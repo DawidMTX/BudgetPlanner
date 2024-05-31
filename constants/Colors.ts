@@ -5,6 +5,15 @@
 
 const tintColorLight = '#0a7ea4';
 const tintColorDark = '#fff';
+export const incomeColor = "#339F48";
+export const expenseColor = "#CE2D2D";
+
+//Chart colors
+
+export const gas = "#FFF67E";
+export const fees = "#DBA979";
+export const food = "#9BCF53";
+export const pleasures = "#DD5746";
 
 export const Colors = {
   light: {
