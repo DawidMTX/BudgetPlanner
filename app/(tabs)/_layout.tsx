@@ -26,12 +26,20 @@ export default function TabLayout() {
       <Tabs.Screen
         name="explore"
         options={{
-          title: 'Explore',
+          title: 'Dodaj',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+            <TabBarIcon name={focused ? 'add-circle' : 'add-circle-outline'} color={color} />
           ),
         }}
-      />
+      /> <Tabs.Screen
+      name="settings"
+      options={{
+        title: 'Ustawienia',
+        tabBarIcon: ({ color, focused }) => (
+          <TabBarIcon name={focused ? 'settings' : 'settings-outline'} color={color} />
+        ),
+      }}
+    />
     </Tabs>
   );
 }

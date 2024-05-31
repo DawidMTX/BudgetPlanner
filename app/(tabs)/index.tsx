@@ -1,70 +1,94 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import {
+	Image,
+	StyleSheet,
+	Platform,
+	View,
+	SafeAreaView,
+	Text,
+} from "react-native";
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { HelloWave } from "@/components/HelloWave";
+import ParallaxScrollView from "@/components/ParallaxScrollView";
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedView } from "@/components/ThemedView";
+import PieChart from "react-native-pie-chart";
+import { useEffect, useState } from "react";
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+	const widthAndHeight = 220;
+	const [series, setSeries] = useState<Array<number>>([1, 0, 0, 0]);
+	const [sliceColor, setSliceColor] = useState<Array<string>>([
+		"#FFF67E",
+		"#DBA979",
+		"#9BCF53",
+		"#DD5746",
+	]);
+	// const sliceColor = ["#fbd203", "#ffb300", "#ff9100", "#ff6c00"];
+	const data = [
+		{ name: "gas", series: 1, sliceColor: "#FFF67E" },
+		{ name: "kredits", series: 1, sliceColor: "#DBA979" },
+		{ name: "food", series: 1, sliceColor: "#9BCF53" },
+		{ name: "pleasure", series: 1, sliceColor: "#DD5746" },
+	];
+
+	useEffect(() => {
+		let arr: Array<number> = [];
+		data.map(item => {
+			arr.push(item.series);
+			return arr;
+		});
+		setSeries(arr);
+	}, []);
+
+	return (
+		<SafeAreaView style={styles.container}>
+			<View style={styles.chartContener}>
+				<View style={styles.bilans}>
+					<Text style={[styles.incomeExpenses, { backgroundColor: "green" }]}>
+						3000 zł
+					</Text>
+					<Text style={[styles.incomeExpenses, { backgroundColor: "red" }]}>
+						{" "}
+						-2000 zł
+					</Text>
+				</View>
+				<View style={styles.chart}>
+					<PieChart
+						widthAndHeight={widthAndHeight}
+						series={series}
+						sliceColor={sliceColor}
+						coverRadius={0.45}
+						coverFill={"#FFF"}
+					/>
+				</View>
+				<View>
+					<Text>Legenda: </Text>
+				</View>
+			</View>
+			<View></View>
+		</SafeAreaView>
+	);
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
+	container: {
+		backgroundColor: "white",
+	},
+	chartContener: {
+		gap: 30,
+
+		paddingHorizontal: 25,
+	},
+	bilans: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+	},
+	incomeExpenses: {
+		color: "white",
+		padding: 7,
+		borderRadius: 10,
+	},
+	chart: {
+		alignItems: "center",
+	},
 });
