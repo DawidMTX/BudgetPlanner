@@ -11,7 +11,7 @@ import {
 } from "@/constants/Colors";
 
 const Chart = () => {
-	const widthAndHeight = 220;
+	const widthAndHeight = 190;
 	const [series, setSeries] = useState<Array<number>>([1, 0, 0, 0]);
 	const [sliceColor, setSliceColor] = useState<Array<string>>([
 		gas,
