@@ -4,3 +4,8 @@ export interface Data{
     series: number, 
     sliceColor: string
 }
+
+export interface typeOfExpense{
+    title: string,
+    icon: string, 
+}
