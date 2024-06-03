@@ -9,6 +9,7 @@ import {
 	incomeColor,
 	pleasures,
 } from "@/constants/Colors";
+import { Data } from "@/types";
 
 const Chart = () => {
 	const widthAndHeight = 190;
@@ -20,7 +21,7 @@ const Chart = () => {
 		pleasures,
 	]);
 	// const sliceColor = ["#fbd203", "#ffb300", "#ff9100", "#ff6c00"];
-	const data = [
+	const data: Data[] = [
 		{ name: "gas", series: 1, sliceColor: "#FFF67E" },
 		{ name: "fees", series: 1, sliceColor: "#DBA979" },
 		{ name: "food", series: 1, sliceColor: "#9BCF53" },
