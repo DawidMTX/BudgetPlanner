@@ -1,3 +1,4 @@
+import BudgetDetail from "@/components/BudgetDetail";
 import Chart from "@/components/Chart";
 import SelectMonth from "@/components/SelectMonth";
 
@@ -17,14 +18,14 @@ export default function HomeScreen() {
 		<SafeAreaView style={styles.container}>
 			<SelectMonth/>
 			<Chart />
-			<View></View>
+			<BudgetDetail />
 		</SafeAreaView>
 	);
 }
 
 const styles = StyleSheet.create({
 	container: {
-		
+		height: '100%'
 		
 	},
 });
