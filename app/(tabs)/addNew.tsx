@@ -1,4 +1,8 @@
-import { AntIcon, MaterialIcon, TabBarIcon } from "@/components/navigation/TabBarIcon";
+import {
+	AntIcon,
+	MaterialIcon,
+	TabBarIcon,
+} from "@/components/navigation/TabBarIcon";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useState } from "react";
 import {
@@ -39,9 +43,7 @@ export default function addNew() {
 		// setDate(changeDate)
 	};
 
-	const addItems = () => {
-
-	}
+	const addItems = () => {};
 
 	return (
 		<SafeAreaView style={styles.contener}>
@@ -119,16 +121,22 @@ export default function addNew() {
 				</View>
 			</View>
 			<View style={styles.buttonContener}>
-				<TouchableHighlight onPress={addItems}>
-					<View style={[styles.button, {backgroundColor: '#89BB7B'}]}>
+				<TouchableHighlight
+					onPress={addItems}
+					underlayColor={"transparent"}
+				>
+					<View style={[styles.button, { backgroundColor: "#89BB7B" }]}>
 						<AntIcon
 							name="plus"
 							style={styles.iconStyle}
 						/>
 					</View>
 				</TouchableHighlight>
-				<TouchableHighlight onPress={addItems}>
-					<View style={[styles.button, {backgroundColor: '#EE4848'}]}>
+				<TouchableHighlight
+					onPress={addItems}
+					underlayColor={"transparent"}
+				>
+					<View style={[styles.button, { backgroundColor: "#EE4848" }]}>
 						<MaterialIcon
 							name="clear"
 							style={styles.iconStyle}
@@ -143,8 +151,8 @@ export default function addNew() {
 const styles = StyleSheet.create({
 	contener: {
 		flex: 1,
-		justifyContent: 'space-around',
-		marginVertical: 40
+		justifyContent: "space-around",
+		marginVertical: 40,
 	},
 	header: {
 		fontSize: 28,
@@ -156,9 +164,9 @@ const styles = StyleSheet.create({
 		gap: 20,
 	},
 	buttonContener: {
-		flexDirection: 'row',
-		justifyContent: 'center', 
-		gap: 70
+		flexDirection: "row",
+		justifyContent: "center",
+		gap: 70,
 	},
 	input: {
 		width: 300,
@@ -214,17 +222,15 @@ const styles = StyleSheet.create({
 		fontSize: 28,
 		marginRight: 8,
 	},
-	button:{
-		width: 70, 
-		height: 70, 
+	button: {
+		width: 70,
+		height: 70,
 		borderRadius: 100,
-		color: "white"
+		color: "white",
 	},
-	iconStyle:{
+	iconStyle: {
 		fontSize: 40,
 		padding: 15,
-		color: 'white',
-		
-		
+		color: "white",
 	},
 });

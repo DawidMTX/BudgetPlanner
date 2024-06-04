@@ -1,4 +1,6 @@
 import Chart from "@/components/Chart";
+import SelectMonth from "@/components/SelectMonth";
+
 import {
 	Image,
 	StyleSheet,
@@ -8,13 +10,13 @@ import {
 	Text,
 } from "react-native";
 
-
-
 export default function HomeScreen() {
+
 
 	return (
 		<SafeAreaView style={styles.container}>
-			<Chart/>
+			<SelectMonth/>
+			<Chart />
 			<View></View>
 		</SafeAreaView>
 	);
@@ -22,9 +24,8 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: "white",
+		
+		
 	},
-
 });
-
 
