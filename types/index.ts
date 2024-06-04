@@ -12,5 +12,8 @@ export interface typeOfExpense {
 export interface ActiveButtonProps {
 	title: string;
 	onPress: () => void;
-	active: string
+	active: string, 
+	isSelected?: string, 
+	style?: any,
+	activeStyle?: any
 }

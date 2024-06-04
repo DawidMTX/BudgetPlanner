@@ -16,7 +16,8 @@ import {
 	incomeColor,
 	pleasures,
 } from "@/constants/Colors";
-import { ActiveButtonProps, Data } from "@/types";
+
+import ActiveButton from "./ActiveButton";
 
 const Chart = () => {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
@@ -29,14 +30,7 @@ const Chart = () => {
 		pleasures,
 	]);
 
-	const ActiveButton = ({ title, onPress, active}: ActiveButtonProps) => (
-		<TouchableOpacity
-			style={[styles.button, isSelected === active ? styles.buttonIsSelected : null]}
-			onPress={onPress}
-		>
-			<Text>{title}</Text>
-		</TouchableOpacity>
-	);
+
 
 	const pieData = [
 		{
@@ -88,11 +82,14 @@ const Chart = () => {
 					title="Dochody"
 					active={'incomes'}
 					onPress={showIncome}
+					isSelected={isSelected}
+					
 				/>
 				<ActiveButton
 					title="Wydatki"
 					active={'expenses'}
 					onPress={showExpenses}
+					isSelected={isSelected}
 				/>
 			</View>
 			<View style={styles.chart}>
@@ -135,32 +132,20 @@ export default Chart;
 const styles = StyleSheet.create({
 	chartContener: {
 		gap: 30,
-		marginVertical: 5,
-        marginHorizontal: 7,
+		margin: 7,
 		padding: 25,
 		borderRadius: 10,
 		backgroundColor: "white",
 	},
 	buttonsContener: {
 		width: "100%",
+		height: 35,
 		flexDirection: "row",
 		backgroundColor: "#F1F1F1",
 		borderRadius: 5,
 	
 	},
-	button: {
-		alignItems: "center",
-		justifyContent: "center",
-		width: "50%",
-		height: 35,
-		borderRadius: 5,
-	},
-	buttonIsSelected: {
-		backgroundColor: "#fff",
-		padding: 5,
-		borderWidth: 1,
-		borderColor: "#dfdedb",
-	},
+
 	bilansTextColor: { color: "white" },
 
 	incomeExpenses: {
@@ -174,7 +159,7 @@ const styles = StyleSheet.create({
 
 	shadowProp: {
 		shadowColor: "#171717",
-		shadowOffset: { width: -1, height: 2 },
+		shadowOffset: { width: -2, height: 2 },
 		shadowOpacity: 0.2,
 		shadowRadius: 3,
 	},

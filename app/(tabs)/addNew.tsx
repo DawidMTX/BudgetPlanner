@@ -15,15 +15,20 @@ import {
 	TextInput,
 	Button,
 	TouchableHighlight,
+	TouchableOpacity,
 } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import { addDays, format } from "date-fns";
 import { AntDesign } from "@expo/vector-icons";
 
+import { ActiveButtonProps } from "@/types";
+import ActiveButton from "@/components/ActiveButton";
+
 export default function addNew() {
 	const [text, setText] = useState<string>("");
 	const [amount, setAmount] = useState<string>("");
 	const [date, setDate] = useState(format(new Date(), "MM-dd-yyyy"));
+	const [isSelected, setIsSelected] = useState<string>("expenses");
 
 	const typeOfExpense = [
 		{ title: "art. spozywcze", icon: "minuscircleo" },
@@ -45,10 +50,37 @@ export default function addNew() {
 
 	const addItems = () => {};
 
+	const showIncome = () => {
+		setIsSelected("incomes");
+	};
+
+	const showExpenses = () => {
+		setIsSelected("expenses");
+	};
+
 	return (
 		<SafeAreaView style={styles.contener}>
 			<Text style={styles.header}>Dodaj nowe</Text>
+
 			<View style={styles.inputContener}>
+				<View style={styles.buttonsContener}>
+					<ActiveButton
+						title="Dochody"
+						active={"incomes"}
+						onPress={showIncome}
+						isSelected={isSelected}
+						style={{ borderRadius: 10 }}
+						activeStyle={{ backgroundColor: "#8EDF85" }}
+					/>
+					<ActiveButton
+						title="Wydatki"
+						active={"expenses"}
+						onPress={showExpenses}
+						isSelected={isSelected}
+						style={{ borderRadius: 10 }}
+						activeStyle={{ backgroundColor: "#DF8592" }}
+					/>
+				</View>
 				<View>
 					<Text>Nazwa: </Text>
 					<TextInput
@@ -58,6 +90,7 @@ export default function addNew() {
 						placeholder="Nazwa"
 					/>
 				</View>
+
 				<View>
 					<Text>Rodzaj: </Text>
 					<SelectDropdown
@@ -153,6 +186,15 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "space-around",
 		marginVertical: 40,
+	},
+	buttonsContener: {
+		width: 300,
+		height: 45,
+		flexDirection: "row",
+		backgroundColor: "#F1F1F1",
+		borderRadius: 10,
+		borderWidth: 0.2,
+		alignSelf: "center",
 	},
 	header: {
 		fontSize: 28,
