@@ -18,6 +18,10 @@ import {
 } from "@/constants/Colors";
 
 import ActiveButton from "./ActiveButton";
+import { pieDataExpenses } from "@/constants/data";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import moment from "moment";
+
 
 const Chart = () => {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
@@ -31,33 +35,6 @@ const Chart = () => {
 	]);
 
 
-
-	const pieData = [
-		{
-			value: 47,
-			color: "#009FFF",
-			gradientCenterColor: "#006DFF",
-			focused: false,
-		},
-		{
-			value: 40,
-			color: "#93FCF8",
-			gradientCenterColor: "#3BE9DE",
-			focused: false,
-		},
-		{
-			value: 16,
-			color: "#BDB2FA",
-			gradientCenterColor: "#8F80F3",
-			focused: true,
-		},
-		{
-			value: 3,
-			color: "#FFA5BA",
-			gradientCenterColor: "#FF7F97",
-			focused: false,
-		},
-	];
 	// useEffect(() => {
 	// 	let arr: Array<number> = [];
 	// 	data.map(item => {
@@ -94,7 +71,7 @@ const Chart = () => {
 			</View>
 			<View style={styles.chart}>
 				<PieChart
-					data={pieData}
+					data={pieDataExpenses}
 					donut
 					showGradient
 					sectionAutoFocus
