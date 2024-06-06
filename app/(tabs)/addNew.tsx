@@ -30,7 +30,7 @@ export default function addNew() {
 	const [date, setDate] = useState(format(new Date(), "MM-dd-yyyy"));
 	const [isSelected, setIsSelected] = useState<string>("expenses");
 	const [selectedItem, setSelectedItem] = useState('')
-	const [allData, setAllData ] = useState<object>({})
+	const [allData, setAllData ] = useState<Array<object>>([])
 
 	
 
@@ -54,7 +54,7 @@ export default function addNew() {
 		console.log(data[1])
 
 		if (data.length !== 0){
-			setAllData(data)
+			setAllData([data])
 		}
 	};
 
