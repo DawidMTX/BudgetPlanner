@@ -16,12 +16,12 @@ export const typesOfExpense: ExpensesTypes[]= [
 ];
 
 export const typesOfIncome: ExpensesTypes[] = [
-    {title: "Pensja", icon: "#009FFF", color: "" },
-    {title: "Prezent", icon: "#93FCF8", color: "" },
-    {title: "Sprzedaz", icon: "#BDB2FA", color: "" },
-    {title: "Bonus", icon: "#FFA5BA", color: "" },
-    {title: "Premia", icon: "#ABB159", color: "" },
-    {title: "Inne", icon: "#776274", color: "" },
+    {title: "Pensja", color: "#009FFF", icon: "" },
+    {title: "Prezent", color: "#93FCF8", icon: "" },
+    {title: "Sprzedaz", color: "#BDB2FA", icon: "" },
+    {title: "Bonus", color: "#FFA5BA", icon: "" },
+    {title: "Premia", color: "#ABB159", icon: "" },
+    {title: "Inne", color: "#776274", icon: "" },
 ]
 
 

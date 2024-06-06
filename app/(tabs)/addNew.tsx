@@ -19,24 +19,20 @@ import {
 } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import { addDays, format } from "date-fns";
-import { AntDesign } from "@expo/vector-icons";
 
-import { ActiveButtonProps } from "@/types";
 import ActiveButton from "@/components/ActiveButton";
+import { typesOfIncome } from "@/constants/data";
+
 
 export default function addNew() {
-	const [text, setText] = useState<string>("");
+	const [text, setText] = useState<string | any>("");
 	const [amount, setAmount] = useState<string>("");
 	const [date, setDate] = useState(format(new Date(), "MM-dd-yyyy"));
 	const [isSelected, setIsSelected] = useState<string>("expenses");
+	const [selectedItem, setSelectedItem] = useState('')
+	const [allData, setAllData ] = useState<object>({})
 
-	const typeOfExpense = [
-		{ title: "art. spozywcze", icon: "minuscircleo" },
-		{ title: "paliwo", icon: "minuscircleo" },
-		{ title: "opłaty (kredyt, czynsz itp)", icon: "minuscircleo" },
-		{ title: "przyjemności", icon: "minuscircleo" },
-		{ title: "przychód", icon: "pluscircleo" },
-	];
+	
 
 	const handleChangeAmount = (text: any) => {
 		const numericValue = text.replace(/[^0-9]/g, "");
@@ -48,7 +44,19 @@ export default function addNew() {
 		// setDate(changeDate)
 	};
 
-	const addItems = () => {};
+	const addItems = () => {
+		let data: any = selectedItem;
+		data.name = text;
+		data.value = amount;
+		data.id = Math.floor(Math.random() * 100)
+		data.date = date 
+		data.focused = false;
+		console.log(data[1])
+
+		if (data.length !== 0){
+			setAllData(data)
+		}
+	};
 
 	const showIncome = () => {
 		setIsSelected("incomes");
@@ -94,9 +102,9 @@ export default function addNew() {
 				<View>
 					<Text>Rodzaj: </Text>
 					<SelectDropdown
-						data={typeOfExpense}
+						data={typesOfIncome}
 						onSelect={(selectedItem, index) => {
-							console.log(selectedItem, index);
+							setSelectedItem(selectedItem)
 						}}
 						renderButton={(selectedItem, isOpened) => {
 							return (

@@ -16,11 +16,12 @@ const SelectMonth = () => {
 
 	useEffect(() => {
 		dispathch(selectedMonth(month))
+		console.log(month);
 	}, [month, currentMonth]);
 
 	const handleAddMonth = () => {
 		setMonth(month.add(1, "M"));
-		console.log(month);
+		
 		// console.log("curent: ", currentMonth);
 	};
 
@@ -32,7 +33,7 @@ const SelectMonth = () => {
 					style={styles.iconStyle}
 				/>
 			</TouchableOpacity>
-			<Text style={{ fontSize: 19 }}>{currentMonth.format("MMMM YYYY")}</Text>
+			<Text style={{ fontSize: 19 }}>{month.format("MMMM YYYY")}</Text>
 			<TouchableOpacity onPress={handleAddMonth}>
 				<MaterialIcon
 					name="arrow-forward-ios"
