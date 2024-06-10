@@ -3,36 +3,41 @@ import {
 	MaterialIcon,
 	TabBarIcon,
 } from "@/components/navigation/TabBarIcon";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import { useState } from "react";
 import {
 	StyleSheet,
-	Image,
-	Platform,
 	View,
 	SafeAreaView,
 	Text,
-	TextInput,
-	Button,
 	TouchableHighlight,
-	TouchableOpacity,
 } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import { addDays, format } from "date-fns";
 
 import ActiveButton from "@/components/ActiveButton";
 import { typesOfIncome } from "@/constants/data";
-
+import DateSelection from "@/components/DateSelection";
+import Input from "@/components/Input";
 
 export default function addNew() {
 	const [text, setText] = useState<string | any>("");
 	const [amount, setAmount] = useState<string>("");
-	const [date, setDate] = useState(format(new Date(), "MM-dd-yyyy"));
-	const [isSelected, setIsSelected] = useState<string>("expenses");
-	const [selectedItem, setSelectedItem] = useState('')
-	const [allData, setAllData ] = useState<Array<object>>([])
 
-	
+	const [date, setDate] = useState(format(new Date(), "dd-MM-yyyy"));
+	const [isSelected, setIsSelected] = useState<string>("expenses");
+	const [selectedItem, setSelectedItem] = useState("");
+	const [allData, setAllData] = useState<Array<object>>([]);
+
+	let validStyles;
+
+	const handleAddName = (text: any) => {
+		setText(text);
+		if (text.length > 3 || text.length == 0) {
+			validStyles = null;
+		} else {
+			validStyles = { borderColor: "red" };
+		}
+	};
 
 	const handleChangeAmount = (text: any) => {
 		const numericValue = text.replace(/[^0-9]/g, "");
@@ -48,22 +53,14 @@ export default function addNew() {
 		let data: any = selectedItem;
 		data.name = text;
 		data.value = amount;
-		data.id = Math.floor(Math.random() * 100)
-		data.date = date 
+		data.id = Math.floor(Math.random() * 100);
+		data.date = date;
 		data.focused = false;
-		console.log(data[1])
+		console.log(data[1]);
 
-		if (data.length !== 0){
-			setAllData([data])
+		if (data.length !== 0) {
+			setAllData([data]);
 		}
-	};
-
-	const showIncome = () => {
-		setIsSelected("incomes");
-	};
-
-	const showExpenses = () => {
-		setIsSelected("expenses");
 	};
 
 	return (
@@ -75,7 +72,7 @@ export default function addNew() {
 					<ActiveButton
 						title="Dochody"
 						active={"incomes"}
-						onPress={showIncome}
+						onPress={() => setIsSelected("incomes")}
 						isSelected={isSelected}
 						style={{ borderRadius: 10 }}
 						activeStyle={{ backgroundColor: "#8EDF85" }}
@@ -83,28 +80,26 @@ export default function addNew() {
 					<ActiveButton
 						title="Wydatki"
 						active={"expenses"}
-						onPress={showExpenses}
+						onPress={() => setIsSelected("expenses")}
 						isSelected={isSelected}
 						style={{ borderRadius: 10 }}
 						activeStyle={{ backgroundColor: "#DF8592" }}
 					/>
 				</View>
-				<View>
-					<Text>Nazwa: </Text>
-					<TextInput
-						style={styles.input}
-						onChangeText={text => setText(text)}
-						value={text}
-						placeholder="Nazwa"
-					/>
-				</View>
+				<Input
+					placeholder="Nazwa"
+					value={text}
+					name="Nazwa"
+					style={validStyles}
+					onChangeText={(text: any) => handleAddName(text)}
+				/>
 
 				<View>
 					<Text>Rodzaj: </Text>
 					<SelectDropdown
 						data={typesOfIncome}
 						onSelect={(selectedItem, index) => {
-							setSelectedItem(selectedItem)
+							setSelectedItem(selectedItem);
 						}}
 						renderButton={(selectedItem, isOpened) => {
 							return (
@@ -141,25 +136,22 @@ export default function addNew() {
 						dropdownStyle={styles.dropdownMenuStyle}
 					/>
 				</View>
-				<View>
-					<Text>Kwota: </Text>
-					<TextInput
-						style={styles.input}
-						onChangeText={handleChangeAmount}
-						value={amount}
-						placeholder="0.0"
-						keyboardType="numeric"
-					/>
-				</View>
-				<View>
-					<Text>Data: </Text>
-					<TextInput
-						style={styles.input}
-						onChange={handleChangeDate}
-						value={date}
-						placeholder={date}
-					/>
-				</View>
+
+				<Input
+					placeholder="0.0"
+					value={amount}
+					name="Kwota:"
+					style=""
+					onChangeText={({ text }: any) => handleChangeAmount(text)}
+					keyboardType="numeric"
+				/>
+
+				<Input
+					placeholder={date}
+					value={date}
+					name="Data: "
+					onChangeText={handleChangeDate}
+				/>
 			</View>
 			<View style={styles.buttonContener}>
 				<TouchableHighlight
@@ -218,14 +210,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		gap: 70,
 	},
-	input: {
-		width: 300,
-		height: 45,
-		margin: 12,
-		borderWidth: 0.2,
-		padding: 10,
-		borderRadius: 10,
-	},
+
 	dropdownButtonStyle: {
 		width: 300,
 		height: 45,
