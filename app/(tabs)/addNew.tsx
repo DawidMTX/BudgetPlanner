@@ -20,12 +20,12 @@ import DateSelection from "@/components/DateSelection";
 import Input from "@/components/Input";
 
 export default function addNew() {
-	const [text, setText] = useState<string | any>("");
-	const [amount, setAmount] = useState<string>("");
-
-	const [date, setDate] = useState(format(new Date(), "dd-MM-yyyy"));
 	const [isSelected, setIsSelected] = useState<string>("expenses");
+	const [text, setText] = useState<string | any>("");
 	const [selectedItem, setSelectedItem] = useState("");
+	const [amount, setAmount] = useState<string>("");
+	const [date, setDate] = useState(format(new Date(), "dd-MM-yyyy"));
+	
 	const [allData, setAllData] = useState<Array<object>>([]);
 
 	let validStyles;

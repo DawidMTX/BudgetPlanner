@@ -33,7 +33,7 @@ const SelectMonth = () => {
 					style={styles.iconStyle}
 				/>
 			</TouchableOpacity>
-			<Text style={{ fontSize: 19 }}>{month.format("MMMM YYYY")}</Text>
+			<Text style={{ fontSize: 19 }}>month</Text>
 			<TouchableOpacity onPress={handleAddMonth}>
 				<MaterialIcon
 					name="arrow-forward-ios"

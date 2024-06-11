@@ -4,7 +4,7 @@ import moment from "moment";
 
 
 const initialState: TypeOfState = {
-	month: moment()
+	month: ''
 };
 
 const manageData = createSlice({

@@ -51,12 +51,10 @@ export default function TabLayout() {
 	);
 }
 
-
-
-// - zrobic walidacje inputow 
-// - dodac mozliwosc zmieniania daty 
-// - dodac sprawdzanie czy wszytkie elementy sa uzupenione i dopiero wtedy mozna wyslac obiekt z danymi 
-// - uzupenic kategorie w logo i color i zmienic wyglad 
+// - zrobic walidacje inputow
+// - dodac mozliwosc zmieniania daty
+// - dodac sprawdzanie czy wszytkie elementy sa uzupenione i dopiero wtedy mozna wyslac obiekt z danymi
+// - uzupenic kategorie w logo i color i zmienic wyglad
 
 // - dodac wysylanie i odbieranie danych do asyncstorage
 // - dodac edytowanie i usowanie danych w async sotrage
