@@ -46,14 +46,28 @@ export interface DropdownProps {
 export interface InputProps {
 	name: string;
 	style: { key: string; value: string } | any;
-	onChangeText: (text :string) => void;
+	onChangeText: (text: string) => void;
 	value: string;
 	placeholder: string;
 	keyboardType?: string | any;
 }
 
 export interface SelectDateProps {
-	defaultValue: Date,
-	handleAddDay: any,
-	handleSubDay: any
+	defaultValue: Date;
+	handleAddDay: any;
+	handleSubDay: any;
+}
+
+export interface CategoryTypes {
+	title: string;
+	icon: string;
+	color: string;
+}
+
+export interface AllDataTypes extends CategoryTypes {
+	name: string;
+	value: string;
+	id: number;
+	date: Date;
+	focused: boolean;
 }

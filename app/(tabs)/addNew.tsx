@@ -22,15 +22,15 @@ import RNDateTimePicker from "@react-native-community/datetimepicker";
 import SelectData from "@/components/SelectData";
 import { pl, se } from "date-fns/locale";
 import getDays from "@/utils/handleGetDate";
+import { AllDataTypes, CategoryTypes } from "@/types";
 
 export default function addNew() {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
 	const [text, setText] = useState<string | any>("");
-	const [selectedItem, setSelectedItem] = useState("");
+	const [selectedItem, setSelectedItem] = useState<CategoryTypes>();
 	const [amount, setAmount] = useState<string>("");
 	const [selectedDate, setSelectedDate] = useState(new Date());
-
-	const [allData, setAllData] = useState<Array<object>>([]);
+	const [allData, setAllData] = useState<Array<AllDataTypes>>([]);
 
 	const addDay = () => {
 		const date: any = getDays("add", selectedDate);
@@ -39,10 +39,6 @@ export default function addNew() {
 	const subDay = () => {
 		const date: any = getDays("sub", selectedDate);
 		setSelectedDate(date);
-	};
-
-	const handleAddName = (text: string) => {
-		setText(text);
 	};
 
 	const handleChangeAmount = (text: any) => {
@@ -63,7 +59,7 @@ export default function addNew() {
 		data.date = selectedDate;
 		data.focused = false;
 
-		if (data.length !== 0) {
+		if (data !== null) {
 			setAllData([data]);
 		}
 	};
@@ -104,7 +100,7 @@ export default function addNew() {
 					style={
 						text.length > 2 || text.length == 0 ? null : { borderColor: "red" }
 					}
-					onChangeText={(text: string) => handleAddName(text)}
+					onChangeText={(text: string) => setText(text)}
 					keyboardType=""
 				/>
 
