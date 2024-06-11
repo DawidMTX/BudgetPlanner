@@ -1,18 +1,24 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useState } from "react";
+import { InputProps } from "@/types";
 
-const Input = ({ ...props}: any) => {
-    const {style, onChangeText, value, placeholder, keyboardType} = props
-       
+const Input = ({
+	name,
+	style,
+	onChangeText,
+	value,
+	placeholder,
+	keyboardType
+}: InputProps) => {
 	return (
 		<View>
-			<Text>{props.name} </Text>
+			<Text>{name} </Text>
 			<TextInput
 				style={[styles.input, style]}
 				onChangeText={onChangeText}
 				value={value}
 				placeholder={placeholder}
-                keyboardType={keyboardType}
+				keyboardType={keyboardType}
 			/>
 		</View>
 	);
@@ -28,6 +34,5 @@ const styles = StyleSheet.create({
 		borderWidth: 0.2,
 		padding: 10,
 		borderRadius: 10,
-        
 	},
 });

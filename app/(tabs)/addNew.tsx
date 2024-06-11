@@ -25,10 +25,11 @@ export default function addNew() {
 	const [text, setText] = useState<string | any>("");
 	const [selectedItem, setSelectedItem] = useState("");
 	const [amount, setAmount] = useState<string>("");
-	const [selectedDate, setSelectedDate] = useState(format(new Date(), "dd-MM-yyyy"));
+	const [selectedDate, setSelectedDate] = useState(
+		format(new Date(), "dd-MM-yyyy")
+	);
 
 	const [allData, setAllData] = useState<Array<object>>([]);
-	const [selectedLanguage, setSelectedLanguage] = useState();
 
 	const handleAddName = (text: string) => {
 		setText(text);
@@ -89,14 +90,15 @@ export default function addNew() {
 						text.length > 2 || text.length == 0 ? null : { borderColor: "red" }
 					}
 					onChangeText={(text: string) => handleAddName(text)}
+					keyboardType=""
 				/>
 
 				<View>
 					<Text>Rodzaj: </Text>
 					<Dropdown
-					title={"Wybierz kategorie"}
-					showChevronIcon={true}
-						data={typesOfIncome}
+						title={"Wybierz kategorie"}
+						showChevronIcon={true}
+						entryData={typesOfIncome}
 						onSelect={(selectedItem: any, index: number) => {
 							setSelectedItem(selectedItem);
 						}}
@@ -115,9 +117,9 @@ export default function addNew() {
 				<View>
 					<Text>Data: </Text>
 					<Dropdown
-					title={selectedDate}
-					showChevronIcon={false}
-						data={typesOfIncome}
+						title={selectedDate}
+						showChevronIcon={false}
+						entryData={typesOfIncome}
 						onSelect={(selectedData: any, index: number) => {
 							setSelectedDate(selectedDate);
 						}}

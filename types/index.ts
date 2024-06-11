@@ -33,5 +33,21 @@ export interface PieChartTypes {
 }
 
 export interface TypeOfState {
-	month: any
+	month: any;
+}
+
+export interface DropdownProps {
+	entryData: ExpensesTypes[];
+	onSelect: (selectedItem: {}, index: number) => void;
+	title: string;
+	showChevronIcon: boolean;
+}
+
+export interface InputProps {
+	name: string;
+	style: { key: string; value: string } | any;
+	onChangeText: (text :string) => void;
+	value: string;
+	placeholder: string;
+	keyboardType?: string | any;
 }

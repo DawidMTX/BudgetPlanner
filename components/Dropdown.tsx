@@ -2,11 +2,12 @@ import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { TabBarIcon } from "./navigation/TabBarIcon";
+import { DropdownProps } from "@/types";
 
-const Dropdown = ({ data, onSelect, title,showChevronIcon }: any) => {
+const Dropdown = ({ entryData, onSelect, title,showChevronIcon }: DropdownProps) => {
 	return (
 		<SelectDropdown
-			data={data}
+			data={entryData}
 			onSelect={onSelect}
 			renderButton={(selectedItem, isOpened) => {
 				return (
