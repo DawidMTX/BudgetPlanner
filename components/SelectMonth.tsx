@@ -16,7 +16,7 @@ const SelectMonth = () => {
 
 	useEffect(() => {
 		dispathch(selectedMonth(month))
-		console.log(month);
+		
 	}, [month, currentMonth]);
 
 	const handleAddMonth = () => {

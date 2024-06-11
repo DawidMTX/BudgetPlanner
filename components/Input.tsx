@@ -3,10 +3,7 @@ import React, { useState } from "react";
 
 const Input = ({ ...props}: any) => {
     const {style, onChangeText, value, placeholder, keyboardType} = props
-    
-
-   
-
+       
 	return (
 		<View>
 			<Text>{props.name} </Text>

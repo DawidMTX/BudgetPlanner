@@ -18,25 +18,20 @@ import ActiveButton from "@/components/ActiveButton";
 import { typesOfIncome } from "@/constants/data";
 import DateSelection from "@/components/DateSelection";
 import Input from "@/components/Input";
+import Dropdown from "@/components/Dropdown";
 
 export default function addNew() {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
 	const [text, setText] = useState<string | any>("");
 	const [selectedItem, setSelectedItem] = useState("");
 	const [amount, setAmount] = useState<string>("");
-	const [date, setDate] = useState(format(new Date(), "dd-MM-yyyy"));
-	
+	const [selectedDate, setSelectedDate] = useState(format(new Date(), "dd-MM-yyyy"));
+
 	const [allData, setAllData] = useState<Array<object>>([]);
+	const [selectedLanguage, setSelectedLanguage] = useState();
 
-	let validStyles;
-
-	const handleAddName = (text: any) => {
+	const handleAddName = (text: string) => {
 		setText(text);
-		if (text.length > 3 || text.length == 0) {
-			validStyles = null;
-		} else {
-			validStyles = { borderColor: "red" };
-		}
 	};
 
 	const handleChangeAmount = (text: any) => {
@@ -54,7 +49,7 @@ export default function addNew() {
 		data.name = text;
 		data.value = amount;
 		data.id = Math.floor(Math.random() * 100);
-		data.date = date;
+		data.date = selectedDate;
 		data.focused = false;
 		console.log(data[1]);
 
@@ -90,50 +85,21 @@ export default function addNew() {
 					placeholder="Nazwa"
 					value={text}
 					name="Nazwa"
-					style={validStyles}
-					onChangeText={(text: any) => handleAddName(text)}
+					style={
+						text.length > 2 || text.length == 0 ? null : { borderColor: "red" }
+					}
+					onChangeText={(text: string) => handleAddName(text)}
 				/>
 
 				<View>
 					<Text>Rodzaj: </Text>
-					<SelectDropdown
+					<Dropdown
+					title={"Wybierz kategorie"}
+					showChevronIcon={true}
 						data={typesOfIncome}
-						onSelect={(selectedItem, index) => {
+						onSelect={(selectedItem: any, index: number) => {
 							setSelectedItem(selectedItem);
 						}}
-						renderButton={(selectedItem, isOpened) => {
-							return (
-								<View style={styles.dropdownButtonStyle}>
-									{selectedItem && (
-										<TabBarIcon
-											name={selectedItem.icon}
-											style={styles.dropdownButtonIconStyle}
-										/>
-									)}
-									<Text style={styles.dropdownButtonTxtStyle}>
-										{(selectedItem && selectedItem.title) || "Wybierz wydatek"}
-									</Text>
-									<TabBarIcon
-										name={isOpened ? "chevron-up" : "chevron-down"}
-										style={styles.dropdownButtonArrowStyle}
-									/>
-								</View>
-							);
-						}}
-						renderItem={(item, index, isSelected) => {
-							return (
-								<View
-									style={{
-										...styles.dropdownItemStyle,
-										...(isSelected && { backgroundColor: "#D2D9DF" }),
-									}}
-								>
-									<Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
-								</View>
-							);
-						}}
-						showsVerticalScrollIndicator={false}
-						dropdownStyle={styles.dropdownMenuStyle}
 					/>
 				</View>
 
@@ -146,12 +112,17 @@ export default function addNew() {
 					keyboardType="numeric"
 				/>
 
-				<Input
-					placeholder={date}
-					value={date}
-					name="Data: "
-					onChangeText={handleChangeDate}
-				/>
+				<View>
+					<Text>Data: </Text>
+					<Dropdown
+					title={selectedDate}
+					showChevronIcon={false}
+						data={typesOfIncome}
+						onSelect={(selectedData: any, index: number) => {
+							setSelectedDate(selectedDate);
+						}}
+					/>
+				</View>
 			</View>
 			<View style={styles.buttonContener}>
 				<TouchableHighlight
@@ -211,52 +182,6 @@ const styles = StyleSheet.create({
 		gap: 70,
 	},
 
-	dropdownButtonStyle: {
-		width: 300,
-		height: 45,
-		borderWidth: 0.2,
-		borderRadius: 10,
-		flexDirection: "row",
-		justifyContent: "center",
-		alignItems: "center",
-		paddingHorizontal: 12,
-		margin: 12,
-	},
-	dropdownButtonTxtStyle: {
-		flex: 1,
-		fontSize: 18,
-		fontWeight: "500",
-		color: "#151E26",
-	},
-	dropdownButtonArrowStyle: {
-		fontSize: 28,
-	},
-	dropdownButtonIconStyle: {
-		fontSize: 28,
-		marginRight: 8,
-	},
-	dropdownMenuStyle: {
-		backgroundColor: "#E9ECEF",
-		borderRadius: 8,
-	},
-	dropdownItemStyle: {
-		width: "100%",
-		flexDirection: "row",
-		paddingHorizontal: 12,
-		justifyContent: "center",
-		alignItems: "center",
-		paddingVertical: 8,
-	},
-	dropdownItemTxtStyle: {
-		flex: 1,
-		fontSize: 18,
-		fontWeight: "500",
-		color: "#151E26",
-	},
-	dropdownItemIconStyle: {
-		fontSize: 28,
-		marginRight: 8,
-	},
 	button: {
 		width: 70,
 		height: 70,
