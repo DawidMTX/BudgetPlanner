@@ -3,7 +3,7 @@ import {
 	MaterialIcon,
 	TabBarIcon,
 } from "@/components/navigation/TabBarIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
 	StyleSheet,
 	View,
@@ -11,14 +11,17 @@ import {
 	Text,
 	TouchableHighlight,
 } from "react-native";
-import SelectDropdown from "react-native-select-dropdown";
-import { addDays, format } from "date-fns";
+import { addDays, eachDayOfInterval, format, subDays } from "date-fns";
 
 import ActiveButton from "@/components/ActiveButton";
 import { typesOfIncome } from "@/constants/data";
 import DateSelection from "@/components/DateSelection";
 import Input from "@/components/Input";
 import Dropdown from "@/components/Dropdown";
+import getDays from "@/utils/getDays";
+import RNDateTimePicker from "@react-native-community/datetimepicker";
+import SelectData from "@/components/SelectData";
+
 
 export default function addNew() {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
@@ -28,8 +31,11 @@ export default function addNew() {
 	const [selectedDate, setSelectedDate] = useState(
 		format(new Date(), "dd-MM-yyyy")
 	);
+	const days = getDays()
 
 	const [allData, setAllData] = useState<Array<object>>([]);
+
+	
 
 	const handleAddName = (text: string) => {
 		setText(text);
@@ -52,7 +58,7 @@ export default function addNew() {
 		data.id = Math.floor(Math.random() * 100);
 		data.date = selectedDate;
 		data.focused = false;
-		console.log(data[1]);
+
 
 		if (data.length !== 0) {
 			setAllData([data]);
@@ -82,6 +88,7 @@ export default function addNew() {
 						activeStyle={{ backgroundColor: "#DF8592" }}
 					/>
 				</View>
+				
 				<Input
 					placeholder="Nazwa"
 					value={text}
@@ -116,14 +123,15 @@ export default function addNew() {
 
 				<View>
 					<Text>Data: </Text>
-					<Dropdown
+					{/* <Dropdown
 						title={selectedDate}
 						showChevronIcon={false}
-						entryData={typesOfIncome}
-						onSelect={(selectedData: any, index: number) => {
+						entryData={days}
+						onSelect={(selectedDate: any, index: number) => {
 							setSelectedDate(selectedDate);
 						}}
-					/>
+					/> */}
+					<SelectData />
 				</View>
 			</View>
 			<View style={styles.buttonContener}>

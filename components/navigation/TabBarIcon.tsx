@@ -26,7 +26,7 @@ export function AntIcon({
 }: IconProps<ComponentProps<typeof AntDesign>["name"]>) {
 	return (
 		<AntDesign
-			size={28}
+			size={24}
 			style={[{ marginBottom: -3 }, style]}
 			{...rest}
 		/>

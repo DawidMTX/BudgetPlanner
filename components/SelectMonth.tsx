@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { MaterialIcon } from "./navigation/TabBarIcon";
+import { AntIcon } from "./navigation/TabBarIcon";
 import moment from "moment";
 import "moment/locale/pl";
 import { useAppDispatch, useAppSelector } from "@/store/store";
@@ -10,34 +10,33 @@ const SelectMonth = () => {
 	const dispathch = useAppDispatch();
 	moment.locale("pl");
 	const currentMonth = useAppSelector(store => store.manageData.month);
-	
+
 	const [month, setMonth] = useState<any>(currentMonth);
 	// const [selectedMonth, setSelectedMonth] = useState<any>(moment())
 
 	useEffect(() => {
-		dispathch(selectedMonth(month))
-		
+		dispathch(selectedMonth(month));
 	}, [month, currentMonth]);
 
 	const handleAddMonth = () => {
 		setMonth(month.add(1, "M"));
-		
+
 		// console.log("curent: ", currentMonth);
 	};
 
 	return (
 		<View style={[styles.contener, styles.shadowProp]}>
-			<TouchableOpacity onPress={() => handleAddMonth()}>
-				<MaterialIcon
-					name="arrow-back-ios"
+			<TouchableOpacity  onPress={() => handleAddMonth()}>
+				<AntIcon
 					style={styles.iconStyle}
+					name="left"
 				/>
 			</TouchableOpacity>
 			<Text style={{ fontSize: 19 }}>month</Text>
 			<TouchableOpacity onPress={handleAddMonth}>
-				<MaterialIcon
-					name="arrow-forward-ios"
+				<AntIcon
 					style={styles.iconStyle}
+					name="right"
 				/>
 			</TouchableOpacity>
 		</View>
@@ -64,7 +63,8 @@ const styles = StyleSheet.create({
 		shadowRadius: 3,
 	},
 	iconStyle: {
-		fontSize: 20,
+		fontSize: 24,
 		marginHorizontal: 18,
+
 	},
 });

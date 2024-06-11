@@ -37,7 +37,7 @@ export interface TypeOfState {
 }
 
 export interface DropdownProps {
-	entryData: ExpensesTypes[];
+	entryData: ExpensesTypes[] | object[];
 	onSelect: (selectedItem: {}, index: number) => void;
 	title: string;
 	showChevronIcon: boolean;

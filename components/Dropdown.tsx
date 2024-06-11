@@ -1,10 +1,16 @@
-import { StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 import { DropdownProps } from "@/types";
+import RNDateTimePicker from "@react-native-community/datetimepicker";
 
-const Dropdown = ({ entryData, onSelect, title,showChevronIcon }: DropdownProps) => {
+const Dropdown = ({
+	entryData,
+	onSelect,
+	title,
+	showChevronIcon,
+}: DropdownProps) => {
 	return (
 		<SelectDropdown
 			data={entryData}
@@ -21,6 +27,8 @@ const Dropdown = ({ entryData, onSelect, title,showChevronIcon }: DropdownProps)
 						<Text style={styles.dropdownButtonTxtStyle}>
 							{(selectedItem && selectedItem.title) || `${title}`}
 						</Text>
+						
+
 						{showChevronIcon && (
 							<TabBarIcon
 								name={isOpened ? "chevron-up" : "chevron-down"}
@@ -35,7 +43,7 @@ const Dropdown = ({ entryData, onSelect, title,showChevronIcon }: DropdownProps)
 					<View
 						style={{
 							...styles.dropdownItemStyle,
-							...(isSelected && { backgroundColor: "#D2D9DF" }),
+							...(isSelected && { backgroundColor: "#D2D9DF"}),
 						}}
 					>
 						<Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
@@ -78,6 +86,7 @@ const styles = StyleSheet.create({
 	dropdownMenuStyle: {
 		backgroundColor: "#E9ECEF",
 		borderRadius: 8,
+        height: 200
 	},
 	dropdownItemStyle: {
 		width: "100%",
@@ -86,6 +95,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 		paddingVertical: 8,
+      
 	},
 	dropdownItemTxtStyle: {
 		flex: 1,
