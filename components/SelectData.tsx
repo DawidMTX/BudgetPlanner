@@ -7,20 +7,27 @@ import {
 } from "react-native";
 import React from "react";
 import { AntIcon } from "./navigation/TabBarIcon";
+import { SelectDateProps } from "@/types";
+import getDays from "@/utils/handleGetDate";
+import { format } from "date-fns";
+import { pl, se } from "date-fns/locale";
 
-const SelectData = () => {
-	const handleAddMonth = () => {};
+const SelectData = ({
+	defaultValue,
+	handleAddDay,
+	handleSubDay,
+}: SelectDateProps) => {
 
 	return (
 		<View style={styles.contener}>
-			<TouchableOpacity onPress={() => handleAddMonth()}>
+			<TouchableOpacity onPress={handleSubDay}>
 				<AntIcon
 					style={styles.iconStyle}
 					name="left"
 				/>
 			</TouchableOpacity>
-			<Text style={styles.textStyle}>20 listopadssss 2024</Text>
-			<TouchableOpacity onPress={handleAddMonth}>
+			<Text style={styles.textStyle}>{format(defaultValue, "dd MMMM yyyy", { locale: pl })}</Text>
+			<TouchableOpacity onPress={handleAddDay}>
 				<AntIcon
 					style={styles.iconStyle}
 					name="right"
@@ -42,7 +49,7 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 		flexDirection: "row",
 		justifyContent: "space-between",
-       overflow: 'hidden'
+		overflow: "hidden",
 	},
 	textStyle: {
 		alignItems: "center",

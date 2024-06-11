@@ -18,24 +18,28 @@ import { typesOfIncome } from "@/constants/data";
 import DateSelection from "@/components/DateSelection";
 import Input from "@/components/Input";
 import Dropdown from "@/components/Dropdown";
-import getDays from "@/utils/getDays";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import SelectData from "@/components/SelectData";
-
+import { pl, se } from "date-fns/locale";
+import getDays from "@/utils/handleGetDate";
 
 export default function addNew() {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
 	const [text, setText] = useState<string | any>("");
 	const [selectedItem, setSelectedItem] = useState("");
 	const [amount, setAmount] = useState<string>("");
-	const [selectedDate, setSelectedDate] = useState(
-		format(new Date(), "dd-MM-yyyy")
-	);
-	const days = getDays()
+	const [selectedDate, setSelectedDate] = useState(new Date());
 
 	const [allData, setAllData] = useState<Array<object>>([]);
 
-	
+	const addDay = () => {
+		const date: any = getDays("add", selectedDate);
+		setSelectedDate(date);
+	};
+	const subDay = () => {
+		const date: any = getDays("sub", selectedDate);
+		setSelectedDate(date);
+	};
 
 	const handleAddName = (text: string) => {
 		setText(text);
@@ -59,10 +63,14 @@ export default function addNew() {
 		data.date = selectedDate;
 		data.focused = false;
 
-
 		if (data.length !== 0) {
 			setAllData([data]);
 		}
+	};
+
+	const clearItems = () => {
+		const date: any = getDays("add", selectedDate);
+		console.log(date);
 	};
 
 	return (
@@ -88,7 +96,7 @@ export default function addNew() {
 						activeStyle={{ backgroundColor: "#DF8592" }}
 					/>
 				</View>
-				
+
 				<Input
 					placeholder="Nazwa"
 					value={text}
@@ -123,15 +131,11 @@ export default function addNew() {
 
 				<View>
 					<Text>Data: </Text>
-					{/* <Dropdown
-						title={selectedDate}
-						showChevronIcon={false}
-						entryData={days}
-						onSelect={(selectedDate: any, index: number) => {
-							setSelectedDate(selectedDate);
-						}}
-					/> */}
-					<SelectData />
+					<SelectData
+						defaultValue={selectedDate}
+						handleAddDay={addDay}
+						handleSubDay={subDay}
+					/>
 				</View>
 			</View>
 			<View style={styles.buttonContener}>
@@ -147,7 +151,7 @@ export default function addNew() {
 					</View>
 				</TouchableHighlight>
 				<TouchableHighlight
-					onPress={addItems}
+					onPress={clearItems}
 					underlayColor={"transparent"}
 				>
 					<View style={[styles.button, { backgroundColor: "#EE4848" }]}>

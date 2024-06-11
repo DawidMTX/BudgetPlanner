@@ -51,3 +51,9 @@ export interface InputProps {
 	placeholder: string;
 	keyboardType?: string | any;
 }
+
+export interface SelectDateProps {
+	defaultValue: Date,
+	handleAddDay: any,
+	handleSubDay: any
+}
