@@ -57,6 +57,7 @@ export default function TabLayout() {
 //!!!!! - poprawic podawanie kwoty, dodaje tylko dwu cyforwe liczby
 // - przenoszenie na strone glowna po wpisaniu wydatku ??
 // - uzupenic kategorie w logo i color i zmienic wyglad
+// - dodac modal ktory sie pojawi po poprawnym dodaniu obiektu 
 
 
 // - dodac wysylanie i odbieranie danych do asyncstorage

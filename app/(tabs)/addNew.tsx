@@ -24,7 +24,6 @@ import getDays from "@/utils/handleGetDate";
 import { AllDataTypes, CategoryTypes } from "@/types";
 import { useNavigation } from "expo-router";
 
-
 export default function addNew() {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
 	const [text, setText] = useState<string | any>("");
@@ -34,7 +33,7 @@ export default function addNew() {
 	const [allData, setAllData] = useState<Array<AllDataTypes>>([]);
 	const [validError, setValidError] = useState<boolean>(false);
 
-	const navigation = useNavigation()
+	const navigation = useNavigation();
 	useEffect(() => {
 		console.log(allData);
 	}, [allData]);
@@ -55,15 +54,25 @@ export default function addNew() {
 		setAmount(numericValue);
 	};
 
-	const addItems = async () => {
-		const dot = amount.toString().indexOf(".");
-		const cost = amount.slice(0, dot + 3);
+	const changeNumberValue = () => {
+		let cost;
 
+		const dot = amount.toString().indexOf(".");
+		if (dot > 0) {
+			return (cost = amount.slice(0, dot + 3));
+		} else cost = amount;
+
+		return cost;
+	};
+
+	const addItems = async () => {
+		const numberValue = await changeNumberValue();
+		console.log(numberValue);
 		try {
 			let createdData: any = selectedCategory;
 
 			Object.assign(createdData, { name: text });
-			Object.assign(createdData, { value: cost });
+			Object.assign(createdData, { value: numberValue });
 			Object.assign(createdData, { id: Math.floor(Math.random() * 100) });
 			Object.assign(createdData, { date: selectedDate });
 			Object.assign(createdData, { focused: false });
