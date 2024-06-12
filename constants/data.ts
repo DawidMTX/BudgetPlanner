@@ -1,27 +1,28 @@
 import { ExpensesTypes, PieChartTypes } from "@/types";
 import { PieChartPropsType } from "react-native-gifted-charts";
 
+
 export const typesOfExpense: ExpensesTypes[]= [
-{title: "Produkty spozywcze", icon: "", color: "" },
-{title: "Paliwo", icon: "", color: "" },
-{title: "Wynajem", icon: "", color: "" },
-{title: "Restauracja", icon: "", color: "" },
-{title: "Siłownia", icon: "", color: "" },
-{title: "Wakacje", icon: "", color: "" },
-{title: "Prezent", icon: "", color: "" },
-{title: "Rozrywka", icon: "", color: "" },
-{title: "Kredyt", icon: "", color: "" },
-{title: "Czynsz i media", icon: "", color: "" },
-{title: "Inne", icon: "", color: "" },
+{title: "Produkty spozywcze", icon: require("@/assets/images/shopping-cart.png") , color: "#3a86ff" },
+{title: "Paliwo", icon: require("@/assets/images/shopping-cart.png") , color: "#8338ec" },
+{title: "Wynajem", icon: require("@/assets/images/shopping-cart.png") , color: "#ff006e" },
+{title: "Restauracja", icon: require("@/assets/images/shopping-cart.png") , color: "#fb5607" },
+{title: "Siłownia", icon: require("@/assets/images/shopping-cart.png") , color: "#ffbe0b" },
+{title: "Wakacje", icon: require("@/assets/images/shopping-cart.png") , color: "#22577a" },
+{title: "Prezent", icon: require("@/assets/images/shopping-cart.png") , color: "#38a3a5" },
+{title: "Rozrywka", icon: require("@/assets/images/shopping-cart.png") , color: "#57cc99" },
+{title: "Kredyt", icon: require("@/assets/images/shopping-cart.png") , color: "#80ed99" },
+{title: "Czynsz i media", icon: require("@/assets/images/shopping-cart.png") , color: "#c7f9cc" },
+{title: "Inne", icon: require("@/assets/images/shopping-cart.png") , color: "#b5e2fa" },
 ];
 
 export const typesOfIncome: ExpensesTypes[] = [
-    {title: "Pensja", color: "#009FFF", icon: "" },
-    {title: "Prezent", color: "#93FCF8", icon: "" },
-    {title: "Sprzedaz", color: "#BDB2FA", icon: "" },
-    {title: "Bonus", color: "#FFA5BA", icon: "" },
-    {title: "Premia", color: "#ABB159", icon: "" },
-    {title: "Inne", color: "#776274", icon: "" },
+    {title: "Pensja", color: "#f95738", icon: require("@/assets/images/shopping-cart.png") },
+    {title: "Prezent", color: "##ee964b", icon: require("@/assets/images/shopping-cart.png")  },
+    {title: "Sprzedaz", color: "#f4d35e", icon: require("@/assets/images/shopping-cart.png")  },
+    {title: "Bonus", color: "#faf0ca", icon: require("@/assets/images/shopping-cart.png")  },
+    {title: "Premia", color: "#0d3b66", icon: require("@/assets/images/shopping-cart.png")  },
+    {title: "Inne", color: "#81b29a", icon: require("@/assets/images/shopping-cart.png")  },
 ]
 
 

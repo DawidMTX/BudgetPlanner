@@ -8,7 +8,7 @@ const Input = ({
 	onChangeText,
 	value,
 	placeholder,
-	keyboardType
+	keyboardType,
 }: InputProps) => {
 	return (
 		<View>
@@ -34,5 +34,6 @@ const styles = StyleSheet.create({
 		borderWidth: 0.2,
 		padding: 10,
 		borderRadius: 10,
+		fontSize: 18,
 	},
 });

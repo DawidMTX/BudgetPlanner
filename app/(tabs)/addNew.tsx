@@ -10,26 +10,34 @@ import {
 	SafeAreaView,
 	Text,
 	TouchableHighlight,
+	Image,
 } from "react-native";
 import { addDays, eachDayOfInterval, format, subDays } from "date-fns";
 
 import ActiveButton from "@/components/ActiveButton";
-import { typesOfIncome } from "@/constants/data";
+import { typesOfExpense, typesOfIncome } from "@/constants/data";
 import Input from "@/components/Input";
 import Dropdown from "@/components/Dropdown";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import SelectData from "@/components/SelectData";
 import getDays from "@/utils/handleGetDate";
 import { AllDataTypes, CategoryTypes } from "@/types";
+import { useNavigation } from "expo-router";
+
 
 export default function addNew() {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
 	const [text, setText] = useState<string | any>("");
-	const [selectedItem, setSelectedItem] = useState<CategoryTypes>();
+	const [selectedCategory, setSelectedCategory] = useState<CategoryTypes>();
 	const [amount, setAmount] = useState<string>("");
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [allData, setAllData] = useState<Array<AllDataTypes>>([]);
+	const [validError, setValidError] = useState<boolean>(false);
 
+	const navigation = useNavigation()
+	useEffect(() => {
+		console.log(allData);
+	}, [allData]);
 	const addDay = () => {
 		const date: any = getDays("add", selectedDate);
 		setSelectedDate(date);
@@ -47,11 +55,36 @@ export default function addNew() {
 		setAmount(numericValue);
 	};
 
-	const addItems = () => {
+	const addItems = async () => {
 		const dot = amount.toString().indexOf(".");
 		const cost = amount.slice(0, dot + 3);
 
-		// let data: any = selectedItem;
+		try {
+			let createdData: any = selectedCategory;
+
+			Object.assign(createdData, { name: text });
+			Object.assign(createdData, { value: cost });
+			Object.assign(createdData, { id: Math.floor(Math.random() * 100) });
+			Object.assign(createdData, { date: selectedDate });
+			Object.assign(createdData, { focused: false });
+
+			if (
+				createdData &&
+				createdData.name.length > 0 &&
+				createdData.value.length > 0
+			) {
+				setAllData(createdData);
+				setValidError(false);
+				clearItems();
+				// navigation.navigate()
+			} else {
+				setValidError(true);
+			}
+		} catch (error) {
+			setValidError(true);
+			console.log("Error: ", error);
+		}
+
 		// data.name = text;
 		// data.value = amount;
 		// data.id = Math.floor(Math.random() * 100);
@@ -64,8 +97,10 @@ export default function addNew() {
 	};
 
 	const clearItems = () => {
-		const date: any = getDays("add", selectedDate);
-		console.log(date);
+		setText("");
+		setSelectedCategory({ title: "", icon: "", color: "" });
+		setAmount("");
+		setSelectedDate(new Date());
 	};
 
 	return (
@@ -108,9 +143,11 @@ export default function addNew() {
 					<Dropdown
 						title={"Wybierz kategorie"}
 						showChevronIcon={true}
-						entryData={typesOfIncome}
-						onSelect={(selectedItem: any, index: number) => {
-							setSelectedItem(selectedItem);
+						entryData={
+							isSelected === "incomes" ? typesOfIncome : typesOfExpense
+						}
+						onSelect={(selectedCateogry: any, index: number) => {
+							setSelectedCategory(selectedCateogry);
 						}}
 					/>
 				</View>

@@ -4,14 +4,7 @@ import SelectData from "@/components/SelectData";
 import { getMonths } from "@/utils/handleGetDate";
 import { useState } from "react";
 
-import {
-	Image,
-	StyleSheet,
-	Platform,
-	View,
-	SafeAreaView,
-	Text,
-} from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 
 export default function HomeScreen() {
 	const [selectedDate, setSelectedDate] = useState(new Date());

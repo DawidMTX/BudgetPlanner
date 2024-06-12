@@ -1,9 +1,9 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 import { DropdownProps } from "@/types";
-import RNDateTimePicker from "@react-native-community/datetimepicker";
+// import { Image } from "expo-image";
 
 const Dropdown = ({
 	entryData,
@@ -19,15 +19,14 @@ const Dropdown = ({
 				return (
 					<View style={styles.dropdownButtonStyle}>
 						{selectedItem && (
-							<TabBarIcon
-								name={selectedItem.icon}
-								style={styles.dropdownButtonIconStyle}
+							<Image
+								source={selectedItem.icon}
+								style={styles.dropdownItemIconStyle}
 							/>
 						)}
 						<Text style={styles.dropdownButtonTxtStyle}>
 							{(selectedItem && selectedItem.title) || `${title}`}
 						</Text>
-						
 
 						{showChevronIcon && (
 							<TabBarIcon
@@ -39,13 +38,15 @@ const Dropdown = ({
 				);
 			}}
 			renderItem={(item, index, isSelected) => {
+
 				return (
 					<View
 						style={{
 							...styles.dropdownItemStyle,
-							...(isSelected && { backgroundColor: "#D2D9DF"}),
+							...(isSelected && { backgroundColor: "#D2D9DF" }),
 						}}
 					>
+						<Image source={item.icon} />
 						<Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
 					</View>
 				);
@@ -86,16 +87,17 @@ const styles = StyleSheet.create({
 	dropdownMenuStyle: {
 		backgroundColor: "#E9ECEF",
 		borderRadius: 8,
-        height: 200
+		height: 400,
 	},
 	dropdownItemStyle: {
 		width: "100%",
+		height: 50,
 		flexDirection: "row",
 		paddingHorizontal: 12,
 		justifyContent: "center",
 		alignItems: "center",
 		paddingVertical: 8,
-      
+		gap: 12,
 	},
 	dropdownItemTxtStyle: {
 		flex: 1,
@@ -104,7 +106,7 @@ const styles = StyleSheet.create({
 		color: "#151E26",
 	},
 	dropdownItemIconStyle: {
-		fontSize: 28,
-		marginRight: 8,
+		marginRight: 12
 	},
+	image: {},
 });
