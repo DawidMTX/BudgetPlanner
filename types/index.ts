@@ -53,15 +53,17 @@ export interface InputProps {
 }
 
 export interface SelectDateProps {
-	defaultValue: Date;
-	handleAddDay: any;
-	handleSubDay: any;
+	defaultValue: Date,
+	handleAddDay: any,
+	handleSubDay: any,
+	dateFormat: string,
+	style: any
 }
 
 export interface CategoryTypes {
-	title: string;
-	icon: string;
-	color: string;
+	title: string,
+	icon: string,
+	color: string,
 }
 
 export interface AllDataTypes extends CategoryTypes {

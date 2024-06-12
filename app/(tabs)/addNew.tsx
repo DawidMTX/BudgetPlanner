@@ -15,12 +15,10 @@ import { addDays, eachDayOfInterval, format, subDays } from "date-fns";
 
 import ActiveButton from "@/components/ActiveButton";
 import { typesOfIncome } from "@/constants/data";
-import DateSelection from "@/components/DateSelection";
 import Input from "@/components/Input";
 import Dropdown from "@/components/Dropdown";
 import RNDateTimePicker from "@react-native-community/datetimepicker";
 import SelectData from "@/components/SelectData";
-import { pl, se } from "date-fns/locale";
 import getDays from "@/utils/handleGetDate";
 import { AllDataTypes, CategoryTypes } from "@/types";
 
@@ -42,26 +40,27 @@ export default function addNew() {
 	};
 
 	const handleChangeAmount = (text: any) => {
-		const numericValue = text.replace(/[^0-9]/g, "");
+		const numericValue = text
+			.replace(/[^.\d]/g, "")
+			.replace(/^(\d*\.?)|(\d*)\.?/g, "$1$2");
+
 		setAmount(numericValue);
 	};
 
-	const handleChangeDate = () => {
-		// const changeDate = addDays(date, 1)
-		// setDate(changeDate)
-	};
-
 	const addItems = () => {
-		let data: any = selectedItem;
-		data.name = text;
-		data.value = amount;
-		data.id = Math.floor(Math.random() * 100);
-		data.date = selectedDate;
-		data.focused = false;
+		const dot = amount.toString().indexOf(".");
+		const cost = amount.slice(0, dot + 3);
 
-		if (data !== null) {
-			setAllData([data]);
-		}
+		// let data: any = selectedItem;
+		// data.name = text;
+		// data.value = amount;
+		// data.id = Math.floor(Math.random() * 100);
+		// data.date = selectedDate;
+		// data.focused = false;
+
+		// if (data !== null) {
+		// 	setAllData([data]);
+		// }
 	};
 
 	const clearItems = () => {
@@ -121,13 +120,21 @@ export default function addNew() {
 					value={amount}
 					name="Kwota:"
 					style=""
-					onChangeText={({ text }: any) => handleChangeAmount(text)}
+					onChangeText={(text: any) => handleChangeAmount(text)}
 					keyboardType="numeric"
 				/>
 
 				<View>
 					<Text>Data: </Text>
 					<SelectData
+						style={{
+							width: 300,
+							height: 45,
+							margin: 12,
+							borderWidth: 0.2,
+							overflow: "hidden",
+						}}
+						dateFormat="dd MMMM yyyy"
 						defaultValue={selectedDate}
 						handleAddDay={addDay}
 						handleSubDay={subDay}

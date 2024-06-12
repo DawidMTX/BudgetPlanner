@@ -51,10 +51,14 @@ export default function TabLayout() {
 	);
 }
 
-// - zrobic walidacje inputow
-// - dodac mozliwosc zmieniania daty
+
+
+//!!!!!! - sprawdzic czemu nie dziala dodawnie elementow do obiektu 
+// - zrobic walidacje inputow - spawdzecznie podczas wysylania czy nie sa puste 
+// - dodac mozliwosc zmieniania daty - chodzi o miesiace na stronie glowenj 
 // - dodac sprawdzanie czy wszytkie elementy sa uzupenione i dopiero wtedy mozna wyslac obiekt z danymi
 // - uzupenic kategorie w logo i color i zmienic wyglad
+// - w addNew zostaly do poprawy kwota i kategoria 
 
 // - dodac wysylanie i odbieranie danych do asyncstorage
 // - dodac edytowanie i usowanie danych w async sotrage

@@ -16,17 +16,20 @@ const SelectData = ({
 	defaultValue,
 	handleAddDay,
 	handleSubDay,
+	dateFormat,
+	style,
 }: SelectDateProps) => {
-
 	return (
-		<View style={styles.contener}>
+		<View style={[styles.contener, style]}>
 			<TouchableOpacity onPress={handleSubDay}>
 				<AntIcon
 					style={styles.iconStyle}
 					name="left"
 				/>
 			</TouchableOpacity>
-			<Text style={styles.textStyle}>{format(defaultValue, "dd MMMM yyyy", { locale: pl })}</Text>
+			<Text style={styles.textStyle}>
+				{format(defaultValue, dateFormat, { locale: pl })}
+			</Text>
 			<TouchableOpacity onPress={handleAddDay}>
 				<AntIcon
 					style={styles.iconStyle}
@@ -41,15 +44,11 @@ export default SelectData;
 
 const styles = StyleSheet.create({
 	contener: {
-		width: 300,
-		height: 45,
-		margin: 12,
-		borderWidth: 0.2,
 		padding: 10,
 		borderRadius: 10,
 		flexDirection: "row",
 		justifyContent: "space-between",
-		overflow: "hidden",
+		
 	},
 	textStyle: {
 		alignItems: "center",
