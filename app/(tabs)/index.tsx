@@ -12,6 +12,8 @@ import { StyleSheet, SafeAreaView } from "react-native";
 export default function HomeScreen() {
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [data, setData] = useState([]);
+	let filteredDataByMonth: any[] = [];
+	let listOfCategory: any[] = [];
 	const costInformation = useAppSelector(state => state.manageData.isSelected);
 
 	const addDay = () => {
@@ -31,15 +33,29 @@ export default function HomeScreen() {
 		showData();
 	}, [costInformation, selectedDate]);
 
+
+	// Filter by month date
 	if (data !== null || undefined) {
-		const filteredDataByMonth = data.filter((item): any => {
-			 return format(item["date"], "MM-yyyy") == format(selectedDate, "MM-yyyy");
-			 
+		filteredDataByMonth = data.filter((item): any => {
+			return format(item["date"], "MM-yyyy") == format(selectedDate, "MM-yyyy");
 		});
-		console.log("get month data: ", filteredDataByMonth);
+
+		// console.log("get month data: ", filteredDataByMonth);
+	} else console.log("There is no message to display");
+
+	//Filter by category 
+	if (filteredDataByMonth) {
+		filteredDataByMonth.map((item, i) => {
+			if (listOfCategory.includes(item["title"])) {
+				return;
+			} else {
+				listOfCategory.push(item["title"]);
+			}
+		});
 	}
 
-	// console.log("d: ", data);
+	
+	console.log("d: ", listOfCategory);
 
 	return (
 		<SafeAreaView style={styles.container}>
