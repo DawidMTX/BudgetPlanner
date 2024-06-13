@@ -1,10 +1,39 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+	Button,
+	ScrollView,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+} from "react-native";
+import React, { useEffect, useState } from "react";
+import { getData } from "@/utils/storageData";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BudgetDetail = () => {
+	const [data, setData] = useState([]);
+
+	useEffect(() => {
+		const showData = async () => {
+			const dataFromStorage = await getData("expenses");
+			setData(dataFromStorage);
+		};
+		showData()
+	}, []);
+
+	console.log("d: ", data);
+
 	return (
 		<ScrollView style={[styles.contener, styles.shadowProp]}>
-			<Text>BudgetDetail</Text>
+			<TouchableOpacity >
+				<Text> pokaz dane</Text>
+			</TouchableOpacity>
+			<View>
+				{/* {data ? (data.map((item, i)=> (
+					<Text>{item.name}</Text>
+					<Text>{item.id}</Text>
+				))) : (<Text> Jescze nic tu nie ma </Text>)} */}
+			</View>
 		</ScrollView>
 	);
 };

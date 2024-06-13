@@ -11,8 +11,8 @@ import {
 	Text,
 	TouchableHighlight,
 	Image,
+	
 } from "react-native";
-import { addDays, eachDayOfInterval, format, subDays } from "date-fns";
 
 import ActiveButton from "@/components/ActiveButton";
 import { typesOfExpense, typesOfIncome } from "@/constants/data";
@@ -23,6 +23,10 @@ import SelectData from "@/components/SelectData";
 import getDays from "@/utils/handleGetDate";
 import { AllDataTypes, CategoryTypes } from "@/types";
 import { useNavigation } from "expo-router";
+import PopUpModal from "@/components/PopUpModal";
+import storeData, { getData } from "@/utils/storageData";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 export default function addNew() {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
@@ -31,12 +35,24 @@ export default function addNew() {
 	const [amount, setAmount] = useState<string>("");
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [allData, setAllData] = useState<Array<AllDataTypes>>([]);
-	const [validError, setValidError] = useState<boolean>(false);
+	const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
+	const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
 
 	const navigation = useNavigation();
-	useEffect(() => {
-		console.log(allData);
-	}, [allData]);
+	// useEffect(() => {
+	// 	console.log('Dane z addNew: ', allData)
+	// }, [allData]);
+
+	// const storeData = async () => {
+	// 	try {
+	// 	  const jsonValue = JSON.stringify(allData);
+	// 	  await AsyncStorage.setItem("expenses", jsonValue);
+	// 	  console.log("wyslano")
+	// 	} catch (e) {
+	// 	  console.log(e)
+	// 	}
+	//   };
+
 	const addDay = () => {
 		const date: any = getDays("add", selectedDate);
 		setSelectedDate(date);
@@ -67,10 +83,9 @@ export default function addNew() {
 
 	const addItems = async () => {
 		const numberValue = await changeNumberValue();
-		console.log(numberValue);
+		
 		try {
 			let createdData: any = selectedCategory;
-
 			Object.assign(createdData, { name: text });
 			Object.assign(createdData, { value: numberValue });
 			Object.assign(createdData, { id: Math.floor(Math.random() * 100) });
@@ -82,27 +97,22 @@ export default function addNew() {
 				createdData.name.length > 0 &&
 				createdData.value.length > 0
 			) {
-				setAllData(createdData);
-				setValidError(false);
+				const dataFromStorage = await getData(isSelected)
+				let arr = [... dataFromStorage, createdData]
+				await AsyncStorage.setItem(isSelected, JSON.stringify(arr));
+				setShowErrorModal(false);
+				setShowSuccessModal(true);
 				clearItems();
 				// navigation.navigate()
 			} else {
-				setValidError(true);
+				setShowErrorModal(true);
+				setShowSuccessModal(false);
 			}
 		} catch (error) {
-			setValidError(true);
+			setShowErrorModal(true);
+			setShowSuccessModal(false);
 			console.log("Error: ", error);
 		}
-
-		// data.name = text;
-		// data.value = amount;
-		// data.id = Math.floor(Math.random() * 100);
-		// data.date = selectedDate;
-		// data.focused = false;
-
-		// if (data !== null) {
-		// 	setAllData([data]);
-		// }
 	};
 
 	const clearItems = () => {
@@ -114,6 +124,7 @@ export default function addNew() {
 
 	return (
 		<SafeAreaView style={styles.contener}>
+			{showErrorModal && <PopUpModal isVisible={showErrorModal}/>}
 			<Text style={styles.header}>Dodaj nowe</Text>
 
 			<View style={styles.inputContener}>
@@ -126,6 +137,7 @@ export default function addNew() {
 						style={{ borderRadius: 10 }}
 						activeStyle={{ backgroundColor: "#8EDF85" }}
 					/>
+					
 					<ActiveButton
 						title="Wydatki"
 						active={"expenses"}
