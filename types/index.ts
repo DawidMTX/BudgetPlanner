@@ -33,7 +33,7 @@ export interface PieChartTypes {
 }
 
 export interface TypeOfState {
-	month: any;
+	isSelected: string;
 }
 
 export interface DropdownProps {

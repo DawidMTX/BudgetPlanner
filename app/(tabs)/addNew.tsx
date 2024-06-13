@@ -1,17 +1,14 @@
 import {
 	AntIcon,
 	MaterialIcon,
-	TabBarIcon,
 } from "@/components/navigation/TabBarIcon";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import {
 	StyleSheet,
 	View,
 	SafeAreaView,
 	Text,
-	TouchableHighlight,
-	Image,
-	
+	TouchableHighlight
 } from "react-native";
 
 import ActiveButton from "@/components/ActiveButton";
@@ -22,9 +19,8 @@ import RNDateTimePicker from "@react-native-community/datetimepicker";
 import SelectData from "@/components/SelectData";
 import getDays from "@/utils/handleGetDate";
 import { AllDataTypes, CategoryTypes } from "@/types";
-import { useNavigation } from "expo-router";
 import PopUpModal from "@/components/PopUpModal";
-import storeData, { getData } from "@/utils/storageData";
+import  getData  from "@/utils/storageData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
@@ -34,24 +30,9 @@ export default function addNew() {
 	const [selectedCategory, setSelectedCategory] = useState<CategoryTypes>();
 	const [amount, setAmount] = useState<string>("");
 	const [selectedDate, setSelectedDate] = useState(new Date());
-	const [allData, setAllData] = useState<Array<AllDataTypes>>([]);
 	const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
 	const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
 
-	const navigation = useNavigation();
-	// useEffect(() => {
-	// 	console.log('Dane z addNew: ', allData)
-	// }, [allData]);
-
-	// const storeData = async () => {
-	// 	try {
-	// 	  const jsonValue = JSON.stringify(allData);
-	// 	  await AsyncStorage.setItem("expenses", jsonValue);
-	// 	  console.log("wyslano")
-	// 	} catch (e) {
-	// 	  console.log(e)
-	// 	}
-	//   };
 
 	const addDay = () => {
 		const date: any = getDays("add", selectedDate);
@@ -103,7 +84,7 @@ export default function addNew() {
 				setShowErrorModal(false);
 				setShowSuccessModal(true);
 				clearItems();
-				// navigation.navigate()
+				
 			} else {
 				setShowErrorModal(true);
 				setShowSuccessModal(false);

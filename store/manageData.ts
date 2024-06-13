@@ -4,19 +4,19 @@ import moment from "moment";
 
 
 const initialState: TypeOfState = {
-	month: ''
+	isSelected: "expenses"
 };
 
 const manageData = createSlice({
 	name: "ManageData",
 	initialState,
 	reducers: {
-		selectedMonth(state, action: PayloadAction<any>) {
-			state.month = action.payload;
+		getCostInformation(state, action: PayloadAction<any>) {
+			state.isSelected = action.payload;
 		},
 		
 	},
 });
 
-export const { selectedMonth} = manageData.actions;
+export const { getCostInformation} = manageData.actions;
 export default manageData.reducer;

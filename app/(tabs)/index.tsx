@@ -1,13 +1,17 @@
 import BudgetDetail from "@/components/BudgetDetail";
 import Chart from "@/components/Chart";
 import SelectData from "@/components/SelectData";
+import { useAppSelector } from "@/store/store";
 import { getMonths } from "@/utils/handleGetDate";
-import { useState } from "react";
+import getData from "@/utils/storageData";
+import { useEffect, useState } from "react";
 
 import { StyleSheet, SafeAreaView } from "react-native";
 
 export default function HomeScreen() {
 	const [selectedDate, setSelectedDate] = useState(new Date());
+	const [data, setData] = useState([]);
+	const costInformation = useAppSelector(state => state.manageData.isSelected);
 
 	const addDay = () => {
 		const date: any = getMonths("add", selectedDate);
@@ -17,6 +21,19 @@ export default function HomeScreen() {
 		const date: any = getMonths("sub", selectedDate);
 		setSelectedDate(date);
 	};
+
+	useEffect(() => {
+		const showData = async () => {
+			const dataFromStorage = await getData(costInformation);
+			setData(dataFromStorage);
+		};
+		showData();
+	}, [costInformation]);
+
+
+
+	console.log("d: ", data);
+
 	return (
 		<SafeAreaView style={styles.container}>
 			<SelectData

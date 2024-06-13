@@ -61,5 +61,6 @@ export default function TabLayout() {
 // - dodac modal ktory sie pojawi po poprawnym dodaniu obiektu 
 
 
-// - dodac wysylanie i odbieranie danych do asyncstorage
+// - stworzyc komponenty do wyswietlania danych 
+// - stworzyc cale zarzadzanie danymi - zmiany na wykresie, zmiene elemenow wyswietlanch
 // - dodac edytowanie i usowanie danych w async sotrage

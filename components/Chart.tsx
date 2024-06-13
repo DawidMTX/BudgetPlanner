@@ -21,51 +21,29 @@ import ActiveButton from "./ActiveButton";
 import { pieDataExpenses } from "@/constants/data";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import moment from "moment";
-
+import { getCostInformation } from "@/store/manageData";
 
 const Chart = () => {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
 
-	const [series, setSeries] = useState<Array<number>>([1, 0, 0, 0]);
-	const [sliceColor, setSliceColor] = useState<Array<string>>([
-		gas,
-		fees,
-		food,
-		pleasures,
-	]);
-
-
-	// useEffect(() => {
-	// 	let arr: Array<number> = [];
-	// 	data.map(item => {
-	// 		arr.push(item.series);
-	// 		return arr;
-	// 	});
-	// 	setSeries(arr);
-	// }, []);
-
-	const showIncome = () => {
-		setIsSelected("incomes");
-	};
-
-	const showExpenses = () => {
-		setIsSelected("expenses");
-	};
+	const dispatch = useAppDispatch();
+	useEffect(() => {
+		dispatch(getCostInformation(isSelected));
+	}, [isSelected]);
 
 	return (
 		<View style={[styles.chartContener, styles.shadowProp]}>
 			<View style={styles.buttonsContener}>
 				<ActiveButton
 					title="Dochody"
-					active={'incomes'}
-					onPress={showIncome}
+					active={"incomes"}
+					onPress={() => setIsSelected("incomes")}
 					isSelected={isSelected}
-					
 				/>
 				<ActiveButton
 					title="Wydatki"
-					active={'expenses'}
-					onPress={showExpenses}
+					active={"expenses"}
+					onPress={() => setIsSelected("expenses")}
 					isSelected={isSelected}
 				/>
 			</View>
@@ -120,7 +98,6 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		backgroundColor: "#F1F1F1",
 		borderRadius: 5,
-	
 	},
 
 	bilansTextColor: { color: "white" },
