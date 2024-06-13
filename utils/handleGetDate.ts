@@ -34,7 +34,7 @@ export const getMonths = (type: string, currentDay: Date) => {
 			newDay = addMonths(new Date(currentDay), 1);
 			break;
 		case "sub":
-			newDay = subMonths(currentDay, 1);
+			newDay = subMonths(new Date(currentDay), 1);
 			break;
 		default:
 			newDay = format(new Date(), " MMMM yyyy", { locale: pl });

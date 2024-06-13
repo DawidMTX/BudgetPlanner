@@ -4,6 +4,7 @@ import SelectData from "@/components/SelectData";
 import { useAppSelector } from "@/store/store";
 import { getMonths } from "@/utils/handleGetDate";
 import getData from "@/utils/storageData";
+import { format } from "date-fns";
 import { useEffect, useState } from "react";
 
 import { StyleSheet, SafeAreaView } from "react-native";
@@ -28,11 +29,17 @@ export default function HomeScreen() {
 			setData(dataFromStorage);
 		};
 		showData();
-	}, [costInformation]);
+	}, [costInformation, selectedDate]);
 
+	if (data !== null || undefined) {
+		const filteredDataByMonth = data.filter((item): any => {
+			 return format(item["date"], "MM-yyyy") == format(selectedDate, "MM-yyyy");
+			 
+		});
+		console.log("get month data: ", filteredDataByMonth);
+	}
 
-
-	console.log("d: ", data);
+	// console.log("d: ", data);
 
 	return (
 		<SafeAreaView style={styles.container}>
