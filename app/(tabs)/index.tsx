@@ -33,7 +33,6 @@ export default function HomeScreen() {
 		showData();
 	}, [costInformation, selectedDate]);
 
-
 	// Filter by month date
 	if (data !== null || undefined) {
 		filteredDataByMonth = data.filter((item): any => {
@@ -43,7 +42,7 @@ export default function HomeScreen() {
 		// console.log("get month data: ", filteredDataByMonth);
 	} else console.log("There is no message to display");
 
-	//Filter by category 
+	//Filter by category
 	if (filteredDataByMonth) {
 		filteredDataByMonth.map((item, i) => {
 			if (listOfCategory.includes(item["title"])) {
@@ -53,10 +52,27 @@ export default function HomeScreen() {
 			}
 		});
 	}
+	let collectionArray: any = [];
 
-	
-	console.log("d: ", listOfCategory);
 
+	for (let i = 0; i <= listOfCategory.length; i++) {
+		let temporaryArray: any = [];
+		filteredDataByMonth.map(item => {
+			if (item["title"].includes(listOfCategory[i])) {
+				temporaryArray.push(item);
+
+				// dynamicVars[`${listOfCategory[i]}`] = it;
+				// arr.push(dynamicVars[`${listOfCategory[i]}`])
+			}
+		});
+		collectionArray.push({
+			name: `${listOfCategory[i]}`,
+			data: temporaryArray,
+		});
+	}
+
+
+	console.log("d: ", collectionArray[0]);
 	return (
 		<SafeAreaView style={styles.container}>
 			<SelectData
