@@ -64,3 +64,7 @@ export default function TabLayout() {
 // - stworzyc komponenty do wyswietlania danych 
 // - stworzyc cale zarzadzanie danymi - zmiany na wykresie, zmiene elemenow wyswietlanch
 // - dodac edytowanie i usowanie danych w async sotrage
+
+
+
+// - poprawic wszytkie typy typescript 

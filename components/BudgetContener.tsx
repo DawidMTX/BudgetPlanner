@@ -10,7 +10,10 @@ import {
 import React, { useEffect, useState } from "react";
 import Categories from "./Categories";
 
+
 const BudgetContener = ({ data }: any) => {
+console.log(Boolean(data))
+
 	return (
 		<ScrollView style={[styles.contener, styles.shadowProp]}>
 			{!data ? (
@@ -24,6 +27,8 @@ const BudgetContener = ({ data }: any) => {
 					))}
 				</View>
 			)}
+
+			
 		</ScrollView>
 	);
 };
@@ -50,6 +55,5 @@ const styles = StyleSheet.create({
 		height: 260,
 		justifyContent: "center",
 		alignItems: "center",
-		backgroundColor: "red",
 	},
 });

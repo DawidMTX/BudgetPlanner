@@ -12,8 +12,8 @@ import { StyleSheet, SafeAreaView } from "react-native";
 export default function HomeScreen() {
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [data, setData] = useState([]);
-	let filteredDataByMonth: any[] = [];
-	let listOfCategory: any[] = [];
+	let filteredDataByMonth: any = null;
+	let listOfCategory: any = null;
 	const costInformation = useAppSelector(state => state.manageData.isSelected);
 
 	const addDay = () => {
@@ -42,7 +42,7 @@ export default function HomeScreen() {
 
 	//Filter by category
 	if (filteredDataByMonth) {
-		filteredDataByMonth.map((item, i) => {
+		filteredDataByMonth.map((item: any, i: number) => {
 			if (listOfCategory.includes(item["title"])) {
 				return;
 			} else {
@@ -52,22 +52,23 @@ export default function HomeScreen() {
 	}
 
 	//Data filtered by category
-	let collectionArray: any = [];
-
-	for (let i = 0; i <= listOfCategory.length; i++) {
-		let temporaryArray: any = [];
-		filteredDataByMonth.map(item => {
-			if (item["title"].includes(listOfCategory[i])) {
-				temporaryArray.push(item);
-			}
-		});
-		collectionArray.push({
-			name: `${listOfCategory[i]}`,
-			data: temporaryArray,
-		});
+	let collectionArray: any = null;
+	if (listOfCategory) {
+		for (let i = 0; i <= listOfCategory.length; i++) {
+			let temporaryArray: any = [];
+			filteredDataByMonth.map((item: any) => {
+				if (item["title"].includes(listOfCategory[i])) {
+					temporaryArray.push(item);
+				}
+			});
+			collectionArray.push({
+				name: `${listOfCategory[i]}`,
+				data: temporaryArray,
+			});
+		}
 	}
 
-	console.log("d: ", collectionArray[0]);
+	console.log("d: ", Boolean(listOfCategory));
 	return (
 		<SafeAreaView style={styles.container}>
 			<SelectData
@@ -87,7 +88,7 @@ export default function HomeScreen() {
 				handleSubDay={subDay}
 			/>
 			<Chart />
-			<BudgetContener data={collectionArray}/>
+			<BudgetContener data={collectionArray} />
 		</SafeAreaView>
 	);
 }

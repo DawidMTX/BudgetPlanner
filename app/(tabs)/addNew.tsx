@@ -92,7 +92,7 @@ export default function addNew() {
 		} catch (error) {
 			setShowErrorModal(true);
 			setShowSuccessModal(false);
-			console.log("Error: ", error);
+			console.log("Error from addNew", error);
 		}
 	};
 

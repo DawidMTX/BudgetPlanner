@@ -1,17 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { Button, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Categories = ({category}: any) => {
+const Categories = ({ category }: any) => {
+	console.log(category);
 
-console.log(category)
 
-  return (
-    <View>
-      <Text>Categories</Text>
-    </View>
-  )
-}
 
-export default Categories
+	return (
+		<View>
+			<Text>{category.data.length}</Text>
+		
+		</View>
+	);
+};
 
-const styles = StyleSheet.create({})
+export default Categories;
+
+const styles = StyleSheet.create({});
