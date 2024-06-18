@@ -1,5 +1,6 @@
 import {
 	Button,
+	FlatList,
 	ScrollView,
 	StyleSheet,
 	Text,
@@ -7,25 +8,27 @@ import {
 	View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import  getData  from "@/utils/storageData";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import Categories from "./Categories";
 
-const BudgetDetail = () => {
-	
-
+const BudgetContener = ({ data }: any) => {
 	return (
 		<ScrollView style={[styles.contener, styles.shadowProp]}>
-			<TouchableOpacity >
-				<Text> pokaz dane</Text>
-			</TouchableOpacity>
-			<View>
-				
-			</View>
+			{!data ? (
+				<View style={styles.noDataStyles}>
+					<Text>Ups! Nic tutaj nie ma!</Text>
+				</View>
+			) : (
+				<View>
+					{data.map((item: any) => (
+						<Categories category={item} />
+					))}
+				</View>
+			)}
 		</ScrollView>
 	);
 };
 
-export default BudgetDetail;
+export default BudgetContener;
 
 const styles = StyleSheet.create({
 	contener: {
@@ -42,5 +45,11 @@ const styles = StyleSheet.create({
 		shadowOffset: { width: -1, height: 2 },
 		shadowOpacity: 0.2,
 		shadowRadius: 3,
+	},
+	noDataStyles: {
+		height: 260,
+		justifyContent: "center",
+		alignItems: "center",
+		backgroundColor: "red",
 	},
 });

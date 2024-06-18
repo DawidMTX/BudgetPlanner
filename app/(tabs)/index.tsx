@@ -1,4 +1,4 @@
-import BudgetDetail from "@/components/BudgetDetail";
+import BudgetContener from "@/components/BudgetContener";
 import Chart from "@/components/Chart";
 import SelectData from "@/components/SelectData";
 import { useAppSelector } from "@/store/store";
@@ -38,9 +38,7 @@ export default function HomeScreen() {
 		filteredDataByMonth = data.filter((item): any => {
 			return format(item["date"], "MM-yyyy") == format(selectedDate, "MM-yyyy");
 		});
-
-		// console.log("get month data: ", filteredDataByMonth);
-	} else console.log("There is no message to display");
+	}
 
 	//Filter by category
 	if (filteredDataByMonth) {
@@ -52,17 +50,15 @@ export default function HomeScreen() {
 			}
 		});
 	}
-	let collectionArray: any = [];
 
+	//Data filtered by category
+	let collectionArray: any = [];
 
 	for (let i = 0; i <= listOfCategory.length; i++) {
 		let temporaryArray: any = [];
 		filteredDataByMonth.map(item => {
 			if (item["title"].includes(listOfCategory[i])) {
 				temporaryArray.push(item);
-
-				// dynamicVars[`${listOfCategory[i]}`] = it;
-				// arr.push(dynamicVars[`${listOfCategory[i]}`])
 			}
 		});
 		collectionArray.push({
@@ -70,7 +66,6 @@ export default function HomeScreen() {
 			data: temporaryArray,
 		});
 	}
-
 
 	console.log("d: ", collectionArray[0]);
 	return (
@@ -92,7 +87,7 @@ export default function HomeScreen() {
 				handleSubDay={subDay}
 			/>
 			<Chart />
-			<BudgetDetail />
+			<BudgetContener data={collectionArray}/>
 		</SafeAreaView>
 	);
 }
