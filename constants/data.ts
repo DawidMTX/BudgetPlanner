@@ -9,7 +9,7 @@ export const typesOfExpense: ExpensesTypes[]= [
 {title: "Restauracja", icon: require("@/assets/images/shopping-cart.png") , color: "#fb5607" },
 {title: "Siłownia", icon: require("@/assets/images/shopping-cart.png") , color: "#ffbe0b" },
 {title: "Wakacje", icon: require("@/assets/images/shopping-cart.png") , color: "#22577a" },
-{title: "Prezent", icon: require("@/assets/images/shopping-cart.png") , color: "#38a3a5" },
+{title: "Prezent", icon: require("@/assets/images/gift.png") , color: "#38a3a5" },
 {title: "Rozrywka", icon: require("@/assets/images/shopping-cart.png") , color: "#57cc99" },
 {title: "Kredyt", icon: require("@/assets/images/shopping-cart.png") , color: "#80ed99" },
 {title: "Czynsz i media", icon: require("@/assets/images/shopping-cart.png") , color: "#c7f9cc" },

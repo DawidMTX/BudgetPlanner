@@ -11,9 +11,9 @@ import { StyleSheet, SafeAreaView } from "react-native";
 
 export default function HomeScreen() {
 	const [selectedDate, setSelectedDate] = useState(new Date());
-	const [data, setData] = useState([]);
-	let filteredDataByMonth: any = null;
-	let listOfCategory: any = null;
+	const [data, setData] = useState<any>(null);
+	let filteredDataByMonth: any = [];
+	let listOfCategory: any = [];
 	const costInformation = useAppSelector(state => state.manageData.isSelected);
 
 	const addDay = () => {
@@ -28,6 +28,7 @@ export default function HomeScreen() {
 	useEffect(() => {
 		const showData = async () => {
 			const dataFromStorage = await getData(costInformation);
+			console.log("data: ",dataFromStorage)
 			setData(dataFromStorage);
 		};
 		showData();
@@ -35,7 +36,7 @@ export default function HomeScreen() {
 
 	// Filter by month date
 	if (data !== null || undefined) {
-		filteredDataByMonth = data.filter((item): any => {
+		filteredDataByMonth = data.filter((item: any) => {
 			return format(item["date"], "MM-yyyy") == format(selectedDate, "MM-yyyy");
 		});
 	}
@@ -52,7 +53,7 @@ export default function HomeScreen() {
 	}
 
 	//Data filtered by category
-	let collectionArray: any = null;
+	let collectionArray: any = [];
 	if (listOfCategory) {
 		for (let i = 0; i <= listOfCategory.length; i++) {
 			let temporaryArray: any = [];
@@ -68,7 +69,7 @@ export default function HomeScreen() {
 		}
 	}
 
-	console.log("d: ", Boolean(listOfCategory));
+	// console.log("d: ", Boolean(listOfCategory));
 	return (
 		<SafeAreaView style={styles.container}>
 			<SelectData

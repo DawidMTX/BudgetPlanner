@@ -1,14 +1,11 @@
-import {
-	AntIcon,
-	MaterialIcon,
-} from "@/components/navigation/TabBarIcon";
-import {  useState } from "react";
+import { AntIcon, MaterialIcon } from "@/components/navigation/TabBarIcon";
+import { useState } from "react";
 import {
 	StyleSheet,
 	View,
 	SafeAreaView,
 	Text,
-	TouchableHighlight
+	TouchableHighlight,
 } from "react-native";
 
 import ActiveButton from "@/components/ActiveButton";
@@ -20,9 +17,8 @@ import SelectData from "@/components/SelectData";
 import getDays from "@/utils/handleGetDate";
 import { AllDataTypes, CategoryTypes } from "@/types";
 import PopUpModal from "@/components/PopUpModal";
-import  getData  from "@/utils/storageData";
+import getData from "@/utils/storageData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 
 export default function addNew() {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
@@ -32,7 +28,8 @@ export default function addNew() {
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
 	const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
-
+	let arr: any = [];
+	console.log(selectedCategory)
 
 	const addDay = () => {
 		const date: any = getDays("add", selectedDate);
@@ -64,7 +61,7 @@ export default function addNew() {
 
 	const addItems = async () => {
 		const numberValue = await changeNumberValue();
-		
+
 		try {
 			let createdData: any = selectedCategory;
 			Object.assign(createdData, { name: text });
@@ -78,13 +75,18 @@ export default function addNew() {
 				createdData.name.length > 0 &&
 				createdData.value.length > 0
 			) {
-				const dataFromStorage = await getData(isSelected)
-				let arr = [... dataFromStorage, createdData]
+				const dataFromStorage = await getData(isSelected);
+
+				if (dataFromStorage) {
+					arr = [...dataFromStorage, createdData];
+				} else {
+					arr.push(createdData);
+				}
+
 				await AsyncStorage.setItem(isSelected, JSON.stringify(arr));
 				setShowErrorModal(false);
 				setShowSuccessModal(true);
 				clearItems();
-				
 			} else {
 				setShowErrorModal(true);
 				setShowSuccessModal(false);
@@ -105,7 +107,7 @@ export default function addNew() {
 
 	return (
 		<SafeAreaView style={styles.contener}>
-			{showErrorModal && <PopUpModal isVisible={showErrorModal}/>}
+			{showErrorModal && <PopUpModal isVisible={showErrorModal} />}
 			<Text style={styles.header}>Dodaj nowe</Text>
 
 			<View style={styles.inputContener}>
@@ -118,7 +120,7 @@ export default function addNew() {
 						style={{ borderRadius: 10 }}
 						activeStyle={{ backgroundColor: "#8EDF85" }}
 					/>
-					
+
 					<ActiveButton
 						title="Wydatki"
 						active={"expenses"}

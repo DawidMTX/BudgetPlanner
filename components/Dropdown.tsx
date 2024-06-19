@@ -38,7 +38,7 @@ const Dropdown = ({
 				);
 			}}
 			renderItem={(item, index, isSelected) => {
-
+				console.log("drop: ", item)
 				return (
 					<View
 						style={{

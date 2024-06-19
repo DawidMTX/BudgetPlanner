@@ -9,10 +9,22 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import Categories from "./Categories";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
 const BudgetContener = ({ data }: any) => {
-console.log(Boolean(data))
+
+
+
+const removeValue = async () => {
+	try {
+	  await AsyncStorage.removeItem('expenses')
+	} catch(e) {
+	  // remove error
+	}
+  
+	console.log('Done.')
+  }
 
 	return (
 		<ScrollView style={[styles.contener, styles.shadowProp]}>
@@ -28,6 +40,7 @@ console.log(Boolean(data))
 				</View>
 			)}
 
+<TouchableOpacity onPress={removeValue}><Text>Usuń</Text></TouchableOpacity>
 			
 		</ScrollView>
 	);

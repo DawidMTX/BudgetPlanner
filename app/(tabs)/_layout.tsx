@@ -53,18 +53,3 @@ export default function TabLayout() {
 
 
 
-
-
-// - przenoszenie na strone glowna po wpisaniu wydatku ??
-// - uzupenic kategorie w logo i color i zmienic wyglad
-// - zerowanie input categori po wyslaniu parametrow 
-// - dodac modal ktory sie pojawi po poprawnym dodaniu obiektu 
-
-
-// - stworzyc komponenty do wyswietlania danych 
-// - stworzyc cale zarzadzanie danymi - zmiany na wykresie, zmiene elemenow wyswietlanch
-// - dodac edytowanie i usowanie danych w async sotrage
-
-
-
-// - poprawic wszytkie typy typescript 
