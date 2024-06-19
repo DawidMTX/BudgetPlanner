@@ -28,12 +28,13 @@ const removeValue = async () => {
 
 	return (
 		<ScrollView style={[styles.contener, styles.shadowProp]}>
-			{!data ? (
+			<View style={{marginHorizontal: 25, marginVertical: 20}}>
+				{!data ? (
 				<View style={styles.noDataStyles}>
 					<Text>Ups! Nic tutaj nie ma!</Text>
 				</View>
 			) : (
-				<View>
+				<View >
 					{data.map((item: any) => (
 						<Categories category={item} />
 					))}
@@ -41,6 +42,8 @@ const removeValue = async () => {
 			)}
 
 <TouchableOpacity onPress={removeValue}><Text>Usuń</Text></TouchableOpacity>
+			</View>
+			
 			
 		</ScrollView>
 	);
@@ -53,7 +56,7 @@ const styles = StyleSheet.create({
 		gap: 30,
 		marginVertical: 5,
 		marginHorizontal: 7,
-		padding: 25,
+		padding: 0,
 		borderRadius: 10,
 		backgroundColor: "white",
 		flex: 1,

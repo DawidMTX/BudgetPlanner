@@ -64,12 +64,12 @@ export default function HomeScreen() {
 			});
 			collectionArray.push({
 				name: `${listOfCategory[i]}`,
-				data: temporaryArray,
+				data: temporaryArray
 			});
 		}
 	}
 
-	// console.log("d: ", Boolean(listOfCategory));
+	console.log("d: ", collectionArray);
 	return (
 		<SafeAreaView style={styles.container}>
 			<SelectData
