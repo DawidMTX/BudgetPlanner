@@ -3,6 +3,7 @@ import React from "react";
 
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
+import { Button, Pressable, Text } from "react-native";
 
 export default function TabLayout() {
 	return (
@@ -47,9 +48,10 @@ export default function TabLayout() {
 					),
 				}}
 			/>
+			<Tabs.Screen
+				name="IncomeExpenseDetail"
+				options={{ href: null }}
+			/>
 		</Tabs>
 	);
 }
-
-
-

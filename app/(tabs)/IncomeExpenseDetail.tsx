@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Button, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 
 const IncomeExpenseDetail = () => {
   return (
-    <View>
+    <SafeAreaView>
       <Text>IncomeExpenseDetail</Text>
-    </View>
+      {/* <Text>{props.names[0]}</Text> */}
+    </SafeAreaView>
   )
 }
 
