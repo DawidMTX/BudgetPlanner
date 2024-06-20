@@ -7,27 +7,31 @@ import {
 	View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { ca } from "date-fns/locale";
-import { set } from "date-fns";
+import colorConventer from "@/utils/colorConventer";
+
+
 
 const Categories = ({ category }: any) => {
 	const [icon, setIcon] = useState();
 	const [color, setColor] = useState<string>('')
-	console.log("category: ", color);
+	const [rgbaColor, setRgbaColor] = useState('')
+	const rgba = colorConventer(color, 0.15)
+	console.log("category: ", rgba);
 
 	useEffect(() => {
 		category.data.map((item: any) => console.log(item.icon));
 		category.data.map((item: any) => setColor(item.color))
-
+	
 	}, []);
+	
+	
 
 	const sum = category.data.reduce((acc: number, item: any) => {
 		return acc + parseFloat(item.value);
 	}, 0);
 
 	return (
-		<View style={[styles.contener, {borderColor: color, backgroundColor: color}]}>
+		<View style={[styles.contener, {borderColor: color, backgroundColor: rgba}]}>
 			<View>{/* <Image source={category.data.icon} /> */}</View>
 			<View>
 				<Text style={{ fontSize: 20 }}>{category.name}</Text>
@@ -47,8 +51,7 @@ const styles = StyleSheet.create({
 		height: 70,
 		marginVertical: 5,
 		borderRadius: 10,
-		borderColor: "red",
-		borderWidth: 1,
+		borderWidth: 0.6,
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between",
