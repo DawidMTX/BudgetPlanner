@@ -29,7 +29,6 @@ export default function addNew() {
 	const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
 	const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
 	let arr: any = [];
-	console.log(selectedCategory)
 
 	const addDay = () => {
 		const date: any = getDays("add", selectedDate);

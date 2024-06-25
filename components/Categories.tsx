@@ -1,6 +1,7 @@
 import {
 	Button,
 	Image,
+	Pressable,
 	StyleSheet,
 	Text,
 	TouchableOpacity,
@@ -8,7 +9,7 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import colorConventer from "@/utils/colorConventer";
-import { useNavigation } from "expo-router";
+import { Link, Redirect, useNavigation, useRouter } from "expo-router";
 import {
 	NativeStackNavigationProp,
 	NativeStackScreenProps,
@@ -23,6 +24,7 @@ const Categories = ({ category }: any) => {
 	const [icon, setIcon] = useState();
 	const [color, setColor] = useState<string>("");
 
+	const router = useRouter();
 
 	useEffect(() => {
 		category.data.map((item: any) => setIcon(item.icon));
@@ -38,19 +40,22 @@ const Categories = ({ category }: any) => {
 	}, 0);
 
 	return (
-		<TouchableOpacity
-			onPress={() => navigation.navigate("IncomeExpenseDetail")}
-			style={[styles.contener, { borderColor: color, backgroundColor: rgba }]}
-		>
-			<View><Image source={icon} /></View>
-			<View>
-				<Text style={{ fontSize: 20 }}>{category.name}</Text>
-				<Text>Tranzakcje: {category.data.length}</Text>
-			</View>
-			<View>
-				<Text style={{ fontSize: 22, color: "#dc2f02" }}>{sum} zł</Text>
-			</View>
-		</TouchableOpacity>
+		
+			<TouchableOpacity onPress={()=> router.push("../detail") } 
+				style={[styles.contener, { borderColor: color, backgroundColor: rgba }]}
+			>
+				<View>
+					<Image source={icon} />
+				</View>
+				<View>
+					<Text style={{ fontSize: 20 }}>{category.name}</Text>
+					<Text>Tranzakcje: {category.data.length}</Text>
+				</View>
+				<View>
+					<Text style={{ fontSize: 22, color: "#dc2f02" }}>{sum} zł</Text>
+				</View>
+			</TouchableOpacity>
+		
 	);
 };
 

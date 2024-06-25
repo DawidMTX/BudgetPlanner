@@ -14,7 +14,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BudgetContener = ({ data }: any) => {
 
-
+console.log("BudgetContener: ", data)
 
 const removeValue = async () => {
 	try {
@@ -25,7 +25,7 @@ const removeValue = async () => {
   
 	console.log('Done.')
   }
-
+console.log(Boolean(data))
 	return (
 		<ScrollView style={[styles.contener, styles.shadowProp]}>
 			<View style={{marginHorizontal: 25, marginVertical: 20}}>

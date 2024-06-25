@@ -55,7 +55,7 @@ export default function HomeScreen() {
 	//Data filtered by category
 	let collectionArray: any = [];
 	if (listOfCategory) {
-		for (let i = 0; i <= listOfCategory.length; i++) {
+		for (let i = 0; i < listOfCategory.length; i++) {
 			let temporaryArray: any = [];
 			filteredDataByMonth.map((item: any) => {
 				if (item["title"].includes(listOfCategory[i])) {
@@ -69,7 +69,7 @@ export default function HomeScreen() {
 		}
 	}
 
-	console.log("d: ", collectionArray);
+	// console.log("d: ", collectionArray);
 	return (
 		<SafeAreaView style={styles.container}>
 			<SelectData
