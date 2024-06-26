@@ -14,6 +14,8 @@ export const gas = "#FFF67E";
 export const fees = "#DBA979";
 export const food = "#9BCF53";
 export const pleasures = "#DD5746";
+export const redValueColor = "#dc2f02";
+export const greenValuColor = "#386641"
 
 export const Colors = {
   light: {

@@ -14,6 +14,8 @@ import {
 	NativeStackNavigationProp,
 	NativeStackScreenProps,
 } from "react-native-screens/lib/typescript/native-stack/types";
+import { greenValuColor, incomeColor, redValueColor } from "@/constants/Colors";
+import { useAppSelector } from "@/store/store";
 
 export interface HomeScreenProps {
 	navigation: NativeStackScreenProps<any, any>;
@@ -23,9 +25,9 @@ export interface HomeScreenProps {
 const Categories = ({ category, selectedDate }: any) => {
 	const [icon, setIcon] = useState();
 	const [color, setColor] = useState<string>("");
+	const incomeExpense = useAppSelector(state => state.manageData.isSelected);
 
 	const router = useRouter();
-	
 
 	useEffect(() => {
 		category.data.map((item: any) => setIcon(item.icon));
@@ -33,32 +35,39 @@ const Categories = ({ category, selectedDate }: any) => {
 	}, [category]);
 
 	const rgba = colorConventer(color, 0.15);
-	// console.log("category: ", selectedDate);
-
+	// console.log("category: ", category);
 
 	const sum = category.data.reduce((acc: number, item: any) => {
 		return acc + parseFloat(item.value);
 	}, 0);
 
-//tutaj przesylam dalej tylko name ( category.name )
+	//tutaj przesylam dalej tylko name ( category.name )
 
 	return (
-		
-			<TouchableOpacity onPress={ () => router.push({ pathname: "../detail", params: {category: category.name, date: selectedDate}} )} 
-				style={[styles.contener, { borderColor: color, backgroundColor: rgba }]}
-			>
-				<View>
-					<Image source={icon} />
-				</View>
-				<View>
-					<Text style={{ fontSize: 20 }}>{category.name}</Text>
-					<Text>Tranzakcje: {category.data.length}</Text>
-				</View>
-				<View>
-					<Text style={{ fontSize: 22, color: "#dc2f02" }}>{sum} zł</Text>
-				</View>
-			</TouchableOpacity>
-		
+		<TouchableOpacity
+			onPress={() =>
+				router.push({
+					pathname: "../detail",
+					params: { category: category.name, date: selectedDate },
+				})
+			}
+			style={[styles.contener, { borderColor: color, backgroundColor: rgba }]}
+		>
+			<View>
+				<Image source={icon} />
+			</View>
+			<View>
+				<Text style={{ fontSize: 20 }}>{category.name}</Text>
+				<Text>Tranzakcje: {category.data.length}</Text>
+			</View>
+			<View>
+				{incomeExpense == "expenses" ? (
+					<Text style={{ fontSize: 22, color: redValueColor }}>- {sum} zł</Text>
+				) : (
+					<Text style={{ fontSize: 22, color: incomeColor }}>{sum} zł</Text>
+				)}
+			</View>
+		</TouchableOpacity>
 	);
 };
 

@@ -1,8 +1,11 @@
-import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { format } from "date-fns";
+import { incomeColor, redValueColor } from "@/constants/Colors";
+import { useAppSelector } from "@/store/store";
 
 const DetailComponent = ({ singleCategoryData }: any) => {
+    const incomeExpense = useAppSelector(state => state.manageData.isSelected);
 	return (
 		<View style={styles.contener}>
 			<View>
@@ -12,7 +15,12 @@ const DetailComponent = ({ singleCategoryData }: any) => {
 				</Text>
 			</View>
 			<View>
-				<Text style={[styles.valueText, {}]}> - {singleCategoryData.value} zł</Text>
+            {incomeExpense == "expenses" ? (
+					<Text style={{ fontSize: 22, color: redValueColor }}> - {singleCategoryData.value} zł</Text>
+				) : (
+					<Text style={{ fontSize: 22, color: incomeColor }}>{singleCategoryData.value} zł</Text>
+				)}
+	
 			</View>
 		</View>
 	);
