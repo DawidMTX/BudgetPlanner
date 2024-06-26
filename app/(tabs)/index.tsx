@@ -1,7 +1,8 @@
 import BudgetContener from "@/components/BudgetContener";
 import Chart from "@/components/Chart";
 import SelectData from "@/components/SelectData";
-import { useAppSelector } from "@/store/store";
+import { getAllExpensesData } from "@/store/manageData";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import { getMonths } from "@/utils/handleGetDate";
 import getData from "@/utils/storageData";
 import { format } from "date-fns";
@@ -11,10 +12,9 @@ import { StyleSheet, SafeAreaView } from "react-native";
 
 export default function HomeScreen() {
 	const [selectedDate, setSelectedDate] = useState(new Date());
-	const [data, setData] = useState<any>(null);
-	let filteredDataByMonth: any = [];
-	let listOfCategory: any = [];
 	const costInformation = useAppSelector(state => state.manageData.isSelected);
+	const dispatch = useAppDispatch();
+
 
 	const addDay = () => {
 		const date: any = getMonths("add", selectedDate);
@@ -28,46 +28,11 @@ export default function HomeScreen() {
 	useEffect(() => {
 		const showData = async () => {
 			const dataFromStorage = await getData(costInformation);
-			console.log("data: ",dataFromStorage)
-			setData(dataFromStorage);
+			dispatch(getAllExpensesData(dataFromStorage));
 		};
 		showData();
 	}, [costInformation, selectedDate]);
 
-	// Filter by month date
-	if (data !== null || undefined) {
-		filteredDataByMonth = data.filter((item: any) => {
-			return format(item["date"], "MM-yyyy") == format(selectedDate, "MM-yyyy");
-		});
-	}
-
-	//Filter by category
-	if (filteredDataByMonth) {
-		filteredDataByMonth.map((item: any, i: number) => {
-			if (listOfCategory.includes(item["title"])) {
-				return;
-			} else {
-				listOfCategory.push(item["title"]);
-			}
-		});
-	}
-
-	//Data filtered by category
-	let collectionArray: any = [];
-	if (listOfCategory) {
-		for (let i = 0; i < listOfCategory.length; i++) {
-			let temporaryArray: any = [];
-			filteredDataByMonth.map((item: any) => {
-				if (item["title"].includes(listOfCategory[i])) {
-					temporaryArray.push(item);
-				}
-			});
-			collectionArray.push({
-				name: `${listOfCategory[i]}`,
-				data: temporaryArray
-			});
-		}
-	}
 
 	// console.log("d: ", collectionArray);
 	return (
@@ -89,7 +54,7 @@ export default function HomeScreen() {
 				handleSubDay={subDay}
 			/>
 			<Chart />
-			<BudgetContener data={collectionArray} />
+			<BudgetContener currentDate={selectedDate}/>
 		</SafeAreaView>
 	);
 }

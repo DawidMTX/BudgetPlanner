@@ -20,11 +20,12 @@ export interface HomeScreenProps {
 	category: any;
 }
 
-const Categories = ({ category }: any) => {
+const Categories = ({ category, selectedDate }: any) => {
 	const [icon, setIcon] = useState();
 	const [color, setColor] = useState<string>("");
 
 	const router = useRouter();
+	
 
 	useEffect(() => {
 		category.data.map((item: any) => setIcon(item.icon));
@@ -32,16 +33,18 @@ const Categories = ({ category }: any) => {
 	}, [category]);
 
 	const rgba = colorConventer(color, 0.15);
-	console.log("category: ", category);
-	const navigation = useNavigation();
+	// console.log("category: ", selectedDate);
+
 
 	const sum = category.data.reduce((acc: number, item: any) => {
 		return acc + parseFloat(item.value);
 	}, 0);
 
+//tutaj przesylam dalej tylko name ( category.name )
+
 	return (
 		
-			<TouchableOpacity onPress={()=> router.push("../detail") } 
+			<TouchableOpacity onPress={ () => router.push({ pathname: "../detail", params: {category: category.name, date: selectedDate}} )} 
 				style={[styles.contener, { borderColor: color, backgroundColor: rgba }]}
 			>
 				<View>

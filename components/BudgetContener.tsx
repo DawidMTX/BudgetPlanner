@@ -10,11 +10,28 @@ import {
 import React, { useEffect, useState } from "react";
 import Categories from "./Categories";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAppSelector } from "@/store/store";
+import { format } from "date-fns";
+import filterData, { filterByMonth } from "@/utils/filterData";
 
 
-const BudgetContener = ({ data }: any) => {
+const BudgetContener = ({ currentDate }: any) => {
+	const [data, setData] = useState<any>(null);
+	const allExpensesData = useAppSelector(state =>state.manageData.allExpensesData );
+	let filteredDataByMonth: any = [];
 
-console.log("BudgetContener: ", data)
+	
+	// Filter by month date
+	if (allExpensesData !== null || undefined) {
+	 filteredDataByMonth = filterByMonth(allExpensesData, currentDate)
+	}
+
+	useEffect(() => {
+		const filteredData = filterData(filteredDataByMonth);
+		setData(filteredData)
+	},[allExpensesData])
+
+// console.log("BudgetContener: ", filteredDataByMonth)
 
 const removeValue = async () => {
 	try {
@@ -25,7 +42,9 @@ const removeValue = async () => {
   
 	console.log('Done.')
   }
-console.log(Boolean(data))
+
+console.log(data)
+  //pobieram zfiltrowane dane dane z sotrage 
 	return (
 		<ScrollView style={[styles.contener, styles.shadowProp]}>
 			<View style={{marginHorizontal: 25, marginVertical: 20}}>
@@ -36,7 +55,7 @@ console.log(Boolean(data))
 			) : (
 				<View >
 					{data.map((item: any) => (
-						<Categories category={item} />
+						<Categories category={item} selectedDate={currentDate} />
 					))}
 				</View>
 			)}

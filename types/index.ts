@@ -34,6 +34,7 @@ export interface PieChartTypes {
 
 export interface TypeOfState {
 	isSelected: string;
+	allExpensesData: any
 }
 
 export interface DropdownProps {

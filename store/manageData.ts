@@ -4,7 +4,8 @@ import moment from "moment";
 
 
 const initialState: TypeOfState = {
-	isSelected: "expenses"
+	isSelected: "expenses",
+	allExpensesData: []
 };
 
 const manageData = createSlice({
@@ -14,9 +15,12 @@ const manageData = createSlice({
 		getCostInformation(state, action: PayloadAction<any>) {
 			state.isSelected = action.payload;
 		},
+		getAllExpensesData(state, action:PayloadAction<any>) {
+			state.allExpensesData = action.payload;
+		}
 		
 	},
 });
 
-export const { getCostInformation} = manageData.actions;
+export const { getCostInformation, getAllExpensesData} = manageData.actions;
 export default manageData.reducer;
