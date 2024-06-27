@@ -10,10 +10,9 @@ import {
 import React, { useEffect, useState } from "react";
 import Categories from "./Categories";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useAppDispatch, useAppSelector } from "@/store/store";
-import { format } from "date-fns";
-import filterData, { filterByMonth } from "@/utils/filterData";
-import { getFilteredDataByMonth } from "@/store/manageData";
+import { useAppSelector } from "@/store/store";
+import filterData from "@/utils/filterData";
+
 
 const BudgetContener = () => {
 	const [data, setData] = useState<any>(null);
@@ -25,6 +24,8 @@ const BudgetContener = () => {
 		const filteredData = filterData(filteredDataByMonth);
 		setData(filteredData);
 	}, [filteredDataByMonth]);
+
+	// - problem z useEffect z filteredDataByMonth
 
 	// console.log("BudgetContener: ", filteredDataByMonth)
 

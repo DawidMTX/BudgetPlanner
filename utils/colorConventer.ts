@@ -1,5 +1,4 @@
 
-
 const colorConventer = (col: string, opacity: number) => {
     const red = parseInt(col.substring(1,3), 16)
     const green = parseInt(col.substring(3,5), 16)

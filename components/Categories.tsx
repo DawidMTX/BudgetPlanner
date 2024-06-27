@@ -36,13 +36,12 @@ const Categories = ({ category }: any) => {
 	}, [category]);
 
 	const rgba = colorConventer(color, 0.15);
-	console.log("category: ", fil);
+	// console.log("category: ", fil);
 
 	const sum = category.data.reduce((acc: number, item: any) => {
 		return acc + parseFloat(item.value);
 	}, 0);
 
-	//tutaj przesylam dalej tylko name ( category.name )
 
 	return (
 		<TouchableOpacity

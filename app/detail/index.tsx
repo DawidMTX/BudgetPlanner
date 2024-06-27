@@ -35,7 +35,7 @@ const IncomeExpenseDetail = () => {
 
 	return (
 		<SafeAreaView>
-			<ScrollView style={{ height: "100%" }}>
+			<View style={{ height: "100%" }}>
 				<Text style={styles.titleText}>Kategoria operacji: {category}</Text>
 				<FlatList
 					data={singleCategoryData}
@@ -44,7 +44,7 @@ const IncomeExpenseDetail = () => {
 					)}
 					keyExtractor={item => item.id}
 				/>
-			</ScrollView>
+			</View>
 		</SafeAreaView>
 	);
 };

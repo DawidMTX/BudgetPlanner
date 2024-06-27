@@ -1,44 +1,41 @@
-import {
-	Button,
-	StyleSheet,
-	Text,
-	TouchableHighlight,
-	TouchableOpacity,
-	View,
-} from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { PieChart } from "react-native-gifted-charts";
-import {
-	expenseColor,
-	fees,
-	food,
-	gas,
-	incomeColor,
-	pleasures,
-} from "@/constants/Colors";
+import { incomeColor } from "@/constants/Colors";
 
 import ActiveButton from "./ActiveButton";
-import { pieDataExpenses } from "@/constants/data";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import moment from "moment";
 import { getCostInformation } from "@/store/manageData";
+import { chartFilterData } from "@/utils/filterData";
 
 const Chart = () => {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
+	const [nameOfCategory, setNameOfCategory] = useState("");
+	const [data, setData] = useState([
+		{
+			value: 1,
+			color: "#009FFF",
+			focused: false,
+			name: "...",
+		},
+	]);
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
 	);
+
 	const dispatch = useAppDispatch();
-	
+
 	useEffect(() => {
 		dispatch(getCostInformation(isSelected));
 	}, [isSelected]);
 
-	// // Filter by month date
-	// if (allExpensesData !== null || undefined) {
-	// 	filteredDataByMonth = filterByMonth(allExpensesData, currentDate)
-	//    }
+	useEffect(() => {
+		const chartFilter = chartFilterData(filteredDataByMonth);
+		setData(chartFilter);
+		setNameOfCategory("");
+	}, [filteredDataByMonth]);
 
+	// console.log("list: ", pieData);
 	return (
 		<View style={[styles.chartContener, styles.shadowProp]}>
 			<View style={styles.buttonsContener}>
@@ -57,12 +54,13 @@ const Chart = () => {
 			</View>
 			<View style={styles.chart}>
 				<PieChart
-					data={pieDataExpenses}
+					data={data}
 					donut
-					showGradient
-					sectionAutoFocus
+					showGradient 
+					focusOnPress
 					radius={90}
 					innerRadius={60}
+					onPress={(item: any, index: any) => setNameOfCategory(item.name)}
 					innerCircleColor={"#232B5D"}
 					centerLabelComponent={() => {
 						return (
@@ -72,7 +70,9 @@ const Chart = () => {
 								>
 									47%
 								</Text>
-								<Text style={{ fontSize: 14, color: "white" }}>Excellent</Text>
+								<Text style={{ fontSize: 14, color: "white" }}>
+									{nameOfCategory}
+								</Text>
 							</View>
 						);
 					}}

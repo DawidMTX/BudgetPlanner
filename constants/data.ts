@@ -24,36 +24,4 @@ export const typesOfIncome: ExpensesTypes[] = [
     {title: "Premia", color: "#0d3b66", icon: require("@/assets/images/shopping-cart.png")  },
     {title: "Inne", color: "#81b29a", icon: require("@/assets/images/shopping-cart.png")  },
 ]
-
-
-export const pieDataExpenses: PieChartTypes[] = [
-    {
-        value: 47,
-        color: "#009FFF",
-        gradientCenterColor: "#006DFF",
-        focused: false,
-        name: 'Fuel'
-    },
-    {
-        value: 40,
-        color: "#93FCF8",
-        gradientCenterColor: "#3BE9DE",
-        focused: false,
-        name: 'Fuel'
-    },
-    {
-        value: 16,
-        color: "#BDB2FA",
-        gradientCenterColor: "#8F80F3",
-        focused: true,
-        name: 'Fuel'
-    },
-    // {
-    //     value: 30,
-    //     color: "#FFA5BA",
-    //     gradientCenterColor: "#FF7F97",
-    //     focused: false,
-    //     name: 'Fuel'
-    // },
-];
-    
+  
