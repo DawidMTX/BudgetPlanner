@@ -48,12 +48,12 @@ export const pieDataExpenses: PieChartTypes[] = [
         focused: true,
         name: 'Fuel'
     },
-    {
-        value: 30,
-        color: "#FFA5BA",
-        gradientCenterColor: "#FF7F97",
-        focused: false,
-        name: 'Fuel'
-    },
+    // {
+    //     value: 30,
+    //     color: "#FFA5BA",
+    //     gradientCenterColor: "#FF7F97",
+    //     focused: false,
+    //     name: 'Fuel'
+    // },
 ];
     

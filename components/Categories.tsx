@@ -22,11 +22,12 @@ export interface HomeScreenProps {
 	category: any;
 }
 
-const Categories = ({ category, selectedDate }: any) => {
+const Categories = ({ category }: any) => {
 	const [icon, setIcon] = useState();
 	const [color, setColor] = useState<string>("");
 	const incomeExpense = useAppSelector(state => state.manageData.isSelected);
 
+	const fil = useAppSelector(state => state.manageData.filteredData);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -35,7 +36,7 @@ const Categories = ({ category, selectedDate }: any) => {
 	}, [category]);
 
 	const rgba = colorConventer(color, 0.15);
-	// console.log("category: ", category);
+	console.log("category: ", fil);
 
 	const sum = category.data.reduce((acc: number, item: any) => {
 		return acc + parseFloat(item.value);
@@ -48,7 +49,7 @@ const Categories = ({ category, selectedDate }: any) => {
 			onPress={() =>
 				router.push({
 					pathname: "../detail",
-					params: { category: category.name, date: selectedDate },
+					params: { category: category.name },
 				})
 			}
 			style={[styles.contener, { borderColor: color, backgroundColor: rgba }]}

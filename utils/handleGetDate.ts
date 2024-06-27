@@ -6,7 +6,6 @@ import {
 	subDays,
 	subMonths,
 } from "date-fns";
-import { useEffect } from "react";
 import { pl, se } from "date-fns/locale";
 
 const getDays = (type: string, currentDay: Date) => {

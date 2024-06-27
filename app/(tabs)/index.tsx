@@ -1,8 +1,9 @@
 import BudgetContener from "@/components/BudgetContener";
 import Chart from "@/components/Chart";
 import SelectData from "@/components/SelectData";
-import { getAllExpensesData } from "@/store/manageData";
+import { getAllData, getFilteredDataByMonth } from "@/store/manageData";
 import { useAppDispatch, useAppSelector } from "@/store/store";
+import { filterByMonth } from "@/utils/filterData";
 import { getMonths } from "@/utils/handleGetDate";
 import getData from "@/utils/storageData";
 import { format } from "date-fns";
@@ -13,8 +14,8 @@ import { StyleSheet, SafeAreaView } from "react-native";
 export default function HomeScreen() {
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const costInformation = useAppSelector(state => state.manageData.isSelected);
+	const allData = useAppSelector(state => state.manageData.allData);
 	const dispatch = useAppDispatch();
-
 
 	const addDay = () => {
 		const date: any = getMonths("add", selectedDate);
@@ -26,15 +27,21 @@ export default function HomeScreen() {
 	};
 
 	useEffect(() => {
+		let filteredDataByMonth: any = [];
 		const showData = async () => {
 			const dataFromStorage = await getData(costInformation);
-			dispatch(getAllExpensesData(dataFromStorage));
+			dispatch(getAllData(dataFromStorage));
+
+			if (dataFromStorage!== null || undefined) {
+				filteredDataByMonth = filterByMonth(dataFromStorage, selectedDate);
+			}
+			dispatch(getFilteredDataByMonth(filteredDataByMonth));
 		};
+
 		showData();
 	}, [costInformation, selectedDate]);
 
-
-	// console.log("d: ", collectionArray);
+	// console.log("d: ", filteredDataByMonth);
 	return (
 		<SafeAreaView style={styles.container}>
 			<SelectData
@@ -54,7 +61,7 @@ export default function HomeScreen() {
 				handleSubDay={subDay}
 			/>
 			<Chart />
-			<BudgetContener currentDate={selectedDate}/>
+			<BudgetContener />
 		</SafeAreaView>
 	);
 }

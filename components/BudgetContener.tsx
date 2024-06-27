@@ -10,60 +10,55 @@ import {
 import React, { useEffect, useState } from "react";
 import Categories from "./Categories";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { useAppSelector } from "@/store/store";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import { format } from "date-fns";
 import filterData, { filterByMonth } from "@/utils/filterData";
+import { getFilteredDataByMonth } from "@/store/manageData";
 
-
-const BudgetContener = ({ currentDate }: any) => {
+const BudgetContener = () => {
 	const [data, setData] = useState<any>(null);
-	const allExpensesData = useAppSelector(state =>state.manageData.allExpensesData );
-	let filteredDataByMonth: any = [];
-
-	
-	// Filter by month date
-	if (allExpensesData !== null || undefined) {
-	 filteredDataByMonth = filterByMonth(allExpensesData, currentDate)
-	}
+	const filteredDataByMonth = useAppSelector(
+		state => state.manageData.filteredData
+	);
 
 	useEffect(() => {
 		const filteredData = filterData(filteredDataByMonth);
-		setData(filteredData)
-	},[allExpensesData])
+		setData(filteredData);
+	}, [filteredDataByMonth]);
 
-// console.log("BudgetContener: ", filteredDataByMonth)
+	// console.log("BudgetContener: ", filteredDataByMonth)
 
-const removeValue = async () => {
-	try {
-	  await AsyncStorage.removeItem('expenses')
-	} catch(e) {
-	  // remove error
-	}
-  
-	console.log('Done.')
-  }
+	const removeValue = async () => {
+		try {
+			await AsyncStorage.removeItem("expenses");
+		} catch (e) {
+			// remove error
+		}
 
-console.log(data)
-  //pobieram zfiltrowane dane dane z sotrage 
+		console.log("Done.");
+	};
+
+	// console.log(data)
+	//pobieram zfiltrowane dane dane z sotrage
 	return (
 		<ScrollView style={[styles.contener, styles.shadowProp]}>
-			<View style={{marginHorizontal: 25, marginVertical: 20}}>
+			<View style={{ marginHorizontal: 25, marginVertical: 20 }}>
 				{!data ? (
-				<View style={styles.noDataStyles}>
-					<Text>Ups! Nic tutaj nie ma!</Text>
-				</View>
-			) : (
-				<View >
-					{data.map((item: any) => (
-						<Categories category={item} selectedDate={currentDate} />
-					))}
-				</View>
-			)}
+					<View style={styles.noDataStyles}>
+						<Text>Ups! Nic tutaj nie ma!</Text>
+					</View>
+				) : (
+					<View>
+						{data.map((item: any) => (
+							<Categories category={item} />
+						))}
+					</View>
+				)}
 
-<TouchableOpacity onPress={removeValue}><Text>Usuń</Text></TouchableOpacity>
+				<TouchableOpacity onPress={removeValue}>
+					<Text>Usuń</Text>
+				</TouchableOpacity>
 			</View>
-			
-			
 		</ScrollView>
 	);
 };

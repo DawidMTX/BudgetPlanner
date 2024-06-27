@@ -1,11 +1,12 @@
 import { TypeOfState } from "@/types";
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { format } from "date-fns";
 import moment from "moment";
-
 
 const initialState: TypeOfState = {
 	isSelected: "expenses",
-	allExpensesData: []
+	allData: [],
+	filteredData: []
 };
 
 const manageData = createSlice({
@@ -15,12 +16,18 @@ const manageData = createSlice({
 		getCostInformation(state, action: PayloadAction<any>) {
 			state.isSelected = action.payload;
 		},
-		getAllExpensesData(state, action:PayloadAction<any>) {
-			state.allExpensesData = action.payload;
+		getAllData(state, action: PayloadAction<any>) {
+			state.allData = action.payload;
+		},
+		getFilteredDataByMonth(state, action: PayloadAction<any>) {
+			state.filteredData = action.payload
 		}
-		
 	},
 });
 
-export const { getCostInformation, getAllExpensesData} = manageData.actions;
+export const {
+	getCostInformation,
+	getAllData,
+	getFilteredDataByMonth,
+} = manageData.actions;
 export default manageData.reducer;

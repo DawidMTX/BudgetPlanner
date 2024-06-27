@@ -15,18 +15,15 @@ import { format } from "date-fns";
 import DetailComponent from "./DetailComponent";
 
 const IncomeExpenseDetail = () => {
-	const allExpensesData = useAppSelector(
-		state => state.manageData.allExpensesData
+	const filteredDataByMonth = useAppSelector(
+		state => state.manageData.filteredData
 	);
 	const params = useLocalSearchParams();
-	let filteredDataByMonth: any = [];
-	const { category, date } = params;
-	const router = useRouter();
+
+	const { category } = params;
+
 	let singleCategoryData: any = [];
 
-	if (allExpensesData !== null || undefined) {
-		filteredDataByMonth = filterByMonth(allExpensesData, date);
-	}
 	if (filteredDataByMonth) {
 		filteredDataByMonth.map((item: any) => {
 			if (item["title"].includes(category)) {
@@ -35,16 +32,11 @@ const IncomeExpenseDetail = () => {
 		});
 	}
 
-	// useEffect(() => {
-	// 	console.log("arr: ", singleCategoryData);
-	// }, [singleCategoryData]);
-
-	//tutaj odbieram name i pobieram dane z storage wrzocam do pliku ktory filtruje i wyswietlam tylko pasujace dane po nazwie
 
 	return (
 		<SafeAreaView>
-			<ScrollView style={{height: '100%'}}>
-        <Text style={styles.titleText}>Kategoria operacji: {category}</Text>
+			<ScrollView style={{ height: "100%" }}>
+				<Text style={styles.titleText}>Kategoria operacji: {category}</Text>
 				<FlatList
 					data={singleCategoryData}
 					renderItem={({ item }) => (
@@ -60,9 +52,9 @@ const IncomeExpenseDetail = () => {
 export default IncomeExpenseDetail;
 
 const styles = StyleSheet.create({
-  titleText:{
-    fontSize: 20,
-   alignSelf: 'center',
-   padding: 8
-  }
+	titleText: {
+		fontSize: 20,
+		alignSelf: "center",
+		padding: 8,
+	},
 });

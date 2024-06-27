@@ -25,11 +25,19 @@ import { getCostInformation } from "@/store/manageData";
 
 const Chart = () => {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
-
+	const filteredDataByMonth = useAppSelector(
+		state => state.manageData.filteredData
+	);
 	const dispatch = useAppDispatch();
+	
 	useEffect(() => {
 		dispatch(getCostInformation(isSelected));
 	}, [isSelected]);
+
+	// // Filter by month date
+	// if (allExpensesData !== null || undefined) {
+	// 	filteredDataByMonth = filterByMonth(allExpensesData, currentDate)
+	//    }
 
 	return (
 		<View style={[styles.chartContener, styles.shadowProp]}>
