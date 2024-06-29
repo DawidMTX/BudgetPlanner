@@ -13,7 +13,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAppSelector } from "@/store/store";
 import filterData from "@/utils/filterData";
 
-
 const BudgetContener = () => {
 	const [data, setData] = useState<any>(null);
 	const filteredDataByMonth = useAppSelector(
@@ -42,25 +41,27 @@ const BudgetContener = () => {
 	// console.log(data)
 	//pobieram zfiltrowane dane dane z sotrage
 	return (
-		<ScrollView style={[styles.contener, styles.shadowProp]}>
-			<View style={{ marginHorizontal: 25, marginVertical: 20 }}>
-				{!data ? (
-					<View style={styles.noDataStyles}>
-						<Text>Ups! Nic tutaj nie ma!</Text>
-					</View>
-				) : (
-					<View>
-						{data.map((item: any) => (
-							<Categories category={item} />
-						))}
-					</View>
-				)}
+		<View style={[styles.contener, styles.shadowProp]}>
+			<ScrollView>
+				<View style={{ marginHorizontal: 25, marginVertical: 20 }}>
+					{!data ? (
+						<View style={styles.noDataStyles}>
+							<Text>Ups! Nic tutaj nie ma!</Text>
+						</View>
+					) : (
+						<View>
+							{data.map((item: any) => (
+								<Categories category={item} />
+							))}
+						</View>
+					)}
 
-				<TouchableOpacity onPress={removeValue}>
-					<Text>Usuń</Text>
-				</TouchableOpacity>
-			</View>
-		</ScrollView>
+					<TouchableOpacity onPress={removeValue}>
+						<Text>Usuń</Text>
+					</TouchableOpacity>
+				</View>
+			</ScrollView>
+		</View>
 	);
 };
 
