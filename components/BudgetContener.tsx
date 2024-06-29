@@ -1,6 +1,7 @@
 import {
 	Button,
 	FlatList,
+	Image,
 	ScrollView,
 	StyleSheet,
 	Text,
@@ -14,7 +15,7 @@ import { useAppSelector } from "@/store/store";
 import filterData from "@/utils/filterData";
 
 const BudgetContener = () => {
-	const [data, setData] = useState<any>(null);
+	const [data, setData] = useState<object[]>([]);
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
 	);
@@ -24,9 +25,8 @@ const BudgetContener = () => {
 		setData(filteredData);
 	}, [filteredDataByMonth]);
 
-	// - problem z useEffect z filteredDataByMonth
 
-	// console.log("BudgetContener: ", filteredDataByMonth)
+	// console.log("BudgetContener: ", data)
 
 	const removeValue = async () => {
 		try {
@@ -38,15 +38,17 @@ const BudgetContener = () => {
 		console.log("Done.");
 	};
 
-	// console.log(data)
-	//pobieram zfiltrowane dane dane z sotrage
+	
 	return (
 		<View style={[styles.contener, styles.shadowProp]}>
 			<ScrollView>
 				<View style={{ marginHorizontal: 25, marginVertical: 20 }}>
-					{!data ? (
+					{data.length == 0 ? (
 						<View style={styles.noDataStyles}>
-							<Text>Ups! Nic tutaj nie ma!</Text>
+							
+							<Image source={require("@/assets/images/box.png")} style={styles.iamgeStyles}/>
+							<Text style={{fontSize: 18}}>Ups! Nic tutaj nie ma!</Text>
+							<Button title="Dodaj nowy"/>
 						</View>
 					) : (
 						<View>
@@ -56,9 +58,9 @@ const BudgetContener = () => {
 						</View>
 					)}
 
-					<TouchableOpacity onPress={removeValue}>
+					{/* <TouchableOpacity onPress={removeValue}>
 						<Text>Usuń</Text>
-					</TouchableOpacity>
+					</TouchableOpacity> */}
 				</View>
 			</ScrollView>
 		</View>
@@ -88,4 +90,9 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 	},
+	iamgeStyles: {
+		width: 120,
+		height: 120,
+		opacity: 0.2
+	}
 });

@@ -2,13 +2,12 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { PieChart } from "react-native-gifted-charts";
 import { incomeColor } from "@/constants/Colors";
-
 import ActiveButton from "./ActiveButton";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { getCostInformation } from "@/store/manageData";
-import { chartFilterData } from "@/utils/filterData";
-import { ar } from "date-fns/locale";
-// import { getChartData } from "@/utils/chartData";
+import { chartFilterData, filterByMonth } from "@/utils/filterData";
+import getData from "@/utils/storageData";
+import sumariseValues from "@/utils/sumariseValue";
 
 const Chart = () => {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
@@ -18,12 +17,13 @@ const Chart = () => {
 			value: 1,
 			color: "#009FFF",
 			focused: false,
-			name: "...",
+			name: " ",
 		},
 	]);
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
 	);
+	const bilans = useAppSelector(state => state.manageData.bilans)
 
 	const dispatch = useAppDispatch();
 
@@ -33,11 +33,22 @@ const Chart = () => {
 
 	useEffect(() => {
 		const chartFilter = chartFilterData(filteredDataByMonth);
-		setData(chartFilter)
+		if (chartFilter.length == 0) {
+			setData([
+				{
+					value: 1,
+					color: "#009FFF",
+					focused: false,
+					name: "...",
+				},
+			]);
+		} else {
+			setData(chartFilter);
+		}
 		setNameOfCategory("");
 	}, [filteredDataByMonth]);
 
-	// console.log("list: ", pieData);
+	// console.log("list: ", data);
 	return (
 		<View style={[styles.chartContener, styles.shadowProp]}>
 			<View style={styles.buttonsContener}>
@@ -86,7 +97,7 @@ const Chart = () => {
 					{ backgroundColor: incomeColor, alignItems: "center" },
 				]}
 			>
-				<Text style={styles.bilansTextColor}>Bilans: 2220</Text>
+				<Text style={styles.bilansTextColor}>Bilans: {bilans.toString()}</Text>
 			</View>
 		</View>
 	);

@@ -1,11 +1,17 @@
 import BudgetContener from "@/components/BudgetContener";
 import Chart from "@/components/Chart";
 import SelectData from "@/components/SelectData";
-import { getAllData, getFilteredDataByMonth } from "@/store/manageData";
+import {
+	getAllExpensesData,
+	getAllIncomesData,
+	getBilans,
+	getFilteredDataByMonth,
+} from "@/store/manageData";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { filterByMonth } from "@/utils/filterData";
 import { getMonths } from "@/utils/handleGetDate";
 import getData from "@/utils/storageData";
+import sumariseValues from "@/utils/sumariseValue";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 
@@ -14,7 +20,6 @@ import { StyleSheet, SafeAreaView } from "react-native";
 export default function HomeScreen() {
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const costInformation = useAppSelector(state => state.manageData.isSelected);
-	const allData = useAppSelector(state => state.manageData.allData);
 	const dispatch = useAppDispatch();
 
 	const addDay = () => {
@@ -29,13 +34,28 @@ export default function HomeScreen() {
 	useEffect(() => {
 		let filteredDataByMonth: any = [];
 		const showData = async () => {
-			const dataFromStorage = await getData(costInformation);
-			dispatch(getAllData(dataFromStorage));
+			const incomesData = await getData("incomes");
+			const expensesData = await getData("expenses");
+			dispatch(getAllExpensesData("expenses"));
+			dispatch(getAllIncomesData("incomes"));
 
-			if (dataFromStorage!== null || undefined) {
-				filteredDataByMonth = filterByMonth(dataFromStorage, selectedDate);
+			switch (costInformation) {
+				case "expenses":
+					filteredDataByMonth = filterByMonth(expensesData, selectedDate);
+					break;
+				case "incomes":
+					filteredDataByMonth = filterByMonth(incomesData, selectedDate);
+					break;
 			}
+			// const bilans = sumariseValues(incomesData, expensesData, selectedDate)
 			dispatch(getFilteredDataByMonth(filteredDataByMonth));
+
+			const bilans = await sumariseValues(
+				incomesData,
+				expensesData,
+				selectedDate
+			);
+			dispatch(getBilans(bilans));
 		};
 
 		showData();
