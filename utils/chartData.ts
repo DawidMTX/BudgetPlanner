@@ -1,10 +1,13 @@
-import { useAppSelector } from "@/store/store";
+// import { useAppSelector } from "@/store/store";
+// import { chartFilterData } from "./filterData";
 
-export const getChartData = () => {
-    const summariseAll = 0
+// export  const getChartData = (filteredDataByMonth: any) => {
+//     let summariseAll = 0
+//     const chartFilter = chartFilterData(filteredDataByMonth);
+
+//     chartFilter.
+
     
-
-    
-
-}
+//     return
+// }
 

@@ -7,6 +7,8 @@ import ActiveButton from "./ActiveButton";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { getCostInformation } from "@/store/manageData";
 import { chartFilterData } from "@/utils/filterData";
+import { ar } from "date-fns/locale";
+// import { getChartData } from "@/utils/chartData";
 
 const Chart = () => {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
@@ -30,8 +32,12 @@ const Chart = () => {
 	}, [isSelected]);
 
 	useEffect(() => {
+		//const chartFilter = getChartData(filteredDataByMonth)
 		const chartFilter = chartFilterData(filteredDataByMonth);
-		setData(chartFilter);
+
+	
+
+		console.log("chart: ", chartFilter);
 		setNameOfCategory("");
 	}, [filteredDataByMonth]);
 
@@ -56,7 +62,7 @@ const Chart = () => {
 				<PieChart
 					data={data}
 					donut
-					showGradient 
+					showGradient
 					focusOnPress
 					radius={90}
 					innerRadius={60}
