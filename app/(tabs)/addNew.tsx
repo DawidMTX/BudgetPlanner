@@ -6,6 +6,8 @@ import {
 	SafeAreaView,
 	Text,
 	TouchableHighlight,
+	TouchableWithoutFeedback,
+	Keyboard,
 } from "react-native";
 
 import ActiveButton from "@/components/ActiveButton";
@@ -108,7 +110,7 @@ export default function addNew() {
 		<SafeAreaView style={styles.contener}>
 			{showErrorModal && <PopUpModal isVisible={showErrorModal} />}
 			<Text style={styles.header}>Dodaj nowe</Text>
-
+			<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
 			<View style={styles.inputContener}>
 				<View style={styles.buttonsContener}>
 					<ActiveButton
@@ -181,6 +183,7 @@ export default function addNew() {
 					/>
 				</View>
 			</View>
+			</TouchableWithoutFeedback>
 			<View style={styles.buttonContener}>
 				<TouchableHighlight
 					onPress={addItems}

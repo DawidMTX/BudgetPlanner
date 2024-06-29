@@ -32,12 +32,8 @@ const Chart = () => {
 	}, [isSelected]);
 
 	useEffect(() => {
-		//const chartFilter = getChartData(filteredDataByMonth)
 		const chartFilter = chartFilterData(filteredDataByMonth);
-
-	
-
-		console.log("chart: ", chartFilter);
+		setData(chartFilter)
 		setNameOfCategory("");
 	}, [filteredDataByMonth]);
 

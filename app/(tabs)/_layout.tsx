@@ -6,8 +6,6 @@ import { Colors } from "@/constants/Colors";
 import { Button, Pressable, Text } from "react-native";
 
 export default function TabLayout() {
-
-	
 	return (
 		<Tabs
 			screenOptions={{
@@ -25,7 +23,6 @@ export default function TabLayout() {
 						/>
 					),
 				}}
-		
 			/>
 			<Tabs.Screen
 				name="addNew"
@@ -38,7 +35,7 @@ export default function TabLayout() {
 						/>
 					),
 				}}
-			/>{" "}
+			/>
 			<Tabs.Screen
 				name="settings"
 				options={{
