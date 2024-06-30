@@ -33,7 +33,7 @@ export default function addNew() {
 	const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
 	let arr: any = [];
 
-	const router =useRouter();
+	const router = useRouter();
 
 	const addDay = () => {
 		const date: any = getDays("add", selectedDate);
@@ -46,7 +46,7 @@ export default function addNew() {
 
 	const handleChangeAmount = (text: any) => {
 		const numericValue = text
-			.replace(/[^.\d]/g, "")
+			.replace(/[^,.\d]/g, "")
 			.replace(/^(\d*\.?)|(\d*)\.?/g, "$1$2");
 
 		setAmount(numericValue);
@@ -91,7 +91,7 @@ export default function addNew() {
 				setShowErrorModal(false);
 				setShowSuccessModal(true);
 				clearItems();
-				router.back()
+			
 			} else {
 				setShowErrorModal(true);
 				setShowSuccessModal(false);
@@ -110,83 +110,94 @@ export default function addNew() {
 		setSelectedDate(new Date());
 	};
 
+	const closeModal = () => {
+		setShowErrorModal(false);
+		setShowSuccessModal(false)
+	}
+
 	return (
 		<SafeAreaView style={styles.contener}>
-			{showErrorModal && <PopUpModal isVisible={showErrorModal} />}
+			{showErrorModal && <PopUpModal isVisible={showErrorModal} changeShowVisible ={closeModal} kindOfOperation='error'/>}
+			{showSuccessModal && <PopUpModal isVisible={showSuccessModal} changeShowVisible ={closeModal} kindOfOperation='success'/>}
 			<Text style={styles.header}>Dodaj nowe</Text>
-			<TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-			<View style={styles.inputContener}>
-				<View style={styles.buttonsContener}>
-					<ActiveButton
-						title="Dochody"
-						active={"incomes"}
-						onPress={() => setIsSelected("incomes")}
-						isSelected={isSelected}
-						style={{ borderRadius: 10 }}
-						activeStyle={{ backgroundColor: "#8EDF85" }}
-					/>
+			<TouchableWithoutFeedback
+				onPress={Keyboard.dismiss}
+				accessible={false}
+			>
+				<View style={styles.inputContener}>
+					<View style={styles.buttonsContener}>
+						<ActiveButton
+							title="Dochody"
+							active={"incomes"}
+							onPress={() => setIsSelected("incomes")}
+							isSelected={isSelected}
+							style={{ borderRadius: 10 }}
+							activeStyle={{ backgroundColor: "#8EDF85" }}
+						/>
 
-					<ActiveButton
-						title="Wydatki"
-						active={"expenses"}
-						onPress={() => setIsSelected("expenses")}
-						isSelected={isSelected}
-						style={{ borderRadius: 10 }}
-						activeStyle={{ backgroundColor: "#DF8592" }}
-					/>
-				</View>
+						<ActiveButton
+							title="Wydatki"
+							active={"expenses"}
+							onPress={() => setIsSelected("expenses")}
+							isSelected={isSelected}
+							style={{ borderRadius: 10 }}
+							activeStyle={{ backgroundColor: "#DF8592" }}
+						/>
+					</View>
 
-				<Input
-					placeholder="Nazwa"
-					value={text}
-					name="Nazwa"
-					style={
-						text.length > 2 || text.length == 0 ? null : { borderColor: "red" }
-					}
-					onChangeText={(text: string) => setText(text)}
-					keyboardType=""
-				/>
-
-				<View>
-					<Text>Rodzaj: </Text>
-					<Dropdown
-						title={"Wybierz kategorie"}
-						showChevronIcon={true}
-						entryData={
-							isSelected === "incomes" ? typesOfIncome : typesOfExpense
+					<Input
+						placeholder="Nazwa"
+						value={text}
+						name="Nazwa"
+						style={
+							text.length > 2 || text.length == 0
+								? null
+								: { borderColor: "red" }
 						}
-						onSelect={(selectedCateogry: any, index: number) => {
-							setSelectedCategory(selectedCateogry);
-						}}
+						onChangeText={(text: string) => setText(text)}
+						keyboardType=""
 					/>
-				</View>
 
-				<Input
-					placeholder="0.0"
-					value={amount}
-					name="Kwota:"
-					style=""
-					onChangeText={(text: any) => handleChangeAmount(text)}
-					keyboardType="numeric"
-				/>
+					<View>
+						<Text>Rodzaj: </Text>
+						<Dropdown
+							title={"Wybierz kategorie"}
+							showChevronIcon={true}
+							entryData={
+								isSelected === "incomes" ? typesOfIncome : typesOfExpense
+							}
+							onSelect={(selectedCateogry: any, index: number) => {
+								setSelectedCategory(selectedCateogry);
+							}}
+						/>
+					</View>
 
-				<View>
-					<Text>Data: </Text>
-					<SelectData
-						style={{
-							width: 300,
-							height: 45,
-							margin: 12,
-							borderWidth: 0.2,
-							overflow: "hidden",
-						}}
-						dateFormat="dd MMMM yyyy"
-						defaultValue={selectedDate}
-						handleAddDay={addDay}
-						handleSubDay={subDay}
+					<Input
+						placeholder="0.0"
+						value={amount}
+						name="Kwota:"
+						style=""
+						onChangeText={(text: any) => handleChangeAmount(text)}
+						keyboardType="numeric"
 					/>
+
+					<View>
+						<Text>Data: </Text>
+						<SelectData
+							style={{
+								width: 300,
+								height: 45,
+								margin: 12,
+								borderWidth: 0.2,
+								overflow: "hidden",
+							}}
+							dateFormat="dd MMMM yyyy"
+							defaultValue={selectedDate}
+							handleAddDay={addDay}
+							handleSubDay={subDay}
+						/>
+					</View>
 				</View>
-			</View>
 			</TouchableWithoutFeedback>
 			<View style={styles.buttonContener}>
 				<TouchableHighlight

@@ -20,7 +20,7 @@ const detailLayout = () => {
 			/>
 		</Stack>
 	);
-	y;
+	
 };
 
 export default detailLayout;

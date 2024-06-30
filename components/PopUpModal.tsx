@@ -1,24 +1,56 @@
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
+import { opacity } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
+import { AntIcon } from "./navigation/TabBarIcon";
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
-const PopUpModal = ({isVisible}: any) => {
-  const [showHideModal, setShowHideModal] = useState(isVisible)
+const PopUpModal = ({ isVisible, changeShowVisible, kindOfOperation }: any) => {
+	const [showHideModal, setShowHideModal] = useState(isVisible);
+	const route = useRouter()
+
+	if(kindOfOperation == 'success'){
+		setTimeout(() => {
+			changeShowVisible(); 
+			route.back();
+		}, 2000);
+	}
+
 	return (
 		<View>
 			<Modal
 				visible={showHideModal}
-				animationType='slide'
+				animationType="fade"
+				transparent={true}
 			>
 				<View style={styles.centeredView}>
-					<View style={styles.modalView}>
-						<Text style={styles.modalText}>Hello World!</Text>
-						<Pressable
-							style={[styles.button, styles.buttonClose]}
-							onPress={() => setShowHideModal(!showHideModal)}
-						>
-							<Text style={styles.textStyle}>Ok</Text>
-						</Pressable>
-					</View>
+					{kindOfOperation == "error" ? (
+						<View style={styles.modalView}>
+							<AntIcon
+								name={"warning"}
+								style={{ color: "red" }}
+								size={55}
+							/>
+							<Text style={styles.modalText}>
+								Prosze uzupelnij wszystkie pola :D
+							</Text>
+							<Pressable
+								style={[styles.button, styles.buttonClose]}
+								onPress={changeShowVisible}
+							>
+								<Text style={styles.textStyle}>Ok</Text>
+							</Pressable>
+						</View>
+					) : (
+						<View style={[styles.modalView, {justifyContent:"space-around"}]}>
+							<Ionicons
+								name={"checkmark-done-sharp"}
+								style={{ color: "green" }}
+								size={55}
+							/>
+							<Text style={styles.modalText}>Element dodany :D</Text>
+						</View>
+					)}
 				</View>
 			</Modal>
 		</View>
@@ -32,7 +64,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: "center",
 		alignItems: "center",
-		marginTop: 22,
+		backgroundColor: "rgba(0, 0, 0, 0.6)",
 	},
 	modalView: {
 		margin: 20,
@@ -48,10 +80,14 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.25,
 		shadowRadius: 4,
 		elevation: 5,
+		width: 330,
+		height: 270,
+		justifyContent: "space-between",
 	},
 	button: {
-		borderRadius: 20,
-		padding: 10,
+		borderRadius: 10,
+		paddingVertical: 15,
+		paddingHorizontal: 45,
 		elevation: 2,
 	},
 	buttonClose: {
@@ -65,5 +101,6 @@ const styles = StyleSheet.create({
 	modalText: {
 		marginBottom: 15,
 		textAlign: "center",
+		fontSize: 16,
 	},
 });
