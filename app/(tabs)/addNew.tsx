@@ -21,6 +21,7 @@ import { AllDataTypes, CategoryTypes } from "@/types";
 import PopUpModal from "@/components/PopUpModal";
 import getData from "@/utils/storageData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { router, useRouter } from "expo-router";
 
 export default function addNew() {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
@@ -31,6 +32,8 @@ export default function addNew() {
 	const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
 	const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
 	let arr: any = [];
+
+	const router =useRouter();
 
 	const addDay = () => {
 		const date: any = getDays("add", selectedDate);
@@ -88,6 +91,7 @@ export default function addNew() {
 				setShowErrorModal(false);
 				setShowSuccessModal(true);
 				clearItems();
+				router.back()
 			} else {
 				setShowErrorModal(true);
 				setShowSuccessModal(false);
