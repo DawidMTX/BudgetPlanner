@@ -3,17 +3,21 @@ import React, { useState } from "react";
 import { opacity } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
 import { AntIcon } from "./navigation/TabBarIcon";
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
+import { router, useNavigation, useRouter } from "expo-router";
+import { NativeStackNavigationProp } from "react-native-screens/lib/typescript/native-stack/types";
+import { StackNavigationState } from "@react-navigation/native";
 
 const PopUpModal = ({ isVisible, changeShowVisible, kindOfOperation }: any) => {
 	const [showHideModal, setShowHideModal] = useState(isVisible);
-	const route = useRouter()
+	const route = useRouter();
+	const navigation = useNavigation();
 
-	if(kindOfOperation == 'success'){
+	if (kindOfOperation == "success") {
 		setTimeout(() => {
-			changeShowVisible(); 
-			route.back();
-		}, 2000);
+			changeShowVisible();
+
+			router.push("/(tabs)");
+		}, 1500);
 	}
 
 	return (
@@ -42,7 +46,9 @@ const PopUpModal = ({ isVisible, changeShowVisible, kindOfOperation }: any) => {
 							</Pressable>
 						</View>
 					) : (
-						<View style={[styles.modalView, {justifyContent:"space-around"}]}>
+						<View
+							style={[styles.modalView, { justifyContent: "space-around" }]}
+						>
 							<Ionicons
 								name={"checkmark-done-sharp"}
 								style={{ color: "green" }}

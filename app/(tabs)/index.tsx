@@ -12,6 +12,7 @@ import { filterByMonth } from "@/utils/filterData";
 import { getMonths } from "@/utils/handleGetDate";
 import getData from "@/utils/storageData";
 import sumariseValues from "@/utils/sumariseValue";
+import { useIsFocused } from "@react-navigation/native";
 import { format } from "date-fns";
 import { useEffect, useState } from "react";
 
@@ -21,6 +22,7 @@ export default function HomeScreen() {
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const costInformation = useAppSelector(state => state.manageData.isSelected);
 	const dispatch = useAppDispatch();
+	const isFocus = useIsFocused();
 
 	const addDay = () => {
 		const date: any = getMonths("add", selectedDate);
@@ -59,7 +61,7 @@ export default function HomeScreen() {
 		};
 
 		showData();
-	}, [costInformation, selectedDate]);
+	}, [costInformation, selectedDate, isFocus]);
 
 	// console.log("d: ", filteredDataByMonth);
 	return (

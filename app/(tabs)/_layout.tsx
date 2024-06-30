@@ -1,9 +1,7 @@
-import { Tabs, useRouter } from "expo-router";
+import { Tabs } from "expo-router";
 import React from "react";
 
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
-import { Colors } from "@/constants/Colors";
-import { Button, Pressable, Text } from "react-native";
 
 export default function TabLayout() {
 	return (
