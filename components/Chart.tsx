@@ -6,6 +6,8 @@ import ActiveButton from "./ActiveButton";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { getCostInformation } from "@/store/manageData";
 import { chartFilterData, filterByMonth } from "@/utils/filterData";
+import { calculatingProcentage } from "@/utils/sumariseValue";
+import CostsView from "./CostsView";
 
 const Chart = () => {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
@@ -19,14 +21,12 @@ const Chart = () => {
 			name: " ",
 		},
 	]);
-
-	
+	const dispatch = useAppDispatch();
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
 	);
 	const bilans = useAppSelector(state => state.manageData.bilans);
 	const bilansBacgroundColor = bilans > 0 ? incomeColor : expenseColor;
-	const dispatch = useAppDispatch();
 
 	let sum = filteredDataByMonth.reduce((acc: any, obj: any) => {
 		return acc + parseFloat(obj.value);
@@ -47,14 +47,16 @@ const Chart = () => {
 					name: "...",
 				},
 			]);
+			setNameOfCategory("");
+			setPercent(0);
 		} else {
+			setNameOfCategory(chartFilter[0].name);
+			setPercent(calculatingProcentage(chartFilter[0].value, sum));
+			chartFilter[0].focused = true;
 			setData(chartFilter);
 		}
-		setNameOfCategory("");
-		setPercent(0)
 	}, [filteredDataByMonth]);
 
-	// console.log("list: ", data);
 	return (
 		<View style={[styles.chartContener, styles.shadowProp]}>
 			<View style={styles.buttonsContener}>
@@ -81,8 +83,7 @@ const Chart = () => {
 					innerRadius={60}
 					onPress={(item: any, index: any) => {
 						setNameOfCategory(item.name);
-						const per = (item.value) / sum * 100
-						setPercent(per.toFixed(1));
+						setPercent(calculatingProcentage(item.value, sum));
 					}}
 					innerCircleColor={"#232B5D"}
 					centerLabelComponent={() => {
@@ -101,15 +102,8 @@ const Chart = () => {
 					}}
 				/>
 			</View>
-			<View
-				style={[
-					styles.incomeExpenses,
-					{ backgroundColor: bilansBacgroundColor, alignItems: "center" },
-				]}
-			>
 			
-				<Text style={styles.bilansText}>Bilans: {bilans.toString()}</Text>
-			</View>
+			<CostsView bacgroundColor={bilansBacgroundColor} bilans={bilans} name='Bilans' textColor="white"  />
 		</View>
 	);
 };
@@ -130,14 +124,6 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		backgroundColor: "#F1F1F1",
 		borderRadius: 5,
-	},
-
-	bilansText: { color: "white", fontSize: 18 },
-
-	incomeExpenses: {
-		color: "white",
-		padding: 7,
-		borderRadius: 4,
 	},
 	chart: {
 		alignItems: "center",

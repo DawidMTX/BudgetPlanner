@@ -4,8 +4,8 @@ import SelectData from "@/components/SelectData";
 import {
 	getAllExpensesData,
 	getAllIncomesData,
-	getBilans,
 	getFilteredDataByMonth,
+	getSumariseValue,
 } from "@/store/manageData";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { filterByMonth } from "@/utils/filterData";
@@ -52,12 +52,13 @@ export default function HomeScreen() {
 			// const bilans = sumariseValues(incomesData, expensesData, selectedDate)
 			dispatch(getFilteredDataByMonth(filteredDataByMonth));
 
-			const bilans = await sumariseValues(
+			const {incomes, expense} = await sumariseValues(
 				incomesData,
 				expensesData,
 				selectedDate
 			);
-			dispatch(getBilans(bilans));
+			
+			dispatch(getSumariseValue({incomes, expense}));
 		};
 
 		showData();

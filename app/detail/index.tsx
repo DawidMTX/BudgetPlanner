@@ -6,6 +6,7 @@ import {
 	ScrollView,
 	StyleSheet,
 	Text,
+	TouchableHighlight,
 	View,
 } from "react-native";
 import React, { useEffect } from "react";
@@ -14,6 +15,7 @@ import { useAppSelector } from "@/store/store";
 import { filterByMonth } from "@/utils/filterData";
 import { format } from "date-fns";
 import DetailComponent from "./DetailComponent";
+import { AntIcon } from "@/components/navigation/TabBarIcon";
 
 const IncomeExpenseDetail = () => {
 	const filteredDataByMonth = useAppSelector(
@@ -33,26 +35,47 @@ const IncomeExpenseDetail = () => {
 		});
 	}
 
+	const addItems = () => {
+		// pomysl o stworzeniu komponentu  wspolnego dla tego elementu i dla addNew
+	};
+
 	return (
 		<SafeAreaView>
-			<View style={{ height: "100%" }}>
-				<View style={styles.imageContener}>
-					<Image
-						source={require("@/assets/images/list.png")}
-						style={styles.imageStyles}
-					/>
+			
+				<View>
+					<View style={styles.imageContener}>
+						<Image
+							source={require("@/assets/images/list.png")}
+							style={styles.imageStyles}
+						/>
+					</View>
+
+					<View style={{ position: "absolute", width: "100%" }}>
+						<Text style={styles.titleText}>Kategoria operacji: {category}</Text>
+
+						<FlatList
+							data={singleCategoryData}
+							renderItem={({ item }) => (
+								<DetailComponent singleCategoryData={item} />
+							)}
+							keyExtractor={item => item.id}
+						/>
+					</View>
+					<View>
+						<TouchableHighlight
+							onPress={addItems}
+							underlayColor={"transparent"}
+						>
+							<View style={[styles.button, { backgroundColor: "#89BB7B" }]}>
+								<AntIcon
+									name="plus"
+									style={styles.iconStyle}
+								/>
+							</View>
+						</TouchableHighlight>
+					</View>
 				</View>
-				<View style={{ position: "absolute", width: "100%" }}>
-					<Text style={styles.titleText}>Kategoria operacji: {category}</Text>
-					<FlatList
-						data={singleCategoryData}
-						renderItem={({ item }) => (
-							<DetailComponent singleCategoryData={item} />
-						)}
-						keyExtractor={item => item.id}
-					/>
-				</View>
-			</View>
+			
 		</SafeAreaView>
 	);
 };
@@ -73,6 +96,16 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		alignSelf: "center",
 		opacity: 0.1,
-		
+	},
+	button: {
+		width: 70,
+		height: 70,
+		borderRadius: 100,
+		color: "white",
+	},
+	iconStyle: {
+		fontSize: 40,
+		padding: 15,
+		color: "white",
 	},
 });

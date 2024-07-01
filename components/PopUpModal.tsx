@@ -9,8 +9,8 @@ import { StackNavigationState } from "@react-navigation/native";
 
 const PopUpModal = ({ isVisible, changeShowVisible, kindOfOperation }: any) => {
 	const [showHideModal, setShowHideModal] = useState(isVisible);
-	const route = useRouter();
-	const navigation = useNavigation();
+	
+	
 
 	if (kindOfOperation == "success") {
 		setTimeout(() => {
@@ -35,7 +35,7 @@ const PopUpModal = ({ isVisible, changeShowVisible, kindOfOperation }: any) => {
 								size={55}
 							/>
 							<Text style={styles.modalText}>
-								Prosze uzupelnij wszystkie pola :D
+								Prosze, uzupelnij wszystkie pola. 
 							</Text>
 							<Pressable
 								style={[styles.button, styles.buttonClose]}

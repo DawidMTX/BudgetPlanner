@@ -1,5 +1,5 @@
 import { AntIcon, MaterialIcon } from "@/components/navigation/TabBarIcon";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
 	StyleSheet,
 	View,
@@ -21,7 +21,7 @@ import { AllDataTypes, CategoryTypes } from "@/types";
 import PopUpModal from "@/components/PopUpModal";
 import getData from "@/utils/storageData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router, useRouter } from "expo-router";
+import { router, useLocalSearchParams, useRouter } from "expo-router";
 
 export default function addNew() {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
@@ -31,9 +31,18 @@ export default function addNew() {
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
 	const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
+	const params = useLocalSearchParams();
+
+	const { selected }: any = params;
+
+	/// poprawic nazwe i przejzec componenet
 	let arr: any = [];
 
 	const router = useRouter();
+
+	useEffect(() => {
+		setIsSelected(selected)
+	},[selected])
 
 	const addDay = () => {
 		const date: any = getDays("add", selectedDate);
@@ -44,6 +53,7 @@ export default function addNew() {
 		setSelectedDate(date);
 	};
 
+	//dodac do utilis
 	const handleChangeAmount = (text: any) => {
 		const numericValue = text
 			.replace(/[^,.\d]/g, "")
@@ -52,6 +62,8 @@ export default function addNew() {
 		setAmount(numericValue);
 	};
 
+
+	// dodac do utilis 
 	const changeNumberValue = () => {
 		let cost;
 
@@ -63,6 +75,7 @@ export default function addNew() {
 		return cost;
 	};
 
+	//dodac to utilitis ?
 	const addItems = async () => {
 		const numberValue = await changeNumberValue();
 

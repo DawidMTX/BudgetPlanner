@@ -15,7 +15,7 @@ const detailLayout = () => {
 							<TabBarIcon name={"chevron-back"} />
 						</TouchableOpacity>
 					),
-					title: "Szczegóły:",
+					title: "",
 				}}
 			/>
 		</Stack>

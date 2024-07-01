@@ -75,6 +75,7 @@ export const chartFilterData = (filteredDataByMonth: any) => {
 
 		finalFilterData.push(pieData[i][0]);
 	}
+	// finalFilterData[0].focused = true;
 	return finalFilterData;
 };
 

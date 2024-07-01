@@ -37,7 +37,9 @@ export interface TypeOfState {
 	allIncomesData: any;
 	allExpensesData: any;
 	filteredData: any, 
-	bilans: number
+	bilans: number,
+	expense: number, 
+	incomes: number,
 }
 
 export interface DropdownProps {

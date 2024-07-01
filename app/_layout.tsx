@@ -30,7 +30,7 @@ export default function RootLayout() {
 			<Stack>
 				<Stack.Screen
 					name="(tabs)"
-					options={{ headerShown: false }}
+					options={{ headerShown: false}}
 				/>
 				<Stack.Screen
 					name="detail"

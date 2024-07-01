@@ -1,20 +1,9 @@
-import {
-	Button,
-	Image,
-	Pressable,
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	View,
-} from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import colorConventer from "@/utils/colorConventer";
-import { Link, Redirect, useNavigation, useRouter } from "expo-router";
-import {
-	NativeStackNavigationProp,
-	NativeStackScreenProps,
-} from "react-native-screens/lib/typescript/native-stack/types";
-import { greenValuColor, incomeColor, redValueColor } from "@/constants/Colors";
+import { useRouter } from "expo-router";
+import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
+import { incomeColor, redValueColor } from "@/constants/Colors";
 import { useAppSelector } from "@/store/store";
 
 export interface HomeScreenProps {
@@ -27,7 +16,6 @@ const Categories = ({ category }: any) => {
 	const [color, setColor] = useState<string>("");
 	const incomeExpense = useAppSelector(state => state.manageData.isSelected);
 
-	const fil = useAppSelector(state => state.manageData.filteredData);
 	const router = useRouter();
 
 	useEffect(() => {
@@ -36,12 +24,10 @@ const Categories = ({ category }: any) => {
 	}, [category]);
 
 	const rgba = colorConventer(color, 0.15);
-	// console.log("category: ", fil);
 
 	const sum = category.data.reduce((acc: number, item: any) => {
 		return acc + parseFloat(item.value);
 	}, 0);
-
 
 	return (
 		<TouchableOpacity
@@ -58,7 +44,7 @@ const Categories = ({ category }: any) => {
 			</View>
 			<View>
 				<Text style={{ fontSize: 20 }}>{category.name}</Text>
-				<Text>Tranzakcje: {category.data.length}</Text>
+				<Text>Transakcje: {category.data.length}</Text>
 			</View>
 			<View>
 				{incomeExpense == "expenses" ? (

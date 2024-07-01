@@ -8,7 +8,9 @@ const initialState: TypeOfState = {
 	allIncomesData: [],
 	allExpensesData: [],
 	filteredData: [],
-	bilans: 0
+	bilans: 0,
+	expense: 0, 
+	incomes: 0,
 };
 
 const manageData = createSlice({
@@ -27,9 +29,11 @@ const manageData = createSlice({
 		getFilteredDataByMonth(state, action: PayloadAction<any>) {
 			state.filteredData = action.payload
 		},
-		getBilans(state, action: PayloadAction<any>) {
-			state.bilans = action.payload
-		}
+		getSumariseValue(state, action: PayloadAction<any>) {
+			state.incomes = action.payload.incomes;
+			state.expense = action.payload.expense;
+			state.bilans = action.payload.incomes - action.payload.expense;
+		},
 	},
 });
 
@@ -38,6 +42,6 @@ export const {
 	getAllExpensesData,
 	getAllIncomesData,
 	getFilteredDataByMonth,
-	getBilans
+	getSumariseValue
 } = manageData.actions;
 export default manageData.reducer;
