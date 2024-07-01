@@ -1,17 +1,16 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { PieChart } from "react-native-gifted-charts";
-import { incomeColor } from "@/constants/Colors";
+import { expenseColor, incomeColor } from "@/constants/Colors";
 import ActiveButton from "./ActiveButton";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { getCostInformation } from "@/store/manageData";
 import { chartFilterData, filterByMonth } from "@/utils/filterData";
-import getData from "@/utils/storageData";
-import sumariseValues from "@/utils/sumariseValue";
 
 const Chart = () => {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
-	const [nameOfCategory, setNameOfCategory] = useState("");
+	const [nameOfCategory, setNameOfCategory] = useState<string>("");
+	const [percent, setPercent] = useState<number | string>(0);
 	const [data, setData] = useState([
 		{
 			value: 1,
@@ -20,12 +19,18 @@ const Chart = () => {
 			name: " ",
 		},
 	]);
+
+	
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
 	);
-	const bilans = useAppSelector(state => state.manageData.bilans)
-
+	const bilans = useAppSelector(state => state.manageData.bilans);
+	const bilansBacgroundColor = bilans > 0 ? incomeColor : expenseColor;
 	const dispatch = useAppDispatch();
+
+	let sum = filteredDataByMonth.reduce((acc: any, obj: any) => {
+		return acc + parseFloat(obj.value);
+	}, 0);
 
 	useEffect(() => {
 		dispatch(getCostInformation(isSelected));
@@ -46,6 +51,7 @@ const Chart = () => {
 			setData(chartFilter);
 		}
 		setNameOfCategory("");
+		setPercent(0)
 	}, [filteredDataByMonth]);
 
 	// console.log("list: ", data);
@@ -73,7 +79,11 @@ const Chart = () => {
 					focusOnPress
 					radius={90}
 					innerRadius={60}
-					onPress={(item: any, index: any) => setNameOfCategory(item.name)}
+					onPress={(item: any, index: any) => {
+						setNameOfCategory(item.name);
+						const per = (item.value) / sum * 100
+						setPercent(per.toFixed(1));
+					}}
 					innerCircleColor={"#232B5D"}
 					centerLabelComponent={() => {
 						return (
@@ -81,7 +91,7 @@ const Chart = () => {
 								<Text
 									style={{ fontSize: 22, color: "white", fontWeight: "bold" }}
 								>
-									47%
+									{percent.toString()} %
 								</Text>
 								<Text style={{ fontSize: 14, color: "white" }}>
 									{nameOfCategory}
@@ -94,10 +104,11 @@ const Chart = () => {
 			<View
 				style={[
 					styles.incomeExpenses,
-					{ backgroundColor: incomeColor, alignItems: "center" },
+					{ backgroundColor: bilansBacgroundColor, alignItems: "center" },
 				]}
 			>
-				<Text style={styles.bilansTextColor}>Bilans: {bilans.toString()}</Text>
+			
+				<Text style={styles.bilansText}>Bilans: {bilans.toString()}</Text>
 			</View>
 		</View>
 	);
@@ -121,7 +132,7 @@ const styles = StyleSheet.create({
 		borderRadius: 5,
 	},
 
-	bilansTextColor: { color: "white" },
+	bilansText: { color: "white", fontSize: 18 },
 
 	incomeExpenses: {
 		color: "white",

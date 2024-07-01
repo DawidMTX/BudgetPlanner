@@ -15,7 +15,6 @@ const PopUpModal = ({ isVisible, changeShowVisible, kindOfOperation }: any) => {
 	if (kindOfOperation == "success") {
 		setTimeout(() => {
 			changeShowVisible();
-
 			router.push("/(tabs)");
 		}, 1500);
 	}

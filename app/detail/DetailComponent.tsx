@@ -11,7 +11,7 @@ const DetailComponent = ({ singleCategoryData }: any) => {
 			<View>
 				<Text style={styles.nameText}>{singleCategoryData.name}</Text>
 				<Text style={styles.dateText}>
-					{format(singleCategoryData.date, "dd.mm.yyyy")}
+					{format(singleCategoryData.date, "dd.MM.yyyy")}
 				</Text>
 			</View>
 			<View>

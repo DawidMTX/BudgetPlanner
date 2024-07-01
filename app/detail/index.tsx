@@ -1,6 +1,7 @@
 import {
 	Button,
 	FlatList,
+	Image,
 	SafeAreaView,
 	ScrollView,
 	StyleSheet,
@@ -32,18 +33,25 @@ const IncomeExpenseDetail = () => {
 		});
 	}
 
-
 	return (
 		<SafeAreaView>
 			<View style={{ height: "100%" }}>
-				<Text style={styles.titleText}>Kategoria operacji: {category}</Text>
-				<FlatList
-					data={singleCategoryData}
-					renderItem={({ item }) => (
-						<DetailComponent singleCategoryData={item} />
-					)}
-					keyExtractor={item => item.id}
-				/>
+				<View style={styles.imageContener}>
+					<Image
+						source={require("@/assets/images/list.png")}
+						style={styles.imageStyles}
+					/>
+				</View>
+				<View style={{ position: "absolute", width: "100%" }}>
+					<Text style={styles.titleText}>Kategoria operacji: {category}</Text>
+					<FlatList
+						data={singleCategoryData}
+						renderItem={({ item }) => (
+							<DetailComponent singleCategoryData={item} />
+						)}
+						keyExtractor={item => item.id}
+					/>
+				</View>
 			</View>
 		</SafeAreaView>
 	);
@@ -56,5 +64,15 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		alignSelf: "center",
 		padding: 8,
+	},
+	imageContener: {
+		width: "100%",
+		height: "100%",
+	},
+	imageStyles: {
+		alignItems: "center",
+		alignSelf: "center",
+		opacity: 0.1,
+		
 	},
 });
