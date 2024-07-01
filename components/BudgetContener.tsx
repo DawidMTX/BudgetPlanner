@@ -15,7 +15,7 @@ import CostsView from "./CostsView";
 import { expenseColor, incomeColor } from "@/constants/Colors";
 import { Link } from "expo-router";
 
-const BudgetContener = () => {
+const BudgetContener = ({selectedDate}: any) => {
 	const [data, setData] = useState<object[]>([]);
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
@@ -32,7 +32,7 @@ const BudgetContener = () => {
 	const textColor = selected == "incomes" ? incomeColor : expenseColor;
 	const sum = selected == "incomes" ? incomes : expenses;
 
-	// console.log("BudgetContener: ", data)
+	// console.log("BudgetContener: ", selectedDate)
 
 	const removeValue = async () => {
 		try {
@@ -58,7 +58,7 @@ const BudgetContener = () => {
 							<Link
 								href={{
 									pathname: "/(tabs)/addNew",
-									params: { selected: selected },
+									params: { selected: selected, date: selectedDate },
 								}}
 								asChild
 							>

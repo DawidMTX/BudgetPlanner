@@ -13,7 +13,6 @@ import { getMonths } from "@/utils/handleGetDate";
 import getData from "@/utils/storageData";
 import sumariseValues from "@/utils/sumariseValue";
 import { useIsFocused } from "@react-navigation/native";
-import { format } from "date-fns";
 import { useEffect, useState } from "react";
 
 import { StyleSheet, SafeAreaView } from "react-native";
@@ -64,7 +63,7 @@ export default function HomeScreen() {
 		showData();
 	}, [costInformation, selectedDate, isFocus]);
 
-	// console.log("d: ", filteredDataByMonth);
+	// console.log("d: ", selectedDate);
 	return (
 		<SafeAreaView style={styles.container}>
 			<SelectData
@@ -84,7 +83,7 @@ export default function HomeScreen() {
 				handleSubDay={subDay}
 			/>
 			<Chart />
-			<BudgetContener />
+			<BudgetContener selectedDate={selectedDate}/>
 		</SafeAreaView>
 	);
 }

@@ -21,7 +21,7 @@ import { AllDataTypes, CategoryTypes } from "@/types";
 import PopUpModal from "@/components/PopUpModal";
 import getData from "@/utils/storageData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { router, useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams } from "expo-router";
 
 export default function addNew() {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
@@ -32,17 +32,17 @@ export default function addNew() {
 	const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
 	const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
 	const params = useLocalSearchParams();
-
-	const { selected }: any = params;
+	const { selected, date }: any = params;
 
 	/// poprawic nazwe i przejzec componenet
 	let arr: any = [];
 
-	const router = useRouter();
-
 	useEffect(() => {
-		setIsSelected(selected)
-	},[selected])
+		if (date) {
+			setIsSelected(selected);
+			setSelectedDate(date);
+		}
+	}, [selected, date]);
 
 	const addDay = () => {
 		const date: any = getDays("add", selectedDate);
@@ -62,8 +62,7 @@ export default function addNew() {
 		setAmount(numericValue);
 	};
 
-
-	// dodac do utilis 
+	// dodac do utilis
 	const changeNumberValue = () => {
 		let cost;
 
@@ -104,7 +103,6 @@ export default function addNew() {
 				setShowErrorModal(false);
 				setShowSuccessModal(true);
 				clearItems();
-			
 			} else {
 				setShowErrorModal(true);
 				setShowSuccessModal(false);
@@ -125,13 +123,25 @@ export default function addNew() {
 
 	const closeModal = () => {
 		setShowErrorModal(false);
-		setShowSuccessModal(false)
-	}
+		setShowSuccessModal(false);
+	};
 
 	return (
 		<SafeAreaView style={styles.contener}>
-			{showErrorModal && <PopUpModal isVisible={showErrorModal} changeShowVisible ={closeModal} kindOfOperation='error'/>}
-			{showSuccessModal && <PopUpModal isVisible={showSuccessModal} changeShowVisible ={closeModal} kindOfOperation='success'/>}
+			{showErrorModal && (
+				<PopUpModal
+					isVisible={showErrorModal}
+					changeShowVisible={closeModal}
+					kindOfOperation="error"
+				/>
+			)}
+			{showSuccessModal && (
+				<PopUpModal
+					isVisible={showSuccessModal}
+					changeShowVisible={closeModal}
+					kindOfOperation="success"
+				/>
+			)}
 			<Text style={styles.header}>Dodaj nowe</Text>
 			<TouchableWithoutFeedback
 				onPress={Keyboard.dismiss}
