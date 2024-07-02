@@ -48,7 +48,7 @@ export default function HomeScreen() {
 					filteredDataByMonth = filterByMonth(incomesData, selectedDate);
 					break;
 			}
-			// const bilans = sumariseValues(incomesData, expensesData, selectedDate)
+			
 			dispatch(getFilteredDataByMonth(filteredDataByMonth));
 
 			const {incomes, expense} = await sumariseValues(

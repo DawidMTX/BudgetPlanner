@@ -9,21 +9,26 @@ import {
 	TouchableHighlight,
 	View,
 } from "react-native";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useAppSelector } from "@/store/store";
 import { filterByMonth } from "@/utils/filterData";
 import { format } from "date-fns";
 import DetailComponent from "./DetailComponent";
 import { AntIcon } from "@/components/navigation/TabBarIcon";
+import PopUpModal from "@/components/PopUpModal";
+import AddItemModal from "@/components/AddItemModal";
+import createNewItem from "@/utils/createNewItem";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const IncomeExpenseDetail = () => {
+	const [showModal, setShowModal] = useState<boolean>(false);
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
 	);
 	const params = useLocalSearchParams();
 
-	const { category } = params;
+	const { category, icon, color, isSelected }: any = params;
 
 	let singleCategoryData: any = [];
 
@@ -34,13 +39,26 @@ const IncomeExpenseDetail = () => {
 			}
 		});
 	}
+	const selectedCategory = { icon: icon, color: color, title: category };
+	const selectedDate = filteredDataByMonth[0].date
 
-	const addItems = () => {
-		// pomysl o stworzeniu komponentu  wspolnego dla tego elementu i dla addNew
+	console.log(filteredDataByMonth[0].date)
+	const closeModal = () => {
+		setShowModal(false);
 	};
 
 	return (
-		<SafeAreaView style={{width: '100%', height: '100%'}}>
+		<SafeAreaView style={{ width: "100%", height: "100%" }}>
+			{showModal && (
+				<AddItemModal
+					isVisible={showModal}
+					closeModal={closeModal}
+					selectedCategory={selectedCategory}
+					isSelected={isSelected}
+					date={selectedDate}
+				/>
+			)}
+
 			<View>
 				{/* <View style={styles.imageContener}>
 					<Image
@@ -60,7 +78,7 @@ const IncomeExpenseDetail = () => {
 			</View>
 			<View style={styles.addButton}>
 				<TouchableHighlight
-					onPress={addItems}
+					onPress={() => setShowModal(true)}
 					underlayColor={"transparent"}
 				>
 					<View style={[styles.button, { backgroundColor: "#89BB7B" }]}>

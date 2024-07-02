@@ -14,7 +14,9 @@ export interface HomeScreenProps {
 const Categories = ({ category }: any) => {
 	const [icon, setIcon] = useState();
 	const [color, setColor] = useState<string>("");
-	const incomeExpense = useAppSelector(state => state.manageData.isSelected);
+	const incomeExpense = useAppSelector<string>(
+		state => state.manageData.isSelected
+	);
 
 	const router = useRouter();
 
@@ -28,13 +30,18 @@ const Categories = ({ category }: any) => {
 	const sum = category.data.reduce((acc: number, item: any) => {
 		return acc + parseFloat(item.value);
 	}, 0);
-
+	//  console.log(category)
 	return (
 		<TouchableOpacity
 			onPress={() =>
 				router.push({
 					pathname: "../detail",
-					params: { category: category.name },
+					params: {
+						category: category.name,
+						color: color,
+						icon: icon,
+						isSelected: incomeExpense,
+					},
 				})
 			}
 			style={[styles.contener, { borderColor: color, backgroundColor: rgba }]}

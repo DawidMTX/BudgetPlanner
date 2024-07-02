@@ -1,7 +1,12 @@
-
 import getData from "./storageData";
 
+export const handleChangeAmount = (text: any) => {
+    const numericValue = text
+        .replace(/[^,.\d]/g, "")
+        .replace(/^(\d*\.?)|(\d*)\.?/g, "$1$2");
 
+   return numericValue;
+};
 
 const changeNumberValue = (amount: any) => {
 	let cost;
@@ -18,7 +23,7 @@ const createNewItem = async (
 	text: any,
 	selectedDate: any,
 	isSelected: any,
-    amount: any
+	amount: any
 ) => {
 	const numberValue = await changeNumberValue(amount);
 	let dataArray: any = [];
@@ -36,28 +41,20 @@ const createNewItem = async (
 			createdData.value.length > 0
 		) {
 			const dataFromStorage = await getData(isSelected);
+            
 
-			if (dataFromStorage) {
+			if (dataFromStorage.length > 0) {
 				dataArray = [...dataFromStorage, createdData];
 			} else {
 				dataArray.push(createdData);
-			}
+        }
 			return dataArray;
-			// await AsyncStorage.setItem(isSelected, JSON.stringify(arr));
-			// setShowErrorModal(false);
-			// setShowSuccessModal(true);
-			// clearItems();
 		} else {
-			return null;
-			// setShowErrorModal(true);
-			// setShowSuccessModal(false);
+			return null
 		}
 	} catch (error) {
-		// setShowErrorModal(true);
-		// setShowSuccessModal(false);
-
-		console.log("Error from addNew", error);
-		return error;
+		console.log("Error mesage: ", error);
+		return null
 	}
 };
 

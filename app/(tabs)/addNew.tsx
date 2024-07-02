@@ -9,20 +9,17 @@ import {
 	TouchableWithoutFeedback,
 	Keyboard,
 } from "react-native";
-
 import ActiveButton from "@/components/ActiveButton";
 import { typesOfExpense, typesOfIncome } from "@/constants/data";
 import Input from "@/components/Input";
 import Dropdown from "@/components/Dropdown";
-import RNDateTimePicker from "@react-native-community/datetimepicker";
 import SelectData from "@/components/SelectData";
 import getDays from "@/utils/handleGetDate";
-import { AllDataTypes, CategoryTypes } from "@/types";
+import { CategoryTypes } from "@/types";
 import PopUpModal from "@/components/PopUpModal";
-import getData from "@/utils/storageData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLocalSearchParams } from "expo-router";
-import createNewItem from "@/utils/createNewItem";
+import createNewItem, { handleChangeAmount } from "@/utils/createNewItem";
 
 export default function addNew() {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
@@ -35,13 +32,11 @@ export default function addNew() {
 	const params = useLocalSearchParams();
 	const { selected, date }: any = params;
 
-	/// poprawic nazwe i przejzec componenet
-	let arr: any = [];
-
 	useEffect(() => {
 		if (date) {
 			setIsSelected(selected);
 			setSelectedDate(date);
+		
 		}
 	}, [selected, date]);
 
@@ -53,17 +48,7 @@ export default function addNew() {
 		const date: any = getDays("sub", selectedDate);
 		setSelectedDate(date);
 	};
-
-	//dodac do utilis
-	const handleChangeAmount = (text: any) => {
-		const numericValue = text
-			.replace(/[^,.\d]/g, "")
-			.replace(/^(\d*\.?)|(\d*)\.?/g, "$1$2");
-
-		setAmount(numericValue);
-	};
-
-	
+	console.log("dd: ", selectedCategory)
 	const addItems = async () => {
 		const newItem = await createNewItem(
 			selectedCategory,
@@ -72,56 +57,16 @@ export default function addNew() {
 			isSelected,
 			amount
 		);
-
-		if (newItem !== null) {
+	
+		if (newItem) {
 			await AsyncStorage.setItem(isSelected, JSON.stringify(newItem));
 			setShowErrorModal(false);
 			setShowSuccessModal(true);
 			clearItems();
-		} else if (newItem == Error) {
-			setShowErrorModal(true);
-			setShowSuccessModal(false);
 		} else {
 			setShowErrorModal(true);
 			setShowSuccessModal(false);
 		}
-
-		// const numberValue = await changeNumberValue();
-
-		// try {
-		// 	let createdData: any = selectedCategory;
-		// 	Object.assign(createdData, { name: text });
-		// 	Object.assign(createdData, { value: numberValue });
-		// 	Object.assign(createdData, { id: Math.floor(Math.random() * 100) });
-		// 	Object.assign(createdData, { date: selectedDate });
-		// 	Object.assign(createdData, { focused: false });
-
-		// 	if (
-		// 		createdData &&
-		// 		createdData.name.length > 0 &&
-		// 		createdData.value.length > 0
-		// 	) {
-		// 		const dataFromStorage = await getData(isSelected);
-
-		// 		if (dataFromStorage) {
-		// 			arr = [...dataFromStorage, createdData];
-		// 		} else {
-		// 			arr.push(createdData);
-		// 		}
-
-		// 		await AsyncStorage.setItem(isSelected, JSON.stringify(arr));
-		// 		setShowErrorModal(false);
-		// 		setShowSuccessModal(true);
-		// 		clearItems();
-		// 	} else {
-		// 		setShowErrorModal(true);
-		// 		setShowSuccessModal(false);
-		// 	}
-		// } catch (error) {
-		// 	setShowErrorModal(true);
-		// 	setShowSuccessModal(false);
-		// 	console.log("Error from addNew", error);
-		// }
 	};
 
 	const clearItems = () => {
@@ -210,7 +155,11 @@ export default function addNew() {
 						value={amount}
 						name="Kwota:"
 						style=""
-						onChangeText={(text: any) => handleChangeAmount(text)}
+						onChangeText={(text: any) => {
+							const changedAmount = handleChangeAmount(text);
+							setAmount(changedAmount);
+							
+						}}
 						keyboardType="numeric"
 					/>
 
@@ -261,6 +210,7 @@ export default function addNew() {
 }
 
 const styles = StyleSheet.create({
+	
 	contener: {
 		flex: 1,
 		justifyContent: "space-around",
