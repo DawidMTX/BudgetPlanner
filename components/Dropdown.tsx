@@ -11,6 +11,7 @@ const Dropdown = ({
 	title,
 	showChevronIcon,
 }: DropdownProps) => {
+	
 	return (
 		<SelectDropdown
 			data={entryData}
@@ -51,8 +52,9 @@ const Dropdown = ({
 					</View>
 				);
 			}}
-			showsVerticalScrollIndicator={false}
+			showsVerticalScrollIndicator={true}
 			dropdownStyle={styles.dropdownMenuStyle}
+			
 		/>
 	);
 };

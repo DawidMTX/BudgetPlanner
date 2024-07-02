@@ -40,42 +40,37 @@ const IncomeExpenseDetail = () => {
 	};
 
 	return (
-		<SafeAreaView>
-			
-				<View>
-					<View style={styles.imageContener}>
-						<Image
-							source={require("@/assets/images/list.png")}
-							style={styles.imageStyles}
-						/>
-					</View>
-
-					<View style={{ position: "absolute", width: "100%" }}>
+		<SafeAreaView style={{width: '100%', height: '100%'}}>
+			<View>
+				{/* <View style={styles.imageContener}>
+					<Image
+						source={require("@/assets/images/list.png")}
+						style={styles.imageStyles}
+					/>
+				</View> */}
+				<ScrollView>
+					<View style={{ marginBottom: 70 }}>
 						<Text style={styles.titleText}>Kategoria operacji: {category}</Text>
 
-						<FlatList
-							data={singleCategoryData}
-							renderItem={({ item }) => (
-								<DetailComponent singleCategoryData={item} />
-							)}
-							keyExtractor={item => item.id}
+						{singleCategoryData.map((item: any, index: any) => (
+							<DetailComponent singleCategoryData={item} />
+						))}
+					</View>
+				</ScrollView>
+			</View>
+			<View style={styles.addButton}>
+				<TouchableHighlight
+					onPress={addItems}
+					underlayColor={"transparent"}
+				>
+					<View style={[styles.button, { backgroundColor: "#89BB7B" }]}>
+						<AntIcon
+							name="plus"
+							style={styles.iconStyle}
 						/>
 					</View>
-					<View>
-						<TouchableHighlight
-							onPress={addItems}
-							underlayColor={"transparent"}
-						>
-							<View style={[styles.button, { backgroundColor: "#89BB7B" }]}>
-								<AntIcon
-									name="plus"
-									style={styles.iconStyle}
-								/>
-							</View>
-						</TouchableHighlight>
-					</View>
-				</View>
-			
+				</TouchableHighlight>
+			</View>
 		</SafeAreaView>
 	);
 };
@@ -108,4 +103,5 @@ const styles = StyleSheet.create({
 		padding: 15,
 		color: "white",
 	},
+	addButton: { position: "absolute", bottom: 60, right: 50 },
 });

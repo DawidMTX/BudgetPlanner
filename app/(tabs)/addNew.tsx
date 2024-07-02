@@ -1,5 +1,5 @@
 import { AntIcon, MaterialIcon } from "@/components/navigation/TabBarIcon";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
 	StyleSheet,
 	View,
@@ -22,6 +22,7 @@ import PopUpModal from "@/components/PopUpModal";
 import getData from "@/utils/storageData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLocalSearchParams } from "expo-router";
+import createNewItem from "@/utils/createNewItem";
 
 export default function addNew() {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
@@ -62,56 +63,65 @@ export default function addNew() {
 		setAmount(numericValue);
 	};
 
-	// dodac do utilis
-	const changeNumberValue = () => {
-		let cost;
-
-		const dot = amount.toString().indexOf(".");
-		if (dot > 0) {
-			return (cost = amount.slice(0, dot + 3));
-		} else cost = amount;
-
-		return cost;
-	};
-
-	//dodac to utilitis ?
+	
 	const addItems = async () => {
-		const numberValue = await changeNumberValue();
+		const newItem = await createNewItem(
+			selectedCategory,
+			text,
+			selectedDate,
+			isSelected,
+			amount
+		);
 
-		try {
-			let createdData: any = selectedCategory;
-			Object.assign(createdData, { name: text });
-			Object.assign(createdData, { value: numberValue });
-			Object.assign(createdData, { id: Math.floor(Math.random() * 100) });
-			Object.assign(createdData, { date: selectedDate });
-			Object.assign(createdData, { focused: false });
-
-			if (
-				createdData &&
-				createdData.name.length > 0 &&
-				createdData.value.length > 0
-			) {
-				const dataFromStorage = await getData(isSelected);
-
-				if (dataFromStorage) {
-					arr = [...dataFromStorage, createdData];
-				} else {
-					arr.push(createdData);
-				}
-
-				await AsyncStorage.setItem(isSelected, JSON.stringify(arr));
-				setShowErrorModal(false);
-				setShowSuccessModal(true);
-				clearItems();
-			} else {
-				setShowErrorModal(true);
-				setShowSuccessModal(false);
-			}
-		} catch (error) {
+		if (newItem !== null) {
+			await AsyncStorage.setItem(isSelected, JSON.stringify(newItem));
+			setShowErrorModal(false);
+			setShowSuccessModal(true);
+			clearItems();
+		} else if (newItem == Error) {
 			setShowErrorModal(true);
 			setShowSuccessModal(false);
-			console.log("Error from addNew", error);
+		} else {
+			setShowErrorModal(true);
+			setShowSuccessModal(false);
 		}
+
+		// const numberValue = await changeNumberValue();
+
+		// try {
+		// 	let createdData: any = selectedCategory;
+		// 	Object.assign(createdData, { name: text });
+		// 	Object.assign(createdData, { value: numberValue });
+		// 	Object.assign(createdData, { id: Math.floor(Math.random() * 100) });
+		// 	Object.assign(createdData, { date: selectedDate });
+		// 	Object.assign(createdData, { focused: false });
+
+		// 	if (
+		// 		createdData &&
+		// 		createdData.name.length > 0 &&
+		// 		createdData.value.length > 0
+		// 	) {
+		// 		const dataFromStorage = await getData(isSelected);
+
+		// 		if (dataFromStorage) {
+		// 			arr = [...dataFromStorage, createdData];
+		// 		} else {
+		// 			arr.push(createdData);
+		// 		}
+
+		// 		await AsyncStorage.setItem(isSelected, JSON.stringify(arr));
+		// 		setShowErrorModal(false);
+		// 		setShowSuccessModal(true);
+		// 		clearItems();
+		// 	} else {
+		// 		setShowErrorModal(true);
+		// 		setShowSuccessModal(false);
+		// 	}
+		// } catch (error) {
+		// 	setShowErrorModal(true);
+		// 	setShowSuccessModal(false);
+		// 	console.log("Error from addNew", error);
+		// }
 	};
 
 	const clearItems = () => {

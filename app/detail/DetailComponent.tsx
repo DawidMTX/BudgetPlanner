@@ -5,7 +5,7 @@ import { incomeColor, redValueColor } from "@/constants/Colors";
 import { useAppSelector } from "@/store/store";
 
 const DetailComponent = ({ singleCategoryData }: any) => {
-    const incomeExpense = useAppSelector(state => state.manageData.isSelected);
+	const incomeExpense = useAppSelector(state => state.manageData.isSelected);
 	return (
 		<View style={styles.contener}>
 			<View>
@@ -15,12 +15,16 @@ const DetailComponent = ({ singleCategoryData }: any) => {
 				</Text>
 			</View>
 			<View>
-            {incomeExpense == "expenses" ? (
-					<Text style={{ fontSize: 22, color: redValueColor }}> - {singleCategoryData.value} zł</Text>
+				{incomeExpense == "expenses" ? (
+					<Text style={{ fontSize: 22, color: redValueColor }}>
+						{" "}
+						- {singleCategoryData.value} zł
+					</Text>
 				) : (
-					<Text style={{ fontSize: 22, color: incomeColor }}>{singleCategoryData.value} zł</Text>
+					<Text style={{ fontSize: 22, color: incomeColor }}>
+						{singleCategoryData.value} zł
+					</Text>
 				)}
-	
 			</View>
 		</View>
 	);
@@ -31,10 +35,10 @@ export default DetailComponent;
 const styles = StyleSheet.create({
 	contener: {
 		borderWidth: 0.2,
-        borderColor: '#ccc',
+		borderColor: "#ccc",
 		height: 80,
-		marginVertical: 5,
-     backgroundColor: '#fff',
+		marginVertical: 1,
+		backgroundColor: "#fff",
 		flexDirection: "row",
 		justifyContent: "space-between",
 		padding: 20,
