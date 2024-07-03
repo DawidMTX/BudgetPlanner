@@ -35,7 +35,7 @@ const PopUpModal = ({ isVisible, changeShowVisible, kindOfOperation }: any) => {
 								size={55}
 							/>
 							<Text style={styles.modalText}>
-								Prosze, uzupelnij wszystkie pola. 
+								Prosze, uzupełnij wszystkie pola. 
 							</Text>
 							<Pressable
 								style={[styles.button, styles.buttonClose]}

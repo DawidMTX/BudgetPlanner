@@ -1,13 +1,46 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { Button, StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
 import { format } from "date-fns";
 import { incomeColor, redValueColor } from "@/constants/Colors";
 import { useAppSelector } from "@/store/store";
+import getData from "@/utils/storageData";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import AddItemModal from "@/components/AddItemModal";
 
 const DetailComponent = ({ singleCategoryData }: any) => {
+	const [showEditModal, setShowEditModal] = useState(false);
 	const incomeExpense = useAppSelector(state => state.manageData.isSelected);
+
+	const deleteItem = async () => {
+		try {
+			const allData = await getData(incomeExpense);
+
+			const filteredData = allData.filter((item: any) => {
+				return (
+					item.id !== singleCategoryData.id &&
+					item.name !== singleCategoryData.name
+				);
+			});
+			AsyncStorage.setItem(incomeExpense, JSON.stringify(filteredData));
+		} catch (error) {}
+	};
+
+	// console.log(singleCategoryData)
+	const closeModal = () => {
+		setShowEditModal(false);
+	};
 	return (
 		<View style={styles.contener}>
+			{showEditModal && (
+				<AddItemModal
+					isVisible={showEditModal}
+					closeModal={closeModal}
+					selectedItem={singleCategoryData}
+					isSelected={incomeExpense}
+					date={singleCategoryData.date}
+					typeOfOperation="edit"
+				/>
+			)}
 			<View>
 				<Text style={styles.nameText}>{singleCategoryData.name}</Text>
 				<Text style={styles.dateText}>
@@ -26,6 +59,14 @@ const DetailComponent = ({ singleCategoryData }: any) => {
 					</Text>
 				)}
 			</View>
+			<Button
+				title="Usuń"
+				onPress={deleteItem}
+			/>
+			<Button
+				title="Edytuj"
+				onPress={() => setShowEditModal(true)}
+			/>
 		</View>
 	);
 };

@@ -1,4 +1,5 @@
 import {
+	Alert,
 	Modal,
 	Pressable,
 	StyleSheet,
@@ -13,13 +14,15 @@ import createNewItem, { handleChangeAmount } from "@/utils/createNewItem";
 import SelectData from "./SelectData";
 import getDays from "@/utils/handleGetDate";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import getData from "@/utils/storageData";
 
 const AddItemModal = ({
 	isVisible,
-	selectedCategory,
+	selectedItem,
 	closeModal,
 	isSelected,
 	date,
+	typeOfOperation,
 }: any) => {
 	const [showHideModal, setShowHideModal] = useState(isVisible);
 	const [amount, setAmount] = useState<string>("");
@@ -29,6 +32,10 @@ const AddItemModal = ({
 
 	useEffect(() => {
 		setSelectedDate(date);
+		if (typeOfOperation === "edit") {
+			setText(selectedItem.name);
+			setAmount(selectedItem.value);
+		}
 	}, [date]);
 
 	const addDay = () => {
@@ -42,7 +49,7 @@ const AddItemModal = ({
 
 	const addItems = async () => {
 		const newItem = await createNewItem(
-			selectedCategory,
+			selectedItem,
 			text,
 			selectedDate,
 			isSelected,
@@ -55,9 +62,32 @@ const AddItemModal = ({
 			setShowHideModal(false);
 		} else {
 			setShowErrorModal(true);
-			// setShowSuccessModal(false);
 		}
 	};
+
+	const editItem = async () => {
+		try {
+			const allData = await getData(isSelected);
+
+			allData.map((item: any) => {
+				if (
+					item["id"] === selectedItem.id &&
+					item["name"] === selectedItem.name
+				) {
+					Object.assign(item, { name: text });
+					Object.assign(item, { value: amount });
+					Object.assign(item, { id: item.id });
+					Object.assign(item, { date: selectedDate });
+					Object.assign(item, { focused: item.focused });
+				}
+			});
+
+			AsyncStorage.setItem(isSelected, JSON.stringify(allData));
+		} catch (error) {}
+
+		closeModal();
+	};
+
 	return (
 		<View>
 			<Modal
@@ -86,7 +116,12 @@ const AddItemModal = ({
 						</View>
 					) : (
 						<View style={styles.modalView}>
-							<Text style={styles.modalText}>Dodaj nowy element:</Text>
+							{typeOfOperation === "add" ? (
+								<Text style={styles.modalText}>Dodaj nowy element:</Text>
+							) : (
+								<Text style={styles.modalText}>Edytuj elementy:</Text>
+							)}
+
 							<Input
 								placeholder="Nazwa"
 								value={text}
@@ -128,7 +163,7 @@ const AddItemModal = ({
 							</View>
 							<View style={styles.buttonContener}>
 								<TouchableHighlight
-									onPress={addItems}
+									onPress={typeOfOperation === "add" ? addItems : editItem}
 									underlayColor={"transparent"}
 								>
 									<View style={[styles.button, { backgroundColor: "#89BB7B" }]}>
@@ -220,5 +255,4 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 45,
 		elevation: 2,
 	},
-	
 });

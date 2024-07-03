@@ -42,7 +42,7 @@ const IncomeExpenseDetail = () => {
 	const selectedCategory = { icon: icon, color: color, title: category };
 	const selectedDate = filteredDataByMonth[0].date
 
-	console.log(filteredDataByMonth[0].date)
+	// console.log(filteredDataByMonth[0].date)
 	const closeModal = () => {
 		setShowModal(false);
 	};
@@ -53,9 +53,10 @@ const IncomeExpenseDetail = () => {
 				<AddItemModal
 					isVisible={showModal}
 					closeModal={closeModal}
-					selectedCategory={selectedCategory}
+					selectedItem={selectedCategory}
 					isSelected={isSelected}
 					date={selectedDate}
+					typeOfOperation='add'
 				/>
 			)}
 
