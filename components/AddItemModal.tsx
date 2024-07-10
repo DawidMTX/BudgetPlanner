@@ -21,7 +21,8 @@ import getDays from "@/utils/handleGetDate";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import getData from "@/utils/storageData";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { getDetailData, getFilteredDataByMonth } from "@/store/manageData";
+import { getFilteredDataByMonth } from "@/store/manageData";
+import PopUpModal from "./PopUpModal";
 
 const AddItemModal = ({
 	isVisible,
@@ -78,16 +79,28 @@ const AddItemModal = ({
 		const handlefastAdd = async () => {
 			const numberValue = await changeNumberValue(amount);
 			let createdData: any = selectedItem;
+
 			Object.assign(createdData, { name: text });
 			Object.assign(createdData, { value: numberValue });
 			Object.assign(createdData, { id: Math.floor(Math.random() * 100) });
 			Object.assign(createdData, { date: selectedDate });
 			Object.assign(createdData, { focused: false });
 
-			let handeAddData = [...filteredDataByMonth, createdData];
-			dispatch(getFilteredDataByMonth(handeAddData));
+			if (
+				createdData &&
+				createdData.name.length > 0 &&
+				createdData.value.length > 0
+			) {
+				let handeAddData = [...filteredDataByMonth, createdData];
+				dispatch(getFilteredDataByMonth(handeAddData));
+			} else {
+				setShowErrorModal(true);
+				
+			}
 		};
+
 		handlefastAdd();
+		closeModal();
 	};
 
 	const editItem = async () => {
@@ -110,7 +123,7 @@ const AddItemModal = ({
 
 			AsyncStorage.setItem(isSelected, JSON.stringify(allData));
 
-			await filteredDataByMonth.map((item: any) => {
+			filteredDataByMonth.map((item: any) => {
 				if (
 					item["id"] === selectedItem.id &&
 					item["name"] === selectedItem.name
@@ -130,6 +143,13 @@ const AddItemModal = ({
 
 	return (
 		<View>
+			{showErrorModal && (
+				<PopUpModal
+					isVisible={showErrorModal}
+					changeShowVisible={closeModal}
+					kindOfOperation="error"
+				/>
+			)}
 			<Modal
 				visible={showHideModal}
 				animationType="fade"

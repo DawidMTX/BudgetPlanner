@@ -5,7 +5,7 @@ import moment from "moment";
 
 const initialState: TypeOfState = {
 	isSelected: "expenses",
-	detailData: [],
+	// detailData: [],
 	// allExpensesData: [],
 	filteredData: [],
 	bilans: 0,
@@ -20,9 +20,9 @@ const manageData = createSlice({
 		getCostInformation(state, action: PayloadAction<any>) {
 			state.isSelected = action.payload;
 		},
-		getDetailData(state, action: PayloadAction<any>) {
-			state.detailData = action.payload;
-		},
+		// getDetailData(state, action: PayloadAction<any>) {
+		// 	state.detailData = action.payload;
+		// },
 		// getAllIncomesData(state, action: PayloadAction<any>) {
 		// 	state.allIncomesData = action.payload;
 		// },
@@ -39,7 +39,7 @@ const manageData = createSlice({
 
 export const {
 	getCostInformation,
-	getDetailData,
+	// getDetailData,
 	// getAllIncomesData,
 	getFilteredDataByMonth,
 	getSumariseValue

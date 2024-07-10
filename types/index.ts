@@ -34,7 +34,7 @@ export interface PieChartTypes {
 
 export interface TypeOfState {
 	isSelected: string;
-	detailData: any;
+	// detailData: any;
 	// allExpensesData: any;
 	filteredData: any, 
 	bilans: number,

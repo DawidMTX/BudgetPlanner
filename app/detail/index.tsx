@@ -91,7 +91,7 @@ const IncomeExpenseDetail = () => {
 							</Text>
 
 							{singleCategoryData.map((item: any, index: any) => (
-								<DetailComponent singleCategoryData={item} />
+								<DetailComponent singleCategoryData={item} key={index}/>
 							))}
 						</View>
 					</ScrollView>

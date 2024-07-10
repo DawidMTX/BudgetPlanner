@@ -48,7 +48,7 @@ export default function addNew() {
 		const date: any = getDays("sub", selectedDate);
 		setSelectedDate(date);
 	};
-	console.log("dd: ", selectedCategory)
+	
 	const addItems = async () => {
 		const newItem = await createNewItem(
 			selectedCategory,

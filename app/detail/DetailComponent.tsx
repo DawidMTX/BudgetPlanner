@@ -6,7 +6,7 @@ import {
 	TouchableOpacity,
 	View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { format } from "date-fns";
 import { incomeColor, redValueColor } from "@/constants/Colors";
 import { useAppDispatch, useAppSelector } from "@/store/store";
@@ -16,16 +16,22 @@ import AddItemModal from "@/components/AddItemModal";
 import { Swipeable } from "react-native-gesture-handler";
 import { AntIcon } from "@/components/navigation/TabBarIcon";
 import InsetShadow from "@/components/InsetShadow";
-import { getDetailData, getFilteredDataByMonth } from "@/store/manageData";
+import { getFilteredDataByMonth } from "@/store/manageData";
 import { filterByMonth } from "@/utils/filterData";
 
-const DetailComponent = ({ singleCategoryData }: any) => {
+const DetailComponent = ({ singleCategoryData, key }: any) => {
 	const [showEditModal, setShowEditModal] = useState(false);
 	const incomeExpense = useAppSelector(state => state.manageData.isSelected);
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
 	);
+	const swipeableRef = useRef<any>(null);
+
 	const dispatch = useAppDispatch();
+
+	const closeSwipeable = () => {
+		swipeableRef.current.close();
+	};
 
 	const rightSwipe = () => {
 		return (
@@ -48,9 +54,12 @@ const DetailComponent = ({ singleCategoryData }: any) => {
 		);
 	};
 	const leftSwipe = () => {
+	
 		return (
 			<TouchableOpacity
-				onPress={() => setShowEditModal(true)}
+				onPress={() => {
+					setShowEditModal(true);
+				}}
 				activeOpacity={0.6}
 				style={{ marginVertical: 1 }}
 			>
@@ -66,9 +75,11 @@ const DetailComponent = ({ singleCategoryData }: any) => {
 				</InsetShadow>
 			</TouchableOpacity>
 		);
+		closeSwipeable();
 	};
 
 	const deleteItem = async () => {
+		
 		try {
 			const allData = await getData(incomeExpense);
 
@@ -84,9 +95,10 @@ const DetailComponent = ({ singleCategoryData }: any) => {
 					item.id !== singleCategoryData.id &&
 					item.name !== singleCategoryData.name
 				);
-			})
-			dispatch(getFilteredDataByMonth(handleShowData))
+			});
+			dispatch(getFilteredDataByMonth(handleShowData));
 		} catch (error) {}
+		closeSwipeable();
 	};
 
 	const closeModal = () => {
@@ -94,6 +106,7 @@ const DetailComponent = ({ singleCategoryData }: any) => {
 	};
 	return (
 		<Swipeable
+			ref={swipeableRef}
 			renderRightActions={rightSwipe}
 			renderLeftActions={leftSwipe}
 		>
