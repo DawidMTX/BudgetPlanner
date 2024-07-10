@@ -8,9 +8,24 @@ export const handleChangeAmount = (text: any) => {
 	return numericValue;
 };
 
-const changeNumberValue = (amount: any) => {
+export const changeNumberValue = (amount: any) => {
 	let cost;
-	const dot = amount.toString().indexOf(",");
+	let dot;
+	let newAmount
+
+	if(amount.includes(",")){
+		dot = amount.indexOf(",");
+		amount = amount.splice(dot, 1, ".");
+	}
+	else if (amount.includes(".")) {
+		dot = amount.indexOf(".");
+	}
+
+	// if (amount.toString().includes(".")) {
+	// 	dot = amount.toString().indexOf(".");
+	// 	amount[dot]= ",";
+	// } 
+
 	if (dot > 0) {
 		return (cost = amount.slice(0, dot + 3));
 	} else cost = amount;

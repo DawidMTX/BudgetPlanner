@@ -1,15 +1,69 @@
-import { Button, StyleSheet, Text, View } from "react-native";
+import {
+	Animated,
+	Button,
+	StyleSheet,
+	Text,
+	TouchableOpacity,
+	View,
+} from "react-native";
 import React, { useState } from "react";
 import { format } from "date-fns";
 import { incomeColor, redValueColor } from "@/constants/Colors";
-import { useAppSelector } from "@/store/store";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 import getData from "@/utils/storageData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AddItemModal from "@/components/AddItemModal";
+import { Swipeable } from "react-native-gesture-handler";
+import { AntIcon } from "@/components/navigation/TabBarIcon";
+import InsetShadow from "@/components/InsetShadow";
+import { getDetailData } from "@/store/manageData";
+import { filterByMonth } from "@/utils/filterData";
 
 const DetailComponent = ({ singleCategoryData }: any) => {
 	const [showEditModal, setShowEditModal] = useState(false);
 	const incomeExpense = useAppSelector(state => state.manageData.isSelected);
+	const dispatch = useAppDispatch();
+
+	const rightSwipe = () => {
+		return (
+			<TouchableOpacity
+				onPress={deleteItem}
+				activeOpacity={0.6}
+				style={{ marginVertical: 1 }}
+			>
+				<InsetShadow>
+					<View style={[styles.deleteBox, { backgroundColor: "#e63946" }]}>
+						<Animated.Text>
+							<AntIcon
+								name="delete"
+								style={{ color: "white", fontSize: 26 }}
+							/>
+						</Animated.Text>
+					</View>
+				</InsetShadow>
+			</TouchableOpacity>
+		);
+	};
+	const leftSwipe = () => {
+		return (
+			<TouchableOpacity
+				onPress={() => setShowEditModal(true)}
+				activeOpacity={0.6}
+				style={{ marginVertical: 1 }}
+			>
+				<InsetShadow>
+					<View style={[styles.deleteBox, { backgroundColor: "#ffbe0b" }]}>
+						<Animated.Text>
+							<AntIcon
+								name="edit"
+								style={{ color: "white", fontSize: 26 }}
+							/>
+						</Animated.Text>
+					</View>
+				</InsetShadow>
+			</TouchableOpacity>
+		);
+	};
 
 	const deleteItem = async () => {
 		try {
@@ -25,49 +79,45 @@ const DetailComponent = ({ singleCategoryData }: any) => {
 		} catch (error) {}
 	};
 
-	// console.log(singleCategoryData)
 	const closeModal = () => {
 		setShowEditModal(false);
 	};
 	return (
-		<View style={styles.contener}>
-			{showEditModal && (
-				<AddItemModal
-					isVisible={showEditModal}
-					closeModal={closeModal}
-					selectedItem={singleCategoryData}
-					isSelected={incomeExpense}
-					date={singleCategoryData.date}
-					typeOfOperation="edit"
-				/>
-			)}
-			<View>
-				<Text style={styles.nameText}>{singleCategoryData.name}</Text>
-				<Text style={styles.dateText}>
-					{format(singleCategoryData.date, "dd.MM.yyyy")}
-				</Text>
-			</View>
-			<View>
-				{incomeExpense == "expenses" ? (
-					<Text style={{ fontSize: 22, color: redValueColor }}>
-						{" "}
-						- {singleCategoryData.value} zł
-					</Text>
-				) : (
-					<Text style={{ fontSize: 22, color: incomeColor }}>
-						{singleCategoryData.value} zł
-					</Text>
+		<Swipeable
+			renderRightActions={rightSwipe}
+			renderLeftActions={leftSwipe}
+		>
+			<View style={styles.contener}>
+				{showEditModal && (
+					<AddItemModal
+						isVisible={showEditModal}
+						closeModal={closeModal}
+						selectedItem={singleCategoryData}
+						isSelected={incomeExpense}
+						date={singleCategoryData.date}
+						typeOfOperation="edit"
+					/>
 				)}
+				<View>
+					<Text style={styles.nameText}>{singleCategoryData.name}</Text>
+					<Text style={styles.dateText}>
+						{format(singleCategoryData.date, "dd.MM.yyyy")}
+					</Text>
+				</View>
+				<View>
+					{incomeExpense == "expenses" ? (
+						<Text style={{ fontSize: 22, color: redValueColor }}>
+							{" "}
+							- {singleCategoryData.value} zł
+						</Text>
+					) : (
+						<Text style={{ fontSize: 22, color: incomeColor }}>
+							{singleCategoryData.value} zł
+						</Text>
+					)}
+				</View>
 			</View>
-			<Button
-				title="Usuń"
-				onPress={deleteItem}
-			/>
-			<Button
-				title="Edytuj"
-				onPress={() => setShowEditModal(true)}
-			/>
-		</View>
+		</Swipeable>
 	);
 };
 
@@ -93,5 +143,11 @@ const styles = StyleSheet.create({
 	},
 	dateText: {
 		fontSize: 17,
+	},
+	deleteBox: {
+		justifyContent: "center",
+		alignItems: "center",
+		width: 100,
+		height: "100%",
 	},
 });

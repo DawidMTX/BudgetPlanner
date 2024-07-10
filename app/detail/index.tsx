@@ -1,7 +1,5 @@
 import {
-	Button,
-	FlatList,
-	Image,
+	Animated,
 	SafeAreaView,
 	ScrollView,
 	StyleSheet,
@@ -10,87 +8,109 @@ import {
 	View,
 } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useAppSelector } from "@/store/store";
-import { filterByMonth } from "@/utils/filterData";
-import { format } from "date-fns";
 import DetailComponent from "./DetailComponent";
 import { AntIcon } from "@/components/navigation/TabBarIcon";
-import PopUpModal from "@/components/PopUpModal";
 import AddItemModal from "@/components/AddItemModal";
-import createNewItem from "@/utils/createNewItem";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+	GestureHandlerRootView,
+	RefreshControl,
+} from "react-native-gesture-handler";
+import { filterByMonth } from "@/utils/filterData";
 
 const IncomeExpenseDetail = () => {
 	const [showModal, setShowModal] = useState<boolean>(false);
+	const [refreshing, setRefreshing] = useState(false)
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
 	);
 	const params = useLocalSearchParams();
 
+	
+
 	const { category, icon, color, isSelected }: any = params;
 
 	let singleCategoryData: any = [];
 
-	if (filteredDataByMonth) {
-		filteredDataByMonth.map((item: any) => {
-			if (item["title"].includes(category)) {
-				singleCategoryData.push(item);
-			}
-		});
-	}
-	const selectedCategory = { icon: icon, color: color, title: category };
-	const selectedDate = filteredDataByMonth[0].date
+	filteredDataByMonth.map((item: any) => {
+		if (item["title"].includes(category)) {
+			singleCategoryData.push(item);
+		}
+	});
 
-	// console.log(filteredDataByMonth[0].date)
+	const selectedCategory = { icon: icon, color: color, title: category };
+	const selectedDate = filteredDataByMonth[0].date;
+	console.log(filteredDataByMonth[0].date)
+
+	const onRefresh = React.useCallback(() => {
+		setRefreshing(true);
+
+		setTimeout(() => {
+			setRefreshing(false);
+		}, 2000);
+	}, []);
+
 	const closeModal = () => {
 		setShowModal(false);
 	};
 
 	return (
-		<SafeAreaView style={{ width: "100%", height: "100%" }}>
-			{showModal && (
-				<AddItemModal
-					isVisible={showModal}
-					closeModal={closeModal}
-					selectedItem={selectedCategory}
-					isSelected={isSelected}
-					date={selectedDate}
-					typeOfOperation='add'
-				/>
-			)}
+		<GestureHandlerRootView>
+			<SafeAreaView style={{ width: "100%", height: "100%" }}>
+				{showModal && (
+					<AddItemModal
+						isVisible={showModal}
+						closeModal={closeModal}
+						selectedItem={selectedCategory}
+						isSelected={isSelected}
+						date={selectedDate}
+						typeOfOperation="add"
+					/>
+				)}
 
-			<View>
-				{/* <View style={styles.imageContener}>
+				<View>
+					{/* <View style={styles.imageContener}>
 					<Image
 						source={require("@/assets/images/list.png")}
 						style={styles.imageStyles}
 					/>
 				</View> */}
-				<ScrollView>
-					<View style={{ marginBottom: 70 }}>
-						<Text style={styles.titleText}>Kategoria operacji: {category}</Text>
+					<ScrollView
+						style={{ height: "100%" }}
+						refreshControl={
+							<RefreshControl
+								refreshing={refreshing}
+								onRefresh={onRefresh}
+							/>
+						}
+					>
+						<View style={{ marginBottom: 70 }}>
+							<Text style={styles.titleText}>
+								Kategoria operacji: {category}
+							</Text>
 
-						{singleCategoryData.map((item: any, index: any) => (
-							<DetailComponent singleCategoryData={item} />
-						))}
-					</View>
-				</ScrollView>
-			</View>
-			<View style={styles.addButton}>
-				<TouchableHighlight
-					onPress={() => setShowModal(true)}
-					underlayColor={"transparent"}
-				>
-					<View style={[styles.button, { backgroundColor: "#89BB7B" }]}>
-						<AntIcon
-							name="plus"
-							style={styles.iconStyle}
-						/>
-					</View>
-				</TouchableHighlight>
-			</View>
-		</SafeAreaView>
+							{singleCategoryData.map((item: any, index: any) => (
+								<DetailComponent singleCategoryData={item} />
+							))}
+						</View>
+					</ScrollView>
+				</View>
+				<View style={styles.addButton}>
+					<TouchableHighlight
+						onPress={() => setShowModal(true)}
+						underlayColor={"transparent"}
+					>
+						<View style={[styles.button, { backgroundColor: "#89BB7B" }]}>
+							<AntIcon
+								name="plus"
+								style={styles.iconStyle}
+							/>
+						</View>
+					</TouchableHighlight>
+				</View>
+			</SafeAreaView>
+		</GestureHandlerRootView>
 	);
 };
 

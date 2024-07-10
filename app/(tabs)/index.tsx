@@ -2,8 +2,7 @@ import BudgetContener from "@/components/BudgetContener";
 import Chart from "@/components/Chart";
 import SelectData from "@/components/SelectData";
 import {
-	getAllExpensesData,
-	getAllIncomesData,
+	
 	getFilteredDataByMonth,
 	getSumariseValue,
 } from "@/store/manageData";
@@ -37,8 +36,8 @@ export default function HomeScreen() {
 		const showData = async () => {
 			const incomesData = await getData("incomes");
 			const expensesData = await getData("expenses");
-			dispatch(getAllExpensesData("expenses"));
-			dispatch(getAllIncomesData("incomes"));
+			// dispatch(getAllExpensesData("expenses"));
+			// dispatch(getAllIncomesData("incomes"));
 
 			switch (costInformation) {
 				case "expenses":
@@ -63,7 +62,6 @@ export default function HomeScreen() {
 		showData();
 	}, [costInformation, selectedDate, isFocus]);
 
-	// console.log("d: ", selectedDate);
 	return (
 		<SafeAreaView style={styles.container}>
 			<SelectData
