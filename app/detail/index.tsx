@@ -17,7 +17,7 @@ import {
 	GestureHandlerRootView,
 	RefreshControl,
 } from "react-native-gesture-handler";
-import { filterByMonth } from "@/utils/filterData";
+
 
 const IncomeExpenseDetail = () => {
 	const [showModal, setShowModal] = useState<boolean>(false);
@@ -41,7 +41,7 @@ const IncomeExpenseDetail = () => {
 
 	const selectedCategory = { icon: icon, color: color, title: category };
 	const selectedDate = filteredDataByMonth[0].date;
-	console.log(filteredDataByMonth[0].date)
+	
 
 	const onRefresh = React.useCallback(() => {
 		setRefreshing(true);

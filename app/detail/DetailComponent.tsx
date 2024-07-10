@@ -16,12 +16,15 @@ import AddItemModal from "@/components/AddItemModal";
 import { Swipeable } from "react-native-gesture-handler";
 import { AntIcon } from "@/components/navigation/TabBarIcon";
 import InsetShadow from "@/components/InsetShadow";
-import { getDetailData } from "@/store/manageData";
+import { getDetailData, getFilteredDataByMonth } from "@/store/manageData";
 import { filterByMonth } from "@/utils/filterData";
 
 const DetailComponent = ({ singleCategoryData }: any) => {
 	const [showEditModal, setShowEditModal] = useState(false);
 	const incomeExpense = useAppSelector(state => state.manageData.isSelected);
+	const filteredDataByMonth = useAppSelector(
+		state => state.manageData.filteredData
+	);
 	const dispatch = useAppDispatch();
 
 	const rightSwipe = () => {
@@ -76,6 +79,13 @@ const DetailComponent = ({ singleCategoryData }: any) => {
 				);
 			});
 			AsyncStorage.setItem(incomeExpense, JSON.stringify(filteredData));
+			const handleShowData = filteredDataByMonth.filter((item: any) => {
+				return (
+					item.id !== singleCategoryData.id &&
+					item.name !== singleCategoryData.name
+				);
+			})
+			dispatch(getFilteredDataByMonth(handleShowData))
 		} catch (error) {}
 	};
 

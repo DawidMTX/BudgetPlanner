@@ -20,8 +20,8 @@ import SelectData from "./SelectData";
 import getDays from "@/utils/handleGetDate";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import getData from "@/utils/storageData";
-import { useAppDispatch } from "@/store/store";
-import { getDetailData } from "@/store/manageData";
+import { useAppDispatch, useAppSelector } from "@/store/store";
+import { getDetailData, getFilteredDataByMonth } from "@/store/manageData";
 
 const AddItemModal = ({
 	isVisible,
@@ -36,6 +36,9 @@ const AddItemModal = ({
 	const [text, setText] = useState<string | any>("");
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
+	const filteredDataByMonth = useAppSelector(
+		state => state.manageData.filteredData
+	);
 	const dispatch = useAppDispatch();
 
 	useEffect(() => {
@@ -66,11 +69,25 @@ const AddItemModal = ({
 
 		if (newItem) {
 			await AsyncStorage.setItem(isSelected, JSON.stringify(newItem));
-			
+
 			setShowHideModal(false);
 		} else {
 			setShowErrorModal(true);
 		}
+
+		const handlefastAdd = async () => {
+			const numberValue = await changeNumberValue(amount);
+			let createdData: any = selectedItem;
+			Object.assign(createdData, { name: text });
+			Object.assign(createdData, { value: numberValue });
+			Object.assign(createdData, { id: Math.floor(Math.random() * 100) });
+			Object.assign(createdData, { date: selectedDate });
+			Object.assign(createdData, { focused: false });
+
+			let handeAddData = [...filteredDataByMonth, createdData];
+			dispatch(getFilteredDataByMonth(handeAddData));
+		};
+		handlefastAdd();
 	};
 
 	const editItem = async () => {
@@ -92,6 +109,20 @@ const AddItemModal = ({
 			});
 
 			AsyncStorage.setItem(isSelected, JSON.stringify(allData));
+
+			await filteredDataByMonth.map((item: any) => {
+				if (
+					item["id"] === selectedItem.id &&
+					item["name"] === selectedItem.name
+				) {
+					Object.assign(item, { name: text });
+					Object.assign(item, { value: numberValue });
+					Object.assign(item, { id: item.id });
+					Object.assign(item, { date: selectedDate });
+					Object.assign(item, { focused: item.focused });
+				}
+			});
+			dispatch(getFilteredDataByMonth(filteredDataByMonth));
 		} catch (error) {}
 
 		closeModal();
@@ -100,15 +131,14 @@ const AddItemModal = ({
 	return (
 		<View>
 			<Modal
-					visible={showHideModal}
-					animationType="fade"
-					transparent={true}
-				>
-			<TouchableWithoutFeedback
-				onPress={Keyboard.dismiss}
-				accessible={false}
+				visible={showHideModal}
+				animationType="fade"
+				transparent={true}
 			>
-				
+				<TouchableWithoutFeedback
+					onPress={Keyboard.dismiss}
+					accessible={false}
+				>
 					<View style={styles.centeredView}>
 						{showErrorModal ? (
 							<View style={[styles.modalView, { height: 300 }]}>
@@ -206,8 +236,7 @@ const AddItemModal = ({
 							</View>
 						)}
 					</View>
-				
-			</TouchableWithoutFeedback>
+				</TouchableWithoutFeedback>
 			</Modal>
 		</View>
 	);
