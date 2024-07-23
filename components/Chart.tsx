@@ -5,9 +5,9 @@ import { expenseColor, incomeColor } from "@/constants/Colors";
 import ActiveButton from "./ActiveButton";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { getCostInformation } from "@/store/manageData";
-import { chartFilterData, filterByMonth } from "@/utils/filterData";
-import { calculatingProcentage } from "@/utils/sumariseValue";
 import CostsView from "./CostsView";
+import calculatingProcentage from "@/utils/calculatingProcentage";
+import chartFilterData from "@/utils/chartFilterData";
 
 const Chart = () => {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
@@ -35,7 +35,7 @@ const Chart = () => {
 	useEffect(() => {
 		dispatch(getCostInformation(isSelected));
 	}, [isSelected]);
-
+	
 	useEffect(() => {
 		const chartFilter = chartFilterData(filteredDataByMonth);
 		if (chartFilter.length == 0) {
@@ -54,9 +54,10 @@ const Chart = () => {
 			setPercent(calculatingProcentage(chartFilter[0].value, sum));
 			chartFilter[0].focused = true;
 			setData(chartFilter);
+			
 		}
 	}, [filteredDataByMonth]);
-
+	
 	return (
 		<View style={[styles.chartContener, styles.shadowProp]}>
 			<View style={styles.buttonsContener}>

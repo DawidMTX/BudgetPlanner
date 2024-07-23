@@ -1,4 +1,4 @@
-import { filterByMonth } from "./filterData";
+import filterByMonth from "./filterByMonth";
 
 const sumariseValues = async (
 	incomesData: any,
@@ -15,12 +15,7 @@ const sumariseValues = async (
 	let incomes = filteredIncomes.reduce((acc: any, obj: any) => {
 		return acc + parseFloat(obj.value);
 	}, 0);
-	return {incomes, expense};
+	return { incomes, expense };
 };
-
-export const calculatingProcentage = (value: number, sum: number) => {
-	const percent = (value / sum) * 100;
-	return percent.toFixed(1)
-}
 
 export default sumariseValues;
