@@ -12,10 +12,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { AntIcon, MaterialIcon } from "./navigation/TabBarIcon";
 import Input from "./Input";
-import createNewItem, {
-	changeNumberValue,
-	handleChangeAmount,
-} from "@/utils/createNewItem";
+import createNewItem from "@/utils/createNewItem";
 import SelectData from "./SelectData";
 import getDays from "@/utils/handleGetDate";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -23,6 +20,8 @@ import getData from "@/utils/storageData";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { getFilteredDataByMonth } from "@/store/manageData";
 import PopUpModal from "./PopUpModal";
+import handleChangeAmount from "@/utils/handleChangeAmount";
+import validateAmount from "@/utils/validateAmount";
 
 const AddItemModal = ({
 	isVisible,
@@ -77,7 +76,7 @@ const AddItemModal = ({
 		}
 
 		const handlefastAdd = async () => {
-			const numberValue = await changeNumberValue(amount);
+			const numberValue = await validateAmount(amount);
 			let createdData: any = selectedItem;
 
 			Object.assign(createdData, { name: text });
@@ -95,7 +94,6 @@ const AddItemModal = ({
 				dispatch(getFilteredDataByMonth(handeAddData));
 			} else {
 				setShowErrorModal(true);
-				
 			}
 		};
 
@@ -104,7 +102,7 @@ const AddItemModal = ({
 	};
 
 	const editItem = async () => {
-		const numberValue = await changeNumberValue(amount);
+		const numberValue = await validateAmount(amount);
 		try {
 			const allData = await getData(isSelected);
 

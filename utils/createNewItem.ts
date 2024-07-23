@@ -1,37 +1,6 @@
 import getData from "./storageData";
+import validateAmount from "./validateAmount";
 
-export const handleChangeAmount = (text: any) => {
-	const numericValue = text
-		.replace(/[^,.\d]/g, "")
-		.replace(/^(\d*\.?)|(\d*)\.?/g, "$1$2");
-
-	return numericValue;
-};
-
-export const changeNumberValue = (amount: any) => {
-	let cost;
-	let dot;
-	let newAmount
-
-	if(amount.includes(",")){
-		dot = amount.indexOf(",");
-		amount = amount.splice(dot, 1, ".");
-	}
-	else if (amount.includes(".")) {
-		dot = amount.indexOf(".");
-	}
-
-	// if (amount.toString().includes(".")) {
-	// 	dot = amount.toString().indexOf(".");
-	// 	amount[dot]= ",";
-	// } 
-
-	if (dot > 0) {
-		return (cost = amount.slice(0, dot + 3));
-	} else cost = amount;
-
-	return cost;
-};
 
 const createNewItem = async (
 	selectedItem: any,
@@ -40,7 +9,7 @@ const createNewItem = async (
 	isSelected: any,
 	amount: any
 ) => {
-	const numberValue = await changeNumberValue(amount);
+	const numberValue = await validateAmount(amount);
 	let dataArray: any = [];
 	try {
 		let createdData: any = selectedItem;

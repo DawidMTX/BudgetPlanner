@@ -19,7 +19,8 @@ import { CategoryTypes } from "@/types";
 import PopUpModal from "@/components/PopUpModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLocalSearchParams } from "expo-router";
-import createNewItem, { handleChangeAmount } from "@/utils/createNewItem";
+import createNewItem from "@/utils/createNewItem";
+import handleChangeAmount from "@/utils/handleChangeAmount";
 
 export default function addNew() {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
@@ -155,8 +156,8 @@ export default function addNew() {
 						value={amount}
 						name="Kwota:"
 						style=""
-						onChangeText={(text: any) => {
-							const changedAmount = handleChangeAmount(text);
+						onChangeText={ (text: any) => {
+							const changedAmount =  handleChangeAmount(text);
 							setAmount(changedAmount);
 							
 						}}

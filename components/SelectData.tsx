@@ -23,8 +23,8 @@ const SelectData = ({
 	
 	return (
 		<GestureRecognizer
-		onSwipeLeft={handleSubDay}
-        onSwipeRight={handleAddDay}>
+		onSwipeLeft={handleAddDay}
+        onSwipeRight={handleSubDay}>
 			<View style={[styles.contener, style]}>
 				<TouchableOpacity onPress={handleSubDay}>
 					<AntIcon
