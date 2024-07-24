@@ -69,8 +69,9 @@ const AddItemModal = ({
 
 		if (newItem) {
 			await AsyncStorage.setItem(isSelected, JSON.stringify(newItem));
-
+			setShowErrorModal(false);
 			setShowHideModal(false);
+			closeModal();
 		} else {
 			setShowErrorModal(true);
 		}
@@ -98,7 +99,7 @@ const AddItemModal = ({
 		};
 
 		handlefastAdd();
-		closeModal();
+		
 	};
 
 	const editItem = async () => {
