@@ -13,7 +13,7 @@ const CostsView = ({bacgroundColor, bilans, name, textColor, style}: any) => {
                 style
 			]}
 		>
-			<Text style={[styles.bilansText,{color: textColor}]}>{name}: {bilans.toString()}</Text>
+			<Text style={[styles.bilansText,{color: textColor}]}>{name}: {bilans.toFixed(2).toString()}</Text>
 		</View>
 	);
 };

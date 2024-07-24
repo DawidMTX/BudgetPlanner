@@ -7,7 +7,7 @@ import {
 	getSumariseValue,
 } from "@/store/manageData";
 import { useAppDispatch, useAppSelector } from "@/store/store";
-import { filterByMonth } from "@/utils/filterData";
+import filterByMonth from "@/utils/filterByMonth";
 import { getMonths } from "@/utils/handleGetDate";
 import getData from "@/utils/storageData";
 import sumariseValues from "@/utils/sumariseValue";
