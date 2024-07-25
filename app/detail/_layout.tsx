@@ -1,9 +1,12 @@
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import { SelectCategory } from "@/contexts/SelectCategory";
 import { Stack, Tabs, useRouter } from "expo-router";
+import { useContext } from "react";
 import { Button, Text, TouchableOpacity } from "react-native";
 
 const detailLayout = () => {
 	const router = useRouter();
+	const {category} = useContext(SelectCategory)
 
 	return (
 		<Stack>
@@ -15,7 +18,7 @@ const detailLayout = () => {
 							<TabBarIcon name={"chevron-back"} />
 						</TouchableOpacity>
 					),
-					title: "",
+					title: category,
 				}}
 			/>
 		</Stack>

@@ -7,7 +7,7 @@ import {
 	TouchableHighlight,
 	View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useAppSelector } from "@/store/store";
 import DetailComponent from "./DetailComponent";
@@ -17,20 +17,19 @@ import {
 	GestureHandlerRootView,
 	RefreshControl,
 } from "react-native-gesture-handler";
-
+import { SelectCategory } from "@/contexts/SelectCategory";
 
 const IncomeExpenseDetail = () => {
 	const [showModal, setShowModal] = useState<boolean>(false);
-	const [refreshing, setRefreshing] = useState(false)
+	const [refreshing, setRefreshing] = useState(false);
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
 	);
 	const params = useLocalSearchParams();
-
-	
+	const { setCategory } = useContext(SelectCategory);
 
 	const { category, icon, color, isSelected }: any = params;
-
+	setCategory(category);
 	let singleCategoryData: any = [];
 
 	filteredDataByMonth.map((item: any) => {
@@ -41,7 +40,6 @@ const IncomeExpenseDetail = () => {
 
 	const selectedCategory = { icon: icon, color: color, title: category };
 	const selectedDate = filteredDataByMonth[0].date;
-	
 
 	const onRefresh = React.useCallback(() => {
 		setRefreshing(true);
@@ -86,12 +84,11 @@ const IncomeExpenseDetail = () => {
 						}
 					>
 						<View style={{ marginBottom: 70 }}>
-							<Text style={styles.titleText}>
-								Kategoria operacji: {category}
-							</Text>
-
 							{singleCategoryData.map((item: any, index: any) => (
-								<DetailComponent singleCategoryData={item} key={index}/>
+								<DetailComponent
+									singleCategoryData={item}
+									key={index}
+								/>
 							))}
 						</View>
 					</ScrollView>
