@@ -17,7 +17,7 @@ import { Swipeable } from "react-native-gesture-handler";
 import { AntIcon } from "@/components/navigation/TabBarIcon";
 import InsetShadow from "@/components/InsetShadow";
 import { getFilteredDataByMonth } from "@/store/manageData";
-import { filterByMonth } from "@/utils/filterData";
+
 
 const DetailComponent = ({ singleCategoryData, key }: any) => {
 	const [showEditModal, setShowEditModal] = useState(false);
