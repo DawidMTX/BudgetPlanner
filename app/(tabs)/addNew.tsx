@@ -37,7 +37,6 @@ export default function addNew() {
 		if (date) {
 			setIsSelected(selected);
 			setSelectedDate(date);
-		
 		}
 	}, [selected, date]);
 
@@ -49,7 +48,7 @@ export default function addNew() {
 		const date: any = getDays("sub", selectedDate);
 		setSelectedDate(date);
 	};
-	
+	console.log(amount);
 	const addItems = async () => {
 		const newItem = await createNewItem(
 			selectedCategory,
@@ -58,7 +57,7 @@ export default function addNew() {
 			isSelected,
 			amount
 		);
-	
+
 		if (newItem) {
 			await AsyncStorage.setItem(isSelected, JSON.stringify(newItem));
 			setShowErrorModal(false);
@@ -156,10 +155,9 @@ export default function addNew() {
 						value={amount}
 						name="Kwota:"
 						style=""
-						onChangeText={ (text: any) => {
-							const changedAmount =  handleChangeAmount(text);
+						onChangeText={(text: any) => {
+							const changedAmount = handleChangeAmount(text);
 							setAmount(changedAmount);
-							
 						}}
 						keyboardType="numeric"
 					/>
@@ -211,7 +209,6 @@ export default function addNew() {
 }
 
 const styles = StyleSheet.create({
-	
 	contener: {
 		flex: 1,
 		justifyContent: "space-around",

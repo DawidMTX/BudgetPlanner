@@ -8,6 +8,8 @@ const handleChangeAmount = (text: any) => {
 		numericValue = text
 			.replace(/[^.\d]/g, "")
 			.replace(/^(\d*\.?)|(\d*)\.?/g, "$1$2");
+	} else{
+		return text
 	}
 
 	return numericValue;
