@@ -36,7 +36,7 @@ const createNewItem = async (
 			return null;
 		}
 	} catch (error) {
-		console.log("Error mesage: ", error);
+		console.log("Error message: ", error);
 		return null;
 	}
 };

@@ -2,7 +2,6 @@ import BudgetContener from "@/components/BudgetContener";
 import Chart from "@/components/Chart";
 import SelectData from "@/components/SelectData";
 import {
-	
 	getFilteredDataByMonth,
 	getSumariseValue,
 } from "@/store/manageData";
@@ -13,7 +12,6 @@ import getData from "@/utils/storageData";
 import sumariseValues from "@/utils/sumariseValue";
 import { useIsFocused } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-
 import { StyleSheet, SafeAreaView } from "react-native";
 
 export default function HomeScreen() {

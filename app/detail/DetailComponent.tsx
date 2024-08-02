@@ -18,7 +18,6 @@ import { AntIcon } from "@/components/navigation/TabBarIcon";
 import InsetShadow from "@/components/InsetShadow";
 import { getFilteredDataByMonth } from "@/store/manageData";
 
-
 const DetailComponent = ({ singleCategoryData, key }: any) => {
 	const [showEditModal, setShowEditModal] = useState(false);
 	const incomeExpense = useAppSelector(state => state.manageData.isSelected);
@@ -38,7 +37,7 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 			<TouchableOpacity
 				onPress={deleteItem}
 				activeOpacity={0.6}
-				style={{ marginVertical: 1 }}
+				style={{ marginVertical: 1, backgroundColor: "#e63946" }}
 			>
 				<InsetShadow>
 					<View style={[styles.deleteBox, { backgroundColor: "#e63946" }]}>
@@ -54,7 +53,6 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 		);
 	};
 	const leftSwipe = () => {
-	
 		return (
 			<TouchableOpacity
 				onPress={() => {
@@ -79,7 +77,6 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 	};
 
 	const deleteItem = async () => {
-		
 		try {
 			const allData = await getData(incomeExpense);
 
