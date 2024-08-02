@@ -1,10 +1,13 @@
 import {
 	Animated,
+	Button,
+	RefreshControl,
 	SafeAreaView,
 	ScrollView,
 	StyleSheet,
 	Text,
 	TouchableHighlight,
+	TouchableOpacity,
 	View,
 } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
@@ -13,9 +16,7 @@ import { useAppSelector } from "@/store/store";
 import DetailComponent from "./DetailComponent";
 import { AntIcon } from "@/components/navigation/TabBarIcon";
 import AddItemModal from "@/components/AddItemModal";
-import {
-	GestureHandlerRootView
-} from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SelectCategory } from "@/contexts/SelectCategory";
 import { ImageBackground } from "expo-image";
 
@@ -23,7 +24,7 @@ const IncomeExpenseDetail = () => {
 	const router = useRouter();
 	const [showModal, setShowModal] = useState<boolean>(false);
 	const [refreshing, setRefreshing] = useState(false);
-	const filteredDataByMonth = useAppSelector(
+	let filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
 	);
 	const params = useLocalSearchParams();
@@ -33,31 +34,33 @@ const IncomeExpenseDetail = () => {
 	setCategory(category);
 	let singleCategoryData: any = [];
 
-	let selectedDate = filteredDataByMonth[0].date;
+	let selectedDate;
 
-	filteredDataByMonth.map((item: any) => {
-		if (item["title"].includes(category)) {
-			singleCategoryData.push(item);
-		}
-	});
+	console.log("filter: ", filteredDataByMonth);
 
-	// useEffect(() => {
-	// 	if (singleCategoryData.length <= 0) {
-	// 		router.back();
-	// 	} else {
-	// 		selectedDate = filteredDataByMonth[0].date;
-	// 	}
-	// }, [singleCategoryData]);
+	if (filteredDataByMonth.length > 0) {
+		selectedDate = filteredDataByMonth[0].date;
+		filteredDataByMonth.map((item: any) => {
+			if (item["title"].includes(category)) {
+				singleCategoryData.push(item);
+			}
+		});
+	} else {
+		router.back();
+	}
 
 	const selectedCategory = { icon: icon, color: color, title: category };
 
-	// const onRefresh = React.useCallback(() => {
-	// 	setRefreshing(true);
+	const onRefresh = React.useCallback(() => {
+		setRefreshing(true);
 
-	// 	setTimeout(() => {
-	// 		setRefreshing(false);
-	// 	}, 2000);
-	// }, []);
+		setTimeout(() => {
+			// filteredDataByMonth = useAppSelector(
+			// 	state => state.manageData.filteredData
+			// );
+			setRefreshing(false);
+		}, 2000);
+	}, []);
 
 	const closeModal = () => {
 		setShowModal(false);
@@ -84,12 +87,12 @@ const IncomeExpenseDetail = () => {
 					<View>
 						<ScrollView
 							style={{ height: "100%" }}
-							// refreshControl={
-							// 	<RefreshControl
-							// 		refreshing={refreshing}
-							// 		onRefresh={onRefresh}
-							// 	/>
-							// }
+							refreshControl={
+								<RefreshControl
+									refreshing={refreshing}
+									onRefresh={onRefresh}
+								/>
+							}
 						>
 							<View style={{ marginBottom: 70 }}>
 								{singleCategoryData.map((item: any, index: any) => (
@@ -134,7 +137,7 @@ const styles = StyleSheet.create({
 	},
 	imageStyles: {
 		flex: 1,
-		resizeMode: "cover",
+		resizeMode: "contain",
 		justifyContent: "center",
 	},
 	button: {
