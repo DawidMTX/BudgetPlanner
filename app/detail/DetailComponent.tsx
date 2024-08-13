@@ -83,18 +83,11 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 			const allData = await getData(incomeExpense);
 
 			const filteredData = allData.filter((item: any) => {
-				return (
-					item.id !== singleCategoryData.id &&
-					item.name !== singleCategoryData.name
-				);
+				return item.id !== singleCategoryData.id;
 			});
 			AsyncStorage.setItem(incomeExpense, JSON.stringify(filteredData));
 			const handleShowData = filteredDataByMonth.filter((item: any) => {
-				return (
-					item.id !== singleCategoryData.id &&
-					item.name !== singleCategoryData.name
-				);
-			
+				return item.id !== singleCategoryData.id;
 			});
 			dispatch(getFilteredDataByMonth(handleShowData));
 		} catch (error) {}
@@ -122,7 +115,7 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 					/>
 				)}
 				<View>
-					<Text style={styles.nameText}>{singleCategoryData.id}</Text>
+					<Text style={styles.nameText}>{singleCategoryData.name}</Text>
 					<Text style={styles.dateText}>
 						{format(singleCategoryData.date, "dd.MM.yyyy")}
 					</Text>

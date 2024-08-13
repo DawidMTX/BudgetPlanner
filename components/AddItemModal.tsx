@@ -36,7 +36,7 @@ const AddItemModal = ({
 	const [text, setText] = useState<string | any>("");
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
-	const id = Math.floor(Math.random() * 10000)
+	const id = Date.now()
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
 	);
