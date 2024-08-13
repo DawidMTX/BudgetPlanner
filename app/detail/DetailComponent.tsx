@@ -84,15 +84,15 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 
 			const filteredData = allData.filter((item: any) => {
 				return (
-					item.id !== singleCategoryData.id
-					// item.name !== singleCategoryData.name
+					item.id !== singleCategoryData.id &&
+					item.name !== singleCategoryData.name
 				);
 			});
 			AsyncStorage.setItem(incomeExpense, JSON.stringify(filteredData));
 			const handleShowData = filteredDataByMonth.filter((item: any) => {
 				return (
-					item.id !== singleCategoryData.id
-					// item.name !== singleCategoryData.name
+					item.id !== singleCategoryData.id &&
+					item.name !== singleCategoryData.name
 				);
 			
 			});
