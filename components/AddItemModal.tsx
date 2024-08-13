@@ -36,6 +36,7 @@ const AddItemModal = ({
 	const [text, setText] = useState<string | any>("");
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
+	const [id, setId] = useState(Math.floor(Math.random() * 100));
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
 	);
@@ -64,11 +65,13 @@ const AddItemModal = ({
 			text,
 			selectedDate,
 			isSelected,
-			amount
+			amount,
+			id
 		);
 
 		if (newItem) {
 			await AsyncStorage.setItem(isSelected, JSON.stringify(newItem));
+
 			setShowErrorModal(false);
 			setShowHideModal(false);
 			closeModal();
@@ -82,7 +85,7 @@ const AddItemModal = ({
 
 			Object.assign(createdData, { name: text });
 			Object.assign(createdData, { value: numberValue });
-			Object.assign(createdData, { id: Math.floor(Math.random() * 100) });
+			Object.assign(createdData, { id: id });
 			Object.assign(createdData, { date: selectedDate });
 			Object.assign(createdData, { focused: false });
 
@@ -99,7 +102,6 @@ const AddItemModal = ({
 		};
 
 		handlefastAdd();
-		
 	};
 
 	const editItem = async () => {

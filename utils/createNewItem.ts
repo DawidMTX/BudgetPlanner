@@ -1,5 +1,8 @@
+
 import getData from "./storageData";
 import validateAmount from "./validateAmount";
+
+
 
 
 const createNewItem = async (
@@ -7,7 +10,8 @@ const createNewItem = async (
 	text: any,
 	selectedDate: any,
 	isSelected: any,
-	amount: any
+	amount: any,
+	id: number
 ) => {
 	const numberValue = await validateAmount(amount);
 	let dataArray: any = [];
@@ -15,7 +19,7 @@ const createNewItem = async (
 		let createdData: any = selectedItem;
 		Object.assign(createdData, { name: text });
 		Object.assign(createdData, { value: numberValue });
-		Object.assign(createdData, { id: Math.floor(Math.random() * 100) });
+		Object.assign(createdData, { id: id});
 		Object.assign(createdData, { date: selectedDate });
 		Object.assign(createdData, { focused: false });
 
