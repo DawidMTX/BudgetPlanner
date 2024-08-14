@@ -1,19 +1,26 @@
 import { ScrollView, Image, StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useRef } from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 import { DropdownProps } from "@/types";
 // import { Image } from "expo-image";
+
+const dropdownRef = useRef<SelectDropdown>(null);
 
 const Dropdown = ({
 	entryData,
 	onSelect,
 	title,
 	showChevronIcon,
+	reset,
 }: DropdownProps) => {
 	
+	if(reset){
+		dropdownRef.current?.reset()
+	}
 	return (
 		<SelectDropdown
+		ref={dropdownRef}
 			data={entryData}
 			onSelect={onSelect}
 			renderButton={(selectedItem, isOpened) => {

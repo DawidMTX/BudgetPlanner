@@ -47,6 +47,7 @@ export interface DropdownProps {
 	onSelect: (selectedItem: {}, index: number) => void;
 	title: string;
 	showChevronIcon: boolean;
+	reset: boolean
 }
 
 export interface InputProps {

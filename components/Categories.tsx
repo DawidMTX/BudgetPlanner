@@ -55,9 +55,9 @@ const Categories = ({ category }: any) => {
 			</View>
 			<View>
 				{incomeExpense == "expenses" ? (
-					<Text style={{ fontSize: 22, color: redValueColor }}>- {sum} zł</Text>
+					<Text style={{ fontSize: 22, color: redValueColor }}>- {sum.toFixed(2)} zł</Text>
 				) : (
-					<Text style={{ fontSize: 22, color: incomeColor }}>{sum} zł</Text>
+					<Text style={{ fontSize: 22, color: incomeColor }}>{sum.toFixed(2)} zł</Text>
 				)}
 			</View>
 		</TouchableOpacity>

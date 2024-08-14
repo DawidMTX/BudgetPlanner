@@ -30,10 +30,11 @@ export default function addNew() {
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
 	const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
+	const [isReset, setIsReset] = useState<boolean>(false);
 	const id = Date.now();
 	const params = useLocalSearchParams();
 	const { selected, date }: any = params;
- 
+
 	useEffect(() => {
 		if (date) {
 			setIsSelected(selected);
@@ -49,22 +50,23 @@ export default function addNew() {
 		const date: any = getDays("sub", selectedDate);
 		setSelectedDate(date);
 	};
-	
+
 	const addItems = async () => {
 		const newItem = await createNewItem(
 			selectedCategory,
 			text,
 			selectedDate,
 			isSelected,
-			amount, 
+			amount,
 			id
 		);
 
 		if (newItem) {
 			await AsyncStorage.setItem(isSelected, JSON.stringify(newItem));
+			clearItems();
 			setShowErrorModal(false);
 			setShowSuccessModal(true);
-			clearItems();
+			setIsReset(false);
 		} else {
 			setShowErrorModal(true);
 			setShowSuccessModal(false);
@@ -73,7 +75,7 @@ export default function addNew() {
 
 	const clearItems = () => {
 		setText("");
-		setSelectedCategory({ title: "", icon: "", color: "" });
+		setIsReset(true);
 		setAmount("");
 		setSelectedDate(new Date());
 	};
@@ -141,6 +143,7 @@ export default function addNew() {
 					<View>
 						<Text>Rodzaj: </Text>
 						<Dropdown
+							reset={isReset}
 							title={"Wybierz kategorie"}
 							showChevronIcon={true}
 							entryData={
