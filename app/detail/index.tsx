@@ -36,7 +36,6 @@ const IncomeExpenseDetail = () => {
 
 	let selectedDate;
 
-	console.log("filter: ", filteredDataByMonth);
 
 	if (filteredDataByMonth.length > 0) {
 		selectedDate = filteredDataByMonth[0].date;

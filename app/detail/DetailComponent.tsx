@@ -24,6 +24,9 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
 	);
+
+	// ZROBIC ODSWIERZANIE ELEMENTU ABY POBIERALO JESCZE RAZ FILTERED DATA BY MONTH I ZROBIC REFRESHING ( INDEX.TSX)
+	// pomysl o refresch na zasadzie useEffect a jako zaleznosc cos tam dodac, to wtedy komponent sie odswirzt
 	const swipeableRef = useRef<any>(null);
 
 	const dispatch = useAppDispatch();
@@ -73,7 +76,6 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 				</InsetShadow>
 			</TouchableOpacity>
 		);
-		closeSwipeable();
 	};
 
 	const deleteItem = async () => {
@@ -81,17 +83,11 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 			const allData = await getData(incomeExpense);
 
 			const filteredData = allData.filter((item: any) => {
-				return (
-					item.id !== singleCategoryData.id &&
-					item.name !== singleCategoryData.name
-				);
+				return item.id !== singleCategoryData.id;
 			});
 			AsyncStorage.setItem(incomeExpense, JSON.stringify(filteredData));
 			const handleShowData = filteredDataByMonth.filter((item: any) => {
-				return (
-					item.id !== singleCategoryData.id &&
-					item.name !== singleCategoryData.name
-				);
+				return item.id !== singleCategoryData.id;
 			});
 			dispatch(getFilteredDataByMonth(handleShowData));
 		} catch (error) {}

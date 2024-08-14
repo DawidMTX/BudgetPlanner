@@ -30,9 +30,10 @@ export default function addNew() {
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
 	const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
+	const id = Date.now();
 	const params = useLocalSearchParams();
 	const { selected, date }: any = params;
-
+ 
 	useEffect(() => {
 		if (date) {
 			setIsSelected(selected);
@@ -55,7 +56,8 @@ export default function addNew() {
 			text,
 			selectedDate,
 			isSelected,
-			amount
+			amount, 
+			id
 		);
 
 		if (newItem) {
