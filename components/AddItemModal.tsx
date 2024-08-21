@@ -9,7 +9,7 @@ import {
 	TouchableWithoutFeedback,
 	View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AntIcon, MaterialIcon } from "./navigation/TabBarIcon";
 import Input from "./Input";
 import createNewItem from "@/utils/createNewItem";
@@ -22,6 +22,7 @@ import { getFilteredDataByMonth } from "@/store/manageData";
 import PopUpModal from "./PopUpModal";
 import handleChangeAmount from "@/utils/handleChangeAmount";
 import validateAmount from "@/utils/validateAmount";
+import { TemporaryDataContext } from "@/contexts/TemporaryData";
 
 const AddItemModal = ({
 	isVisible,
@@ -41,6 +42,7 @@ const AddItemModal = ({
 		state => state.manageData.filteredData
 	);
 	const dispatch = useAppDispatch();
+	const { setTemporaryData } = useContext(TemporaryDataContext);
 
 	useEffect(() => {
 		setSelectedDate(date);
@@ -94,8 +96,8 @@ const AddItemModal = ({
 				createdData.name.length > 0 &&
 				createdData.value.length > 0
 			) {
-				let handeAddData = [...filteredDataByMonth, createdData];
-				dispatch(getFilteredDataByMonth(handeAddData));
+				let handleAddData = [...filteredDataByMonth, createdData];
+				dispatch(getFilteredDataByMonth(handleAddData));
 			} else {
 				setShowErrorModal(true);
 			}
@@ -119,7 +121,10 @@ const AddItemModal = ({
 					Object.assign(item, { id: item.id });
 					Object.assign(item, { date: selectedDate });
 					Object.assign(item, { focused: item.focused });
+					console.log('ItemL: ',item)
+					setTemporaryData(item)
 				}
+		
 			});
 
 			AsyncStorage.setItem(isSelected, JSON.stringify(allData));
@@ -134,6 +139,7 @@ const AddItemModal = ({
 					Object.assign(item, { id: item.id });
 					Object.assign(item, { date: selectedDate });
 					Object.assign(item, { focused: item.focused });
+					
 				}
 			});
 			dispatch(getFilteredDataByMonth(filteredDataByMonth));
@@ -211,7 +217,7 @@ const AddItemModal = ({
 									keyboardType="numeric"
 								/>
 								<View>
-									<Text>Data: </Text>
+									<Text style={{fontFamily: "Mrt"}}>Data: </Text>
 									<SelectData
 										style={{
 											width: 300,
@@ -270,6 +276,7 @@ const styles = StyleSheet.create({
 		marginBottom: 15,
 		textAlign: "center",
 		fontSize: 26,
+		fontFamily: 'MrtMed'
 	},
 	centeredView: {
 		flex: 1,
@@ -318,6 +325,7 @@ const styles = StyleSheet.create({
 		color: "white",
 		fontWeight: "bold",
 		textAlign: "center",
+		fontFamily: 'MrtBold'
 	},
 	buttonCloseErrorStyle: {
 		borderRadius: 10,

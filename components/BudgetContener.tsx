@@ -54,7 +54,7 @@ const BudgetContener = ({selectedDate}: any) => {
 								source={require("@/assets/images/box.png")}
 								style={styles.iamgeStyles}
 							/>
-							<Text style={{ fontSize: 18 }}>Ups! Nic tutaj nie ma!</Text>
+							<Text style={{ fontSize: 18, fontFamily: "MrtMed"}}>Ups! Nic tutaj nie ma!</Text>
 							<Link
 								href={{
 									pathname: "/(tabs)/addNew",

@@ -21,7 +21,7 @@ const CostsView = ({bacgroundColor, bilans, name, textColor, style}: any) => {
 export default CostsView;
 
 const styles = StyleSheet.create({
-    bilansText: {fontSize: 18 },
+    bilansText: {fontSize: 18, fontFamily: 'MrtMed'},
 
 	incomeExpenses: {
 		padding: 7,

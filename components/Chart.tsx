@@ -91,11 +91,11 @@ const Chart = () => {
 						return (
 							<View style={{ justifyContent: "center", alignItems: "center" }}>
 								<Text
-									style={{ fontSize: 22, color: "white", fontWeight: "bold" }}
+									style={{ fontSize: 22, color: "white",  fontFamily: 'MrtBold' }}
 								>
 									{percent.toString()} %
 								</Text>
-								<Text style={{ fontSize: 14, color: "white" }}>
+								<Text style={{ fontSize: 14, color: "white", fontFamily: 'MrtMed' }}>
 									{nameOfCategory}
 								</Text>
 							</View>

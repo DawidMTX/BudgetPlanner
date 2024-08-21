@@ -12,7 +12,7 @@ const Input = ({
 }: InputProps) => {
 	return (
 		<View>
-			<Text>{name} </Text>
+			<Text style={{fontFamily: 'Mrt'}}>{name} </Text>
 			<TextInput
 				style={[styles.input, style]}
 				onChangeText={onChangeText}

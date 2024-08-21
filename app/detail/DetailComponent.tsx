@@ -6,7 +6,7 @@ import {
 	TouchableOpacity,
 	View,
 } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { format } from "date-fns";
 import { incomeColor, redValueColor } from "@/constants/Colors";
 import { useAppDispatch, useAppSelector } from "@/store/store";
@@ -17,6 +17,7 @@ import { Swipeable } from "react-native-gesture-handler";
 import { AntIcon } from "@/components/navigation/TabBarIcon";
 import InsetShadow from "@/components/InsetShadow";
 import { getFilteredDataByMonth } from "@/store/manageData";
+import { TemporaryDataContext } from "@/contexts/TemporaryData";
 
 const DetailComponent = ({ singleCategoryData, key }: any) => {
 	const [showEditModal, setShowEditModal] = useState(false);
@@ -24,7 +25,12 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
 	);
+	const { temporaryData } = useContext(TemporaryDataContext);
+	// USUNAC TEN YSE CONTENT RAZEM Z PROVIDEREM
 
+	useEffect(() => {
+		
+	},[])
 	// ZROBIC ODSWIERZANIE ELEMENTU ABY POBIERALO JESCZE RAZ FILTERED DATA BY MONTH I ZROBIC REFRESHING ( INDEX.TSX)
 	// pomysl o refresch na zasadzie useEffect a jako zaleznosc cos tam dodac, to wtedy komponent sie odswirzt
 	const swipeableRef = useRef<any>(null);
@@ -58,9 +64,7 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 	const leftSwipe = () => {
 		return (
 			<TouchableOpacity
-				onPress={() => {
-					setShowEditModal(true);
-				}}
+				onPress={editItem}
 				activeOpacity={0.6}
 				style={{ marginVertical: 1 }}
 			>
@@ -94,6 +98,14 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 		closeSwipeable();
 	};
 
+	const editItem = () => {
+		setShowEditModal(true);
+		// if (!showEditModal) {
+		// 	singleCategoryData = temporaryData;
+		// 	console.log("single :", temporaryData);
+		// }
+	};
+
 	const closeModal = () => {
 		setShowEditModal(false);
 	};
@@ -122,12 +134,12 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 				</View>
 				<View>
 					{incomeExpense == "expenses" ? (
-						<Text style={{ fontSize: 22, color: redValueColor }}>
+						<Text style={{ fontSize: 22, color: redValueColor, fontFamily: 'MrtMed' }}>
 							{" "}
 							- {singleCategoryData.value} zł
 						</Text>
 					) : (
-						<Text style={{ fontSize: 22, color: incomeColor }}>
+						<Text style={{ fontSize: 22, color: incomeColor, fontFamily: 'MrtMed'  }}>
 							{singleCategoryData.value} zł
 						</Text>
 					)}
@@ -153,12 +165,15 @@ const styles = StyleSheet.create({
 	},
 	valueText: {
 		fontSize: 30,
+		fontFamily: 'MrtMed'
 	},
 	nameText: {
 		fontSize: 28,
+		fontFamily: 'MrtMed'
 	},
 	dateText: {
 		fontSize: 17,
+		fontFamily: 'Mrt'
 	},
 	deleteBox: {
 		justifyContent: "center",

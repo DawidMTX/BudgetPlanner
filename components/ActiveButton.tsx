@@ -9,7 +9,7 @@ import { ActiveButtonProps } from "@/types";
 			style={[styles.button, isSelected === active ? [styles.buttonIsSelected, activeStyle] : null, style]}
 			onPress={onPress}
 		>
-			<Text>{title}</Text>
+			<Text style={{fontFamily: 'MrtMed', fontSize: 16}}>{title}</Text>
 		</TouchableOpacity>
 	);
 

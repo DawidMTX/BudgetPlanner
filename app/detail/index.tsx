@@ -20,6 +20,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SelectCategory } from "@/contexts/SelectCategory";
 import { ImageBackground } from "expo-image";
 
+
 const IncomeExpenseDetail = () => {
 	const router = useRouter();
 	const [showModal, setShowModal] = useState<boolean>(false);
@@ -32,10 +33,15 @@ const IncomeExpenseDetail = () => {
 
 	const { category, icon, color, isSelected }: any = params;
 	setCategory(category);
+
+	
+	useEffect(() => {
+		
+	}, []);
+
 	let singleCategoryData: any = [];
 
 	let selectedDate;
-
 
 	if (filteredDataByMonth.length > 0) {
 		selectedDate = filteredDataByMonth[0].date;
@@ -48,6 +54,7 @@ const IncomeExpenseDetail = () => {
 		router.back();
 	}
 
+	console.log("FilteredData: , ", filteredDataByMonth);
 	const selectedCategory = { icon: icon, color: color, title: category };
 
 	const onRefresh = React.useCallback(() => {

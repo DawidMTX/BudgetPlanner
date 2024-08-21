@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
 	textStyle: {
 		alignItems: "center",
 		fontSize: 20,
+		fontFamily: "Mrt"
 	},
 	iconStyle: {
 		fontSize: 25,

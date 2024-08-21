@@ -51,7 +51,11 @@ export default function addNew() {
 		setSelectedDate(date);
 	};
 
+
+
 	const addItems = async () => {
+
+		console.log("")
 		const newItem = await createNewItem(
 			selectedCategory,
 			text,
@@ -130,7 +134,7 @@ export default function addNew() {
 					<Input
 						placeholder="Nazwa"
 						value={text}
-						name="Nazwa"
+						name="Nazwa:"
 						style={
 							text.length > 2 || text.length == 0
 								? null
@@ -141,7 +145,7 @@ export default function addNew() {
 					/>
 
 					<View>
-						<Text>Rodzaj: </Text>
+						<Text style={{fontFamily: 'Mrt'}}>Rodzaj: </Text>
 						<Dropdown
 							reset={isReset}
 							title={"Wybierz kategorie"}
@@ -168,7 +172,7 @@ export default function addNew() {
 					/>
 
 					<View>
-						<Text>Data: </Text>
+						<Text style={{fontFamily: 'Mrt'}}>Data: </Text>
 						<SelectData
 							style={{
 								width: 300,
@@ -232,6 +236,7 @@ const styles = StyleSheet.create({
 		fontSize: 28,
 		alignSelf: "center",
 		marginTop: 10,
+		fontFamily: 'MrtBold'
 	},
 	inputContener: {
 		alignItems: "center",

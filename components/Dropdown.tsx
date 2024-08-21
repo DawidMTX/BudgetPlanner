@@ -85,6 +85,7 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		fontWeight: "500",
 		color: "#151E26",
+		fontFamily: 'Mrt'
 	},
 	dropdownButtonArrowStyle: {
 		fontSize: 28,
@@ -113,6 +114,7 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		fontWeight: "500",
 		color: "#151E26",
+		fontFamily: 'Mrt'
 	},
 	dropdownItemIconStyle: {
 		marginRight: 12
