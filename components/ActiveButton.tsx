@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { ActiveButtonProps } from "@/types";
+import { normalize } from "@/utils/normalizeFont";
 
 
 
@@ -9,7 +10,7 @@ import { ActiveButtonProps } from "@/types";
 			style={[styles.button, isSelected === active ? [styles.buttonIsSelected, activeStyle] : null, style]}
 			onPress={onPress}
 		>
-			<Text style={{fontFamily: 'MrtMed', fontSize: 16}}>{title}</Text>
+			<Text style={{fontFamily: 'MrtMed', fontSize: normalize(14)}}>{title}</Text>
 		</TouchableOpacity>
 	);
 

@@ -21,6 +21,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLocalSearchParams } from "expo-router";
 import createNewItem from "@/utils/createNewItem";
 import handleChangeAmount from "@/utils/handleChangeAmount";
+import { normalize } from "@/utils/normalizeFont";
 
 export default function addNew() {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
@@ -148,7 +149,7 @@ export default function addNew() {
 					/>
 
 					<View>
-						<Text style={{fontFamily: 'Mrt'}}>Rodzaj: </Text>
+						<Text style={styles.label}>Rodzaj: </Text>
 						<Dropdown
 							reset={isReset}
 							title={"Wybierz kategorie"}
@@ -175,7 +176,7 @@ export default function addNew() {
 					/>
 
 					<View>
-						<Text style={{fontFamily: 'Mrt'}}>Data: </Text>
+						<Text style={styles.label}>Data: </Text>
 						<SelectData
 							style={{
 								width: 300,
@@ -262,4 +263,8 @@ const styles = StyleSheet.create({
 		padding: 15,
 		color: "white",
 	},
+	label: {
+		fontFamily: 'Mrt',
+		fontSize: normalize(15)
+	}
 });

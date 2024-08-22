@@ -11,6 +11,7 @@ import { SelectDateProps } from "@/types";
 import { format } from "date-fns";
 import { pl, se } from "date-fns/locale";
 import GestureRecognizer from "react-native-swipe-gestures";
+import { normalize } from "@/utils/normalizeFont";
 
 
 const SelectData = ({
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
 	},
 	textStyle: {
 		alignItems: "center",
-		fontSize: 20,
+		fontSize: normalize(18),
 		fontFamily: "Mrt"
 	},
 	iconStyle: {

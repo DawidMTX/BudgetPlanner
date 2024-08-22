@@ -1,3 +1,4 @@
+import { normalize } from "@/utils/normalizeFont";
 import {
 	Image,
 	StyleSheet,
@@ -41,19 +42,17 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		gap: 8,
-
 	},
 	title: {
 		textTransform: "uppercase",
-		fontSize: 32,
-  fontFamily: 'MrtBold'
+		fontSize: normalize(28),
+		fontFamily: "MrtBold",
 	},
 	stepContainer: {
 		gap: 8,
 		marginBottom: 8,
 	},
-  buttonTittle: {
-    fontFamily: "Mrt"
-  }
-
+	buttonTittle: {
+		fontFamily: "Mrt",
+	},
 });

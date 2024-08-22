@@ -5,6 +5,7 @@ import { useRouter } from "expo-router";
 import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
 import { incomeColor, redValueColor } from "@/constants/Colors";
 import { useAppSelector } from "@/store/store";
+import { normalize } from "@/utils/normalizeFont";
 
 export interface HomeScreenProps {
 	navigation: NativeStackScreenProps<any, any>;
@@ -50,14 +51,14 @@ const Categories = ({ category }: any) => {
 				<Image source={icon} />
 			</View>
 			<View>
-				<Text style={{ fontSize: 20, fontFamily: 'MrtMed' }}>{category.name}</Text>
+				<Text style={{ fontSize: normalize(15), fontFamily: 'MrtMed' }}>{category.name}</Text>
 				<Text style={{fontFamily: 'Mrt'}}>Transakcje: {category.data.length}</Text>
 			</View>
 			<View>
 				{incomeExpense == "expenses" ? (
-					<Text style={{ fontSize: 22, color: redValueColor, fontFamily: 'MrtMed' }}>- {sum.toFixed(2)} zł</Text>
+					<Text style={{ fontSize: normalize(15), color: redValueColor, fontFamily: 'MrtMed' }}>- {sum.toFixed(2)} zł</Text>
 				) : (
-					<Text style={{ fontSize: 22, color: incomeColor,fontFamily: 'MrtMed' }}>{sum.toFixed(2)} zł</Text>
+					<Text style={{ fontSize: normalize(15), color: incomeColor,fontFamily: 'MrtMed' }}>{sum.toFixed(2)} zł</Text>
 				)}
 			</View>
 		</TouchableOpacity>

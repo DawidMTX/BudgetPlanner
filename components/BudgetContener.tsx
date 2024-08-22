@@ -14,6 +14,7 @@ import filterData from "@/utils/filterData";
 import CostsView from "./CostsView";
 import { expenseColor, incomeColor } from "@/constants/Colors";
 import { Link } from "expo-router";
+import { normalize } from "@/utils/normalizeFont";
 
 const BudgetContener = ({selectedDate}: any) => {
 	const [data, setData] = useState<object[]>([]);
@@ -54,7 +55,7 @@ const BudgetContener = ({selectedDate}: any) => {
 								source={require("@/assets/images/box.png")}
 								style={styles.iamgeStyles}
 							/>
-							<Text style={{ fontSize: 18, fontFamily: "MrtMed"}}>Ups! Nic tutaj nie ma!</Text>
+							<Text style={{ fontSize: normalize(18), fontFamily: "MrtMed"}}>Ups! Nic tutaj nie ma!</Text>
 							<Link
 								href={{
 									pathname: "/(tabs)/addNew",

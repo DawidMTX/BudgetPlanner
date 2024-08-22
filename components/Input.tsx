@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useState } from "react";
 import { InputProps } from "@/types";
+import { normalize } from "@/utils/normalizeFont";
 
 const Input = ({
 	name,
@@ -12,7 +13,7 @@ const Input = ({
 }: InputProps) => {
 	return (
 		<View>
-			<Text style={{fontFamily: 'Mrt'}}>{name} </Text>
+			<Text style={styles.label}>{name} </Text>
 			<TextInput
 				style={[styles.input, style]}
 				onChangeText={onChangeText}
@@ -34,6 +35,11 @@ const styles = StyleSheet.create({
 		borderWidth: 0.2,
 		padding: 10,
 		borderRadius: 10,
-		fontSize: 18,
+		fontSize: normalize(16),
+		fontFamily: 'Mrt'
 	},
+	label:{
+		fontFamily: 'Mrt',
+		fontSize: normalize(15)
+	}
 });

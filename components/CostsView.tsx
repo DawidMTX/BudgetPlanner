@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { normalize } from "@/utils/normalizeFont";
 
 const CostsView = ({bacgroundColor, bilans, name, textColor, style}: any) => {
 	return (
@@ -21,7 +22,7 @@ const CostsView = ({bacgroundColor, bilans, name, textColor, style}: any) => {
 export default CostsView;
 
 const styles = StyleSheet.create({
-    bilansText: {fontSize: 18, fontFamily: 'MrtMed'},
+    bilansText: {fontSize: normalize(16), fontFamily: 'MrtMed'},
 
 	incomeExpenses: {
 		padding: 7,

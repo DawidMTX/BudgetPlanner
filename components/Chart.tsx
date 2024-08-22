@@ -8,6 +8,7 @@ import { getCostInformation } from "@/store/manageData";
 import CostsView from "./CostsView";
 import calculatingProcentage from "@/utils/calculatingProcentage";
 import chartFilterData from "@/utils/chartFilterData";
+import { normalize } from "@/utils/normalizeFont";
 
 const Chart = () => {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
@@ -91,11 +92,11 @@ const Chart = () => {
 						return (
 							<View style={{ justifyContent: "center", alignItems: "center" }}>
 								<Text
-									style={{ fontSize: 22, color: "white",  fontFamily: 'MrtBold' }}
+									style={{ fontSize: normalize(20), color: "white",  fontFamily: 'MrtBold' }}
 								>
 									{percent.toString()} %
 								</Text>
-								<Text style={{ fontSize: 14, color: "white", fontFamily: 'MrtMed' }}>
+								<Text style={{ fontSize: normalize(12), color: "white", fontFamily: 'MrtMed' }}>
 									{nameOfCategory}
 								</Text>
 							</View>
