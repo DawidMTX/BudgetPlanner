@@ -55,7 +55,7 @@ export default function addNew() {
 
 	const addItems = async () => {
 
-		console.log("")
+		
 		const newItem = await createNewItem(
 			selectedCategory,
 			text,
@@ -64,6 +64,9 @@ export default function addNew() {
 			amount,
 			id
 		);
+
+		console.log("Add: ", newItem
+		)
 
 		if (newItem) {
 			await AsyncStorage.setItem(isSelected, JSON.stringify(newItem));

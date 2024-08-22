@@ -1,9 +1,5 @@
-
 import getData from "./storageData";
 import validateAmount from "./validateAmount";
-
-
-
 
 const createNewItem = async (
 	selectedItem: any,
@@ -19,7 +15,7 @@ const createNewItem = async (
 		let createdData: any = selectedItem;
 		Object.assign(createdData, { name: text });
 		Object.assign(createdData, { value: numberValue });
-		Object.assign(createdData, { id: id});
+		Object.assign(createdData, { id: id });
 		Object.assign(createdData, { date: selectedDate });
 		Object.assign(createdData, { focused: false });
 
@@ -29,11 +25,11 @@ const createNewItem = async (
 			createdData.value.length > 0
 		) {
 			const dataFromStorage = await getData(isSelected);
-
-			if (dataFromStorage.length > 0) {
-				dataArray = [...dataFromStorage, createdData];
-			} else {
+			console.log("Data: ", dataFromStorage);
+			if (dataFromStorage === null) {
 				dataArray.push(createdData);
+			} else if (dataFromStorage.length > 0) {
+				dataArray = [...dataFromStorage, createdData];
 			}
 			return dataArray;
 		} else {
