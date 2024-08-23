@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { SafeAreaView, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { PieChart } from "react-native-gifted-charts";
 import { expenseColor, incomeColor } from "@/constants/Colors";
@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
 		padding: 25,
 		borderRadius: 10,
 		backgroundColor: "white",
+		height: '45%'
 	},
 	buttonsContener: {
 		width: "100%",

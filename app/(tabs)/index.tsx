@@ -1,10 +1,7 @@
 import BudgetContener from "@/components/BudgetContener";
 import Chart from "@/components/Chart";
 import SelectData from "@/components/SelectData";
-import {
-	getFilteredDataByMonth,
-	getSumariseValue,
-} from "@/store/manageData";
+import { getFilteredDataByMonth, getSumariseValue } from "@/store/manageData";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import filterByMonth from "@/utils/filterByMonth";
 import { getMonths } from "@/utils/handleGetDate";
@@ -12,13 +9,14 @@ import getData from "@/utils/storageData";
 import sumariseValues from "@/utils/sumariseValue";
 import { useIsFocused } from "@react-navigation/native";
 import { useEffect, useState } from "react";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView, View, Dimensions } from "react-native";
 
 export default function HomeScreen() {
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const costInformation = useAppSelector(state => state.manageData.isSelected);
 	const dispatch = useAppDispatch();
 	const isFocus = useIsFocused();
+	const { width, height } = Dimensions.get('screen');
 
 	const addDay = () => {
 		const date: any = getMonths("add", selectedDate);
@@ -45,16 +43,16 @@ export default function HomeScreen() {
 					filteredDataByMonth = filterByMonth(incomesData, selectedDate);
 					break;
 			}
-			
+
 			dispatch(getFilteredDataByMonth(filteredDataByMonth));
 
-			const {incomes, expense} = await sumariseValues(
+			const { incomes, expense } = await sumariseValues(
 				incomesData,
 				expensesData,
 				selectedDate
 			);
-			
-			dispatch(getSumariseValue({incomes, expense}));
+
+			dispatch(getSumariseValue({ incomes, expense }));
 		};
 
 		showData();
@@ -78,8 +76,10 @@ export default function HomeScreen() {
 				handleAddDay={addDay}
 				handleSubDay={subDay}
 			/>
-			<Chart />
-			<BudgetContener selectedDate={selectedDate}/>
+		
+				<Chart />
+				<BudgetContener selectedDate={selectedDate} />
+			
 		</SafeAreaView>
 	);
 }

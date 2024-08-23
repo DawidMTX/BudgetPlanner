@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
 		borderRadius: 10,
 		backgroundColor: "white",
 		flex: 1,
+		height: '45%'
 	},
 	shadowProp: {
 		shadowColor: "#171717",
@@ -109,7 +110,6 @@ const styles = StyleSheet.create({
 		shadowRadius: 3,
 	},
 	noDataStyles: {
-		height: 260,
 		justifyContent: "center",
 		alignItems: "center",
 	},

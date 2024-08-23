@@ -47,19 +47,38 @@ const Categories = ({ category }: any) => {
 			}
 			style={[styles.contener, { borderColor: color, backgroundColor: rgba }]}
 		>
-			<View>
+			<View style={{ flexGrow: 1 }}>
 				<Image source={icon} />
 			</View>
-			<View>
-				<Text style={{ fontSize: normalize(15), fontFamily: 'MrtMed' }}>{category.name}</Text>
-				<Text style={{fontFamily: 'Mrt'}}>Transakcje: {category.data.length}</Text>
-			</View>
-			<View>
-				{incomeExpense == "expenses" ? (
-					<Text style={{ fontSize: normalize(15), color: redValueColor, fontFamily: 'MrtMed' }}>- {sum.toFixed(2)} zł</Text>
-				) : (
-					<Text style={{ fontSize: normalize(15), color: incomeColor,fontFamily: 'MrtMed' }}>{sum.toFixed(2)} zł</Text>
-				)}
+			<View
+				style={{
+					flexDirection: "row",
+					alignItems: "center",
+					justifyContent: "space-between",
+					flexGrow: 100,
+				}}
+			>
+				<View
+					style={{
+						flexShrink: 2,
+						backgroundColor: "green",
+						alignContent: "flex-start",
+					}}
+				>
+					<Text style={{ fontSize: normalize(15), fontFamily: "MrtMed" }}>
+						{category.name}
+					</Text>
+					<Text style={{ fontFamily: "Mrt" }}>
+						Transakcje: {category.data.length}
+					</Text>
+				</View>
+				<View style={{ flexShrink: 0, backgroundColor: "green" }}>
+					{incomeExpense == "expenses" ? (
+						<Text style={styles.amount}>- {sum.toFixed(2)} zł</Text>
+					) : (
+						<Text style={styles.amount}>{sum.toFixed(2)} zł</Text>
+					)}
+				</View>
 			</View>
 		</TouchableOpacity>
 	);
@@ -76,6 +95,12 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		alignItems: "center",
 		justifyContent: "space-between",
-		paddingHorizontal: 25,
+		paddingHorizontal: 18,
+		gap: 10,
+	},
+	amount: {
+		fontSize: normalize(15),
+		color: redValueColor,
+		fontFamily: "MrtMed",
 	},
 });

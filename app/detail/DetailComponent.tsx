@@ -18,6 +18,7 @@ import { AntIcon } from "@/components/navigation/TabBarIcon";
 import InsetShadow from "@/components/InsetShadow";
 import { getFilteredDataByMonth } from "@/store/manageData";
 import { TemporaryDataContext } from "@/contexts/TemporaryData";
+import { normalize } from "@/utils/normalizeFont";
 
 const DetailComponent = ({ singleCategoryData, key }: any) => {
 	const [showEditModal, setShowEditModal] = useState(false);
@@ -164,15 +165,15 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	valueText: {
-		fontSize: 30,
+		fontSize: normalize(30),
 		fontFamily: 'MrtMed'
 	},
 	nameText: {
-		fontSize: 28,
+		fontSize: normalize(28),
 		fontFamily: 'MrtMed'
 	},
 	dateText: {
-		fontSize: 17,
+		fontSize: normalize(15),
 		fontFamily: 'Mrt'
 	},
 	deleteBox: {
