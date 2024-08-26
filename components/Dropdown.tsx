@@ -3,7 +3,13 @@ import React, { useRef } from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 import { DropdownProps } from "@/types";
-import { borderRadius, borderWidth, elementHeight, elementWidth } from "@/constants/data";
+import {
+	borderRadius,
+	borderWidth,
+	elementHeight,
+	elementWidth,
+} from "@/constants/data";
+import { normalize } from "@/utils/normalizeFont";
 // import { Image } from "expo-image";
 
 const dropdownRef = useRef<SelectDropdown>(null);
@@ -95,7 +101,7 @@ const styles = StyleSheet.create({
 	dropdownMenuStyle: {
 		backgroundColor: "#E9ECEF",
 		borderRadius: 8,
-		height: 400,
+		height: 300,
 	},
 	dropdownItemStyle: {
 		width: "100%",
@@ -109,7 +115,7 @@ const styles = StyleSheet.create({
 	},
 	dropdownItemTxtStyle: {
 		flex: 1,
-		fontSize: 18,
+		fontSize: normalize(18),
 		fontWeight: "500",
 		color: "#151E26",
 		fontFamily: "Mrt",

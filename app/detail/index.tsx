@@ -99,7 +99,7 @@ const IncomeExpenseDetail = () => {
 								/>
 							}
 						>
-							<View style={{ marginBottom: 70 }}>
+							<View style={{ marginBottom: 70,}}>
 								{singleCategoryData.map((item: any, index: any) => (
 									<DetailComponent
 										singleCategoryData={item}

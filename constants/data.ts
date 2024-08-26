@@ -4,7 +4,7 @@ import { Dimensions } from "react-native";
 
 //inputs:
 const { width, height } = Dimensions.get("window");
-export const elementWidth = height / 3;
+export const elementWidth = height / 2.7;
 export const elementHeight = height / 19;
 export const buttonSize = height / 12;
 export const borderWidth = 0.4;

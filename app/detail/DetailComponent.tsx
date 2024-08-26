@@ -19,6 +19,7 @@ import InsetShadow from "@/components/InsetShadow";
 import { getFilteredDataByMonth } from "@/store/manageData";
 import { TemporaryDataContext } from "@/contexts/TemporaryData";
 import { normalize } from "@/utils/normalizeFont";
+import { buttonSize } from "@/constants/data";
 
 const DetailComponent = ({ singleCategoryData, key }: any) => {
 	const [showEditModal, setShowEditModal] = useState(false);
@@ -29,9 +30,7 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 	const { temporaryData } = useContext(TemporaryDataContext);
 	// USUNAC TEN YSE CONTENT RAZEM Z PROVIDEREM
 
-	useEffect(() => {
-		
-	},[])
+	useEffect(() => {}, []);
 	// ZROBIC ODSWIERZANIE ELEMENTU ABY POBIERALO JESCZE RAZ FILTERED DATA BY MONTH I ZROBIC REFRESHING ( INDEX.TSX)
 	// pomysl o refresch na zasadzie useEffect a jako zaleznosc cos tam dodac, to wtedy komponent sie odswirzt
 	const swipeableRef = useRef<any>(null);
@@ -127,20 +126,38 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 						typeOfOperation="edit"
 					/>
 				)}
-				<View style={{flexShrink: 1,height: '100%'}}>
+				<View
+					style={{
+						flexShrink: 1,
+						height: "100%",
+						justifyContent: "space-evenly",
+					}}
+				>
 					<Text style={styles.nameText}>{singleCategoryData.name}</Text>
 					<Text style={styles.dateText}>
 						{format(singleCategoryData.date, "dd.MM.yyyy")}
 					</Text>
 				</View>
-				<View style={{flexShrink: 1, height: '100%'}}>
+				<View style={{ flexShrink: 1, height: "100%" }}>
 					{incomeExpense == "expenses" ? (
-						<Text style={{ fontSize: normalize(22), color: redValueColor, fontFamily: 'MrtMed' }}>
+						<Text
+							style={{
+								fontSize: normalize(22),
+								color: redValueColor,
+								fontFamily: "MrtMed",
+							}}
+						>
 							{" "}
 							- {singleCategoryData.value} zł
 						</Text>
 					) : (
-						<Text style={{ fontSize: normalize(22), color: incomeColor, fontFamily: 'MrtMed'  }}>
+						<Text
+							style={{
+								fontSize: normalize(22),
+								color: incomeColor,
+								fontFamily: "MrtMed",
+							}}
+						>
 							{singleCategoryData.value} zł
 						</Text>
 					)}
@@ -163,23 +180,20 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		padding: 20,
 		alignItems: "center",
-	
 	},
 	valueText: {
-		fontSize: normalize(30),
-		fontFamily: 'MrtMed',
+		fontSize: normalize(28),
+		fontFamily: "MrtMed",
 	},
 	nameText: {
-		fontSize: normalize(28),
-		fontFamily: 'MrtMed',
-	
-		height: '100%',
-	
-		
+		fontSize: normalize(24),
+		fontFamily: "MrtMed",
+		flexGrow: 100,
+		height: "100%",
 	},
 	dateText: {
-		fontSize: normalize(15),
-		fontFamily: 'Mrt'
+		fontSize: normalize(13),
+		fontFamily: "Mrt",
 	},
 	deleteBox: {
 		justifyContent: "center",
