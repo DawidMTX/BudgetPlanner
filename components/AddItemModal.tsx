@@ -23,6 +23,13 @@ import PopUpModal from "./PopUpModal";
 import handleChangeAmount from "@/utils/handleChangeAmount";
 import validateAmount from "@/utils/validateAmount";
 import { TemporaryDataContext } from "@/contexts/TemporaryData";
+import {
+	borderWidth,
+	buttonSize,
+	elementHeight,
+	elementWidth,
+} from "@/constants/data";
+import { normalize } from "@/utils/normalizeFont";
 
 const AddItemModal = ({
 	isVisible,
@@ -37,7 +44,7 @@ const AddItemModal = ({
 	const [text, setText] = useState<string | any>("");
 	const [selectedDate, setSelectedDate] = useState(new Date());
 	const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
-	const id = Date.now()
+	const id = Date.now();
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
 	);
@@ -121,10 +128,8 @@ const AddItemModal = ({
 					Object.assign(item, { id: item.id });
 					Object.assign(item, { date: selectedDate });
 					Object.assign(item, { focused: item.focused });
-					console.log('ItemL: ',item)
-					setTemporaryData(item)
+					setTemporaryData(item);
 				}
-		
 			});
 
 			AsyncStorage.setItem(isSelected, JSON.stringify(allData));
@@ -139,7 +144,6 @@ const AddItemModal = ({
 					Object.assign(item, { id: item.id });
 					Object.assign(item, { date: selectedDate });
 					Object.assign(item, { focused: item.focused });
-					
 				}
 			});
 			dispatch(getFilteredDataByMonth(filteredDataByMonth));
@@ -217,13 +221,13 @@ const AddItemModal = ({
 									keyboardType="numeric"
 								/>
 								<View>
-									<Text style={{fontFamily: "Mrt"}}>Data: </Text>
+									<Text style={{ fontFamily: "Mrt" }}>Data: </Text>
 									<SelectData
 										style={{
-											width: 300,
-											height: 45,
+											width: elementWidth,
+											height: elementHeight,
 											margin: 12,
-											borderWidth: 0.2,
+											borderWidth: borderWidth,
 											overflow: "hidden",
 										}}
 										dateFormat="dd MMMM yyyy"
@@ -275,8 +279,8 @@ const styles = StyleSheet.create({
 	modalText: {
 		marginBottom: 15,
 		textAlign: "center",
-		fontSize: 26,
-		fontFamily: 'MrtMed'
+		fontSize: normalize(26),
+		fontFamily: "MrtMed",
 	},
 	centeredView: {
 		flex: 1,
@@ -298,8 +302,8 @@ const styles = StyleSheet.create({
 		shadowOpacity: 0.25,
 		shadowRadius: 4,
 		elevation: 5,
-		width: 340,
-		height: 490,
+		width: "88%",
+		height: "66%",
 		justifyContent: "space-between",
 	},
 	iconStyle: {
@@ -308,10 +312,12 @@ const styles = StyleSheet.create({
 		color: "white",
 	},
 	button: {
-		width: 70,
-		height: 70,
+		width: buttonSize,
+		height: buttonSize,
 		borderRadius: 100,
 		color: "white",
+		justifyContent: "center",
+		alignItems: "center",
 	},
 	buttonContener: {
 		flexDirection: "row",
@@ -325,7 +331,7 @@ const styles = StyleSheet.create({
 		color: "white",
 		fontWeight: "bold",
 		textAlign: "center",
-		fontFamily: 'MrtBold'
+		fontFamily: "MrtBold",
 	},
 	buttonCloseErrorStyle: {
 		borderRadius: 10,

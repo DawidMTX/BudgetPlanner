@@ -48,7 +48,7 @@ const BudgetContener = ({selectedDate}: any) => {
 	return (
 		<View style={[styles.contener, styles.shadowProp]}>
 			<ScrollView>
-				<View style={{ marginHorizontal: 25, marginVertical: 20 }}>
+				<View style={{ marginHorizontal: 18, marginVertical: 20 }}>
 					{data.length == 0 ? (
 						<View style={styles.noDataStyles}>
 							<Image
@@ -110,6 +110,8 @@ const styles = StyleSheet.create({
 		shadowRadius: 3,
 	},
 	noDataStyles: {
+		width: '100%', 
+		height: "100%",
 		justifyContent: "center",
 		alignItems: "center",
 	},

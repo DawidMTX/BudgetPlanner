@@ -54,7 +54,6 @@ const IncomeExpenseDetail = () => {
 		router.back();
 	}
 
-	console.log("FilteredData: , ", filteredDataByMonth);
 	const selectedCategory = { icon: icon, color: color, title: category };
 
 	const onRefresh = React.useCallback(() => {

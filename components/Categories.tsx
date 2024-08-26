@@ -56,12 +56,12 @@ const Categories = ({ category }: any) => {
 					alignItems: "center",
 					justifyContent: "space-between",
 					flexGrow: 100,
+					width: "90%",
 				}}
 			>
 				<View
 					style={{
 						flexShrink: 2,
-						backgroundColor: "green",
 						alignContent: "flex-start",
 					}}
 				>
@@ -72,7 +72,7 @@ const Categories = ({ category }: any) => {
 						Transakcje: {category.data.length}
 					</Text>
 				</View>
-				<View style={{ flexShrink: 0, backgroundColor: "green" }}>
+				<View style={{ flexShrink: 1 }}>
 					{incomeExpense == "expenses" ? (
 						<Text style={styles.amount}>- {sum.toFixed(2)} zł</Text>
 					) : (
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
 		gap: 10,
 	},
 	amount: {
-		fontSize: normalize(15),
+		fontSize: normalize(16),
 		color: redValueColor,
 		fontFamily: "MrtMed",
 	},

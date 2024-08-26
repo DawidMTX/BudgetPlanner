@@ -8,9 +8,18 @@ import {
 	TouchableHighlight,
 	TouchableWithoutFeedback,
 	Keyboard,
+	Dimensions,
 } from "react-native";
 import ActiveButton from "@/components/ActiveButton";
-import { typesOfExpense, typesOfIncome } from "@/constants/data";
+import {
+	borderRadius,
+	borderWidth,
+	buttonSize,
+	elementHeight,
+	elementWidth,
+	typesOfExpense,
+	typesOfIncome,
+} from "@/constants/data";
 import Input from "@/components/Input";
 import Dropdown from "@/components/Dropdown";
 import SelectData from "@/components/SelectData";
@@ -35,6 +44,7 @@ export default function addNew() {
 	const id = Date.now();
 	const params = useLocalSearchParams();
 	const { selected, date }: any = params;
+	const { width, height } = Dimensions.get("window");
 
 	useEffect(() => {
 		if (date) {
@@ -52,11 +62,7 @@ export default function addNew() {
 		setSelectedDate(date);
 	};
 
-
-
 	const addItems = async () => {
-
-		
 		const newItem = await createNewItem(
 			selectedCategory,
 			text,
@@ -65,9 +71,6 @@ export default function addNew() {
 			amount,
 			id
 		);
-
-		console.log("Add: ", newItem
-		)
 
 		if (newItem) {
 			await AsyncStorage.setItem(isSelected, JSON.stringify(newItem));
@@ -93,6 +96,8 @@ export default function addNew() {
 		setShowSuccessModal(false);
 	};
 
+	console.log("Heigth: ", height);
+	console.log("Width: ", width);
 	return (
 		<SafeAreaView style={styles.contener}>
 			{showErrorModal && (
@@ -115,13 +120,22 @@ export default function addNew() {
 				accessible={false}
 			>
 				<View style={styles.inputContener}>
-					<View style={styles.buttonsContener}>
+					<View
+						style={[
+							styles.buttonsContener,
+							{ width: elementWidth, height: elementHeight },
+						]}
+					>
 						<ActiveButton
 							title="Dochody"
 							active={"incomes"}
 							onPress={() => setIsSelected("incomes")}
 							isSelected={isSelected}
-							style={{ borderRadius: 10 }}
+							style={{
+								borderRadius: borderRadius,
+								width: elementWidth / 2,
+								height: elementHeight,
+							}}
 							activeStyle={{ backgroundColor: "#8EDF85" }}
 						/>
 
@@ -130,7 +144,11 @@ export default function addNew() {
 							active={"expenses"}
 							onPress={() => setIsSelected("expenses")}
 							isSelected={isSelected}
-							style={{ borderRadius: 10 }}
+							style={{
+								borderRadius: borderRadius,
+								width: elementWidth / 2,
+								height: elementHeight,
+							}}
 							activeStyle={{ backgroundColor: "#DF8592" }}
 						/>
 					</View>
@@ -179,10 +197,10 @@ export default function addNew() {
 						<Text style={styles.label}>Data: </Text>
 						<SelectData
 							style={{
-								width: 300,
-								height: 45,
+								width: elementWidth,
+								height: elementHeight,
 								margin: 12,
-								borderWidth: 0.2,
+								borderWidth: borderWidth,
 								overflow: "hidden",
 							}}
 							dateFormat="dd MMMM yyyy"
@@ -198,7 +216,16 @@ export default function addNew() {
 					onPress={addItems}
 					underlayColor={"transparent"}
 				>
-					<View style={[styles.button, { backgroundColor: "#89BB7B" }]}>
+					<View
+						style={[
+							styles.button,
+							{
+								backgroundColor: "#89BB7B",
+								width: buttonSize,
+								height: buttonSize,
+							},
+						]}
+					>
 						<AntIcon
 							name="plus"
 							style={styles.iconStyle}
@@ -209,7 +236,16 @@ export default function addNew() {
 					onPress={clearItems}
 					underlayColor={"transparent"}
 				>
-					<View style={[styles.button, { backgroundColor: "#EE4848" }]}>
+					<View
+						style={[
+							styles.button,
+							{
+								backgroundColor: "#EE4848",
+								width: buttonSize,
+								height: buttonSize,
+							},
+						]}
+					>
 						<MaterialIcon
 							name="clear"
 							style={styles.iconStyle}
@@ -228,23 +264,23 @@ const styles = StyleSheet.create({
 		marginVertical: 40,
 	},
 	buttonsContener: {
-		width: 300,
-		height: 45,
 		flexDirection: "row",
 		backgroundColor: "#F1F1F1",
-		borderRadius: 10,
-		borderWidth: 0.2,
-		alignSelf: "center",
+		borderRadius: borderRadius,
+		borderWidth: borderWidth,
+		alignItems: "center",
+		justifyContent: "space-between",
+		overflow: "hidden",
 	},
 	header: {
-		fontSize: 28,
+		fontSize: normalize(28),
 		alignSelf: "center",
 		marginTop: 10,
-		fontFamily: 'MrtBold'
+		fontFamily: "MrtBold",
 	},
 	inputContener: {
 		alignItems: "center",
-		gap: 20,
+		gap: 15,
 	},
 	buttonContener: {
 		flexDirection: "row",
@@ -253,18 +289,17 @@ const styles = StyleSheet.create({
 	},
 
 	button: {
-		width: 70,
-		height: 70,
 		borderRadius: 100,
 		color: "white",
+		justifyContent: "center",
+		alignItems: "center",
 	},
 	iconStyle: {
-		fontSize: 40,
-		padding: 15,
+		fontSize: normalize(36),
 		color: "white",
 	},
 	label: {
-		fontFamily: 'Mrt',
-		fontSize: normalize(15)
-	}
+		fontFamily: "Mrt",
+		fontSize: normalize(15),
+	},
 });

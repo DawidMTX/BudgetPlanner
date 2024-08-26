@@ -2,6 +2,7 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useState } from "react";
 import { InputProps } from "@/types";
 import { normalize } from "@/utils/normalizeFont";
+import { borderRadius, borderWidth, elementHeight, elementWidth } from "@/constants/data";
 
 const Input = ({
 	name,
@@ -29,12 +30,12 @@ export default Input;
 
 const styles = StyleSheet.create({
 	input: {
-		width: 300,
-		height: 45,
+		width: elementWidth,
+		height: elementHeight,
 		margin: 12,
-		borderWidth: 0.2,
+		borderWidth: borderWidth,
 		padding: 10,
-		borderRadius: 10,
+		borderRadius: borderRadius,
 		fontSize: normalize(16),
 		fontFamily: 'Mrt'
 	},

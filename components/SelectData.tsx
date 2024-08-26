@@ -12,6 +12,7 @@ import { format } from "date-fns";
 import { pl, se } from "date-fns/locale";
 import GestureRecognizer from "react-native-swipe-gestures";
 import { normalize } from "@/utils/normalizeFont";
+import { borderRadius } from "@/constants/data";
 
 
 const SelectData = ({
@@ -53,18 +54,19 @@ export default SelectData;
 
 const styles = StyleSheet.create({
 	contener: {
-		padding: 10,
-		borderRadius: 10,
+		padding: 8,
+		borderRadius: borderRadius,
 		flexDirection: "row",
 		justifyContent: "space-between",
+		alignItems: 'center'
 	},
 	textStyle: {
 		alignItems: "center",
-		fontSize: normalize(18),
+		fontSize: normalize(17),
 		fontFamily: "Mrt"
 	},
 	iconStyle: {
-		fontSize: 25,
+		fontSize: normalize(20),
 		marginHorizontal: 5,
 	},
 });

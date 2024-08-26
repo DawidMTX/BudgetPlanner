@@ -127,20 +127,20 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 						typeOfOperation="edit"
 					/>
 				)}
-				<View>
+				<View style={{flexShrink: 1,height: '100%'}}>
 					<Text style={styles.nameText}>{singleCategoryData.name}</Text>
 					<Text style={styles.dateText}>
 						{format(singleCategoryData.date, "dd.MM.yyyy")}
 					</Text>
 				</View>
-				<View>
+				<View style={{flexShrink: 1, height: '100%'}}>
 					{incomeExpense == "expenses" ? (
-						<Text style={{ fontSize: 22, color: redValueColor, fontFamily: 'MrtMed' }}>
+						<Text style={{ fontSize: normalize(22), color: redValueColor, fontFamily: 'MrtMed' }}>
 							{" "}
 							- {singleCategoryData.value} zł
 						</Text>
 					) : (
-						<Text style={{ fontSize: 22, color: incomeColor, fontFamily: 'MrtMed'  }}>
+						<Text style={{ fontSize: normalize(22), color: incomeColor, fontFamily: 'MrtMed'  }}>
 							{singleCategoryData.value} zł
 						</Text>
 					)}
@@ -163,14 +163,19 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 		padding: 20,
 		alignItems: "center",
+	
 	},
 	valueText: {
 		fontSize: normalize(30),
-		fontFamily: 'MrtMed'
+		fontFamily: 'MrtMed',
 	},
 	nameText: {
 		fontSize: normalize(28),
-		fontFamily: 'MrtMed'
+		fontFamily: 'MrtMed',
+	
+		height: '100%',
+	
+		
 	},
 	dateText: {
 		fontSize: normalize(15),

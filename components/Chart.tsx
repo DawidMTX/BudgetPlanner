@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import { PieChart } from "react-native-gifted-charts";
 import { expenseColor, incomeColor } from "@/constants/Colors";
@@ -9,11 +9,13 @@ import CostsView from "./CostsView";
 import calculatingProcentage from "@/utils/calculatingProcentage";
 import chartFilterData from "@/utils/chartFilterData";
 import { normalize } from "@/utils/normalizeFont";
+import { withDecay } from "react-native-reanimated";
 
 const Chart = () => {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
 	const [nameOfCategory, setNameOfCategory] = useState<string>("");
 	const [percent, setPercent] = useState<number | string>(0);
+	const { height } = Dimensions.get("window");
 	const [data, setData] = useState([
 		{
 			value: 1,
@@ -36,7 +38,7 @@ const Chart = () => {
 	useEffect(() => {
 		dispatch(getCostInformation(isSelected));
 	}, [isSelected]);
-	
+
 	useEffect(() => {
 		const chartFilter = chartFilterData(filteredDataByMonth);
 		if (chartFilter.length == 0) {
@@ -55,10 +57,9 @@ const Chart = () => {
 			setPercent(calculatingProcentage(chartFilter[0].value, sum));
 			chartFilter[0].focused = true;
 			setData(chartFilter);
-			
 		}
 	}, [filteredDataByMonth]);
-	
+
 	return (
 		<View style={[styles.chartContener, styles.shadowProp]}>
 			<View style={styles.buttonsContener}>
@@ -67,11 +68,13 @@ const Chart = () => {
 					active={"incomes"}
 					onPress={() => setIsSelected("incomes")}
 					isSelected={isSelected}
+					style={{ width: "50%", height: "99%" , borderRadius: 5,}}
 				/>
 				<ActiveButton
 					title="Wydatki"
 					active={"expenses"}
 					onPress={() => setIsSelected("expenses")}
+					style={{ width: "50%", height: "99%", borderRadius: 5, }}
 					isSelected={isSelected}
 				/>
 			</View>
@@ -81,9 +84,9 @@ const Chart = () => {
 					donut
 					showGradient
 					focusOnPress
-					radius={90}
-					innerRadius={60}
-					onPress={(item: any, index: any) => {
+					radius={height / 10}
+					innerRadius={height / 15}
+					onPress={(item: any) => {
 						setNameOfCategory(item.name);
 						setPercent(calculatingProcentage(item.value, sum));
 					}}
@@ -92,11 +95,21 @@ const Chart = () => {
 						return (
 							<View style={{ justifyContent: "center", alignItems: "center" }}>
 								<Text
-									style={{ fontSize: normalize(20), color: "white",  fontFamily: 'MrtBold' }}
+									style={{
+										fontSize: normalize(18),
+										color: "white",
+										fontFamily: "MrtBold",
+									}}
 								>
 									{percent.toString()} %
 								</Text>
-								<Text style={{ fontSize: normalize(12), color: "white", fontFamily: 'MrtMed' }}>
+								<Text
+									style={{
+										fontSize: normalize(11),
+										color: "white",
+										fontFamily: "MrtMed",
+									}}
+								>
 									{nameOfCategory}
 								</Text>
 							</View>
@@ -104,8 +117,13 @@ const Chart = () => {
 					}}
 				/>
 			</View>
-			
-			<CostsView bacgroundColor={bilansBacgroundColor} bilans={bilans} name='Bilans' textColor="white"  />
+
+			<CostsView
+				bacgroundColor={bilansBacgroundColor}
+				bilans={bilans}
+				name="Bilans"
+				textColor="white"
+			/>
 		</View>
 	);
 };
@@ -116,10 +134,11 @@ const styles = StyleSheet.create({
 	chartContener: {
 		gap: 30,
 		margin: 7,
-		padding: 25,
+		padding: 18,
 		borderRadius: 10,
 		backgroundColor: "white",
-		height: '45%'
+		height: "45%",
+		flexShrink: 1,
 	},
 	buttonsContener: {
 		width: "100%",
@@ -130,6 +149,8 @@ const styles = StyleSheet.create({
 	},
 	chart: {
 		alignItems: "center",
+		justifyContent: "center",
+		flexShrink: 1,
 	},
 
 	shadowProp: {

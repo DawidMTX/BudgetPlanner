@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 import SelectDropdown from "react-native-select-dropdown";
 import { TabBarIcon } from "./navigation/TabBarIcon";
 import { DropdownProps } from "@/types";
+import { borderRadius, borderWidth, elementHeight, elementWidth } from "@/constants/data";
 // import { Image } from "expo-image";
 
 const dropdownRef = useRef<SelectDropdown>(null);
@@ -14,13 +15,12 @@ const Dropdown = ({
 	showChevronIcon,
 	reset,
 }: DropdownProps) => {
-	
-	if(reset){
-		dropdownRef.current?.reset()
+	if (reset) {
+		dropdownRef.current?.reset();
 	}
 	return (
 		<SelectDropdown
-		ref={dropdownRef}
+			ref={dropdownRef}
 			data={entryData}
 			onSelect={onSelect}
 			renderButton={(selectedItem, isOpened) => {
@@ -46,7 +46,6 @@ const Dropdown = ({
 				);
 			}}
 			renderItem={(item, index, isSelected) => {
-				
 				return (
 					<View
 						style={{
@@ -61,7 +60,6 @@ const Dropdown = ({
 			}}
 			showsVerticalScrollIndicator={true}
 			dropdownStyle={styles.dropdownMenuStyle}
-			
 		/>
 	);
 };
@@ -70,10 +68,10 @@ export default Dropdown;
 
 const styles = StyleSheet.create({
 	dropdownButtonStyle: {
-		width: 300,
-		height: 45,
-		borderWidth: 0.2,
-		borderRadius: 10,
+		width: elementWidth,
+		height: elementHeight,
+		borderWidth: borderWidth,
+		borderRadius: borderRadius,
 		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
@@ -85,7 +83,7 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		fontWeight: "500",
 		color: "#151E26",
-		fontFamily: 'Mrt'
+		fontFamily: "Mrt",
 	},
 	dropdownButtonArrowStyle: {
 		fontSize: 28,
@@ -114,10 +112,10 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 		fontWeight: "500",
 		color: "#151E26",
-		fontFamily: 'Mrt'
+		fontFamily: "Mrt",
 	},
 	dropdownItemIconStyle: {
-		marginRight: 12
+		marginRight: 12,
 	},
 	image: {},
 });

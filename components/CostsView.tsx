@@ -27,5 +27,6 @@ const styles = StyleSheet.create({
 	incomeExpenses: {
 		padding: 7,
 		borderRadius: 4,
+
 	},
 });
