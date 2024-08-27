@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
 	},
 	dropdownButtonTxtStyle: {
 		flex: 1,
-		fontSize: 18,
+		fontSize: normalize(18),
 		fontWeight: "500",
 		color: "#151E26",
 		fontFamily: "Mrt",
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
 	},
 	dropdownItemTxtStyle: {
 		flex: 1,
-		fontSize: normalize(18),
+		fontSize: normalize(16),
 		fontWeight: "500",
 		color: "#151E26",
 		fontFamily: "Mrt",

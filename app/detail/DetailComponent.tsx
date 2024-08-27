@@ -1,6 +1,6 @@
 import {
-	Animated,
 	Button,
+	Pressable,
 	StyleSheet,
 	Text,
 	TouchableOpacity,
@@ -13,20 +13,32 @@ import { useAppDispatch, useAppSelector } from "@/store/store";
 import getData from "@/utils/storageData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AddItemModal from "@/components/AddItemModal";
-import { Swipeable } from "react-native-gesture-handler";
+import {
+	Swipeable,
+	TouchableWithoutFeedback,
+} from "react-native-gesture-handler";
 import { AntIcon } from "@/components/navigation/TabBarIcon";
 import InsetShadow from "@/components/InsetShadow";
 import { getFilteredDataByMonth } from "@/store/manageData";
 import { TemporaryDataContext } from "@/contexts/TemporaryData";
 import { normalize } from "@/utils/normalizeFont";
 import { buttonSize } from "@/constants/data";
+import Animated, {
+	useAnimatedStyle,
+	useSharedValue,
+	withSpring,
+	withTiming,
+} from "react-native-reanimated";
 
 const DetailComponent = ({ singleCategoryData, key }: any) => {
+	const [animation, setAnimation] = useState<boolean>(false);
 	const [showEditModal, setShowEditModal] = useState(false);
 	const incomeExpense = useAppSelector(state => state.manageData.isSelected);
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
 	);
+	const heightA = useSharedValue(80);
+
 	const { temporaryData } = useContext(TemporaryDataContext);
 	// USUNAC TEN YSE CONTENT RAZEM Z PROVIDEREM
 
@@ -109,60 +121,84 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 	const closeModal = () => {
 		setShowEditModal(false);
 	};
+
+	const animationStyle = useAnimatedStyle(() => {
+		return {
+			// height: withSpring(animate.value.height),
+		};
+	});
+	// dodac tu jescze flexDirection na column i wyregulowac szerokosc i wysokosc elementow
+
+	useEffect(() => {
+		if (animation) {
+			heightA.value = withSpring(220);
+		} else {
+			heightA.value = withSpring(80);
+		}
+	}, [animation]);
+
 	return (
 		<Swipeable
 			ref={swipeableRef}
 			renderRightActions={rightSwipe}
 			renderLeftActions={leftSwipe}
 		>
-			<View style={styles.contener}>
-				{showEditModal && (
-					<AddItemModal
-						isVisible={showEditModal}
-						closeModal={closeModal}
-						selectedItem={singleCategoryData}
-						isSelected={incomeExpense}
-						date={singleCategoryData.date}
-						typeOfOperation="edit"
-					/>
-				)}
-				<View
-					style={{
-						flexShrink: 1,
-						height: "100%",
-						justifyContent: "space-evenly",
-					}}
+			<TouchableWithoutFeedback onPress={() => setAnimation(!animation)}>
+				<Animated.View
+					style={[
+						styles.contener,
+						animation ? { flexDirection: "column" } : { flexDirection: "row" },
+						{ height: heightA },
+					]}
 				>
-					<Text style={styles.nameText}>{singleCategoryData.name}</Text>
-					<Text style={styles.dateText}>
-						{format(singleCategoryData.date, "dd.MM.yyyy")}
-					</Text>
-				</View>
-				<View style={{ flexShrink: 1, height: "100%" }}>
-					{incomeExpense == "expenses" ? (
-						<Text
-							style={{
-								fontSize: normalize(22),
-								color: redValueColor,
-								fontFamily: "MrtMed",
-							}}
-						>
-							{" "}
-							- {singleCategoryData.value} zł
-						</Text>
-					) : (
-						<Text
-							style={{
-								fontSize: normalize(22),
-								color: incomeColor,
-								fontFamily: "MrtMed",
-							}}
-						>
-							{singleCategoryData.value} zł
-						</Text>
+					{showEditModal && (
+						<AddItemModal
+							isVisible={showEditModal}
+							closeModal={closeModal}
+							selectedItem={singleCategoryData}
+							isSelected={incomeExpense}
+							date={singleCategoryData.date}
+							typeOfOperation="edit"
+						/>
 					)}
-				</View>
-			</View>
+					<View
+						style={{
+							flexShrink: 1,
+							height: "85%",
+							justifyContent: "space-evenly",
+						}}
+					>
+						<Text style={styles.nameText}>{singleCategoryData.name}</Text>
+						<Text style={styles.dateText}>
+							{format(singleCategoryData.date, "dd.MM.yyyy")}
+						</Text>
+					</View>
+					<View style={{ flexShrink: 1 }}>
+						{incomeExpense == "expenses" ? (
+							<Text
+								style={{
+									fontSize: normalize(20),
+									color: redValueColor,
+									fontFamily: "MrtMed",
+								}}
+							>
+								{" "}
+								- {singleCategoryData.value} zł
+							</Text>
+						) : (
+							<Text
+								style={{
+									fontSize: normalize(22),
+									color: incomeColor,
+									fontFamily: "MrtMed",
+								}}
+							>
+								{singleCategoryData.value} zł
+							</Text>
+						)}
+					</View>
+				</Animated.View>
+			</TouchableWithoutFeedback>
 		</Swipeable>
 	);
 };
@@ -173,20 +209,19 @@ const styles = StyleSheet.create({
 	contener: {
 		borderWidth: 0.2,
 		borderColor: "#ccc",
-		height: 80,
+		gap: 20,
 		marginVertical: 1,
 		backgroundColor: "#fff",
-		flexDirection: "row",
 		justifyContent: "space-between",
 		padding: 20,
 		alignItems: "center",
 	},
 	valueText: {
-		fontSize: normalize(28),
+		fontSize: normalize(25),
 		fontFamily: "MrtMed",
 	},
 	nameText: {
-		fontSize: normalize(24),
+		fontSize: normalize(22),
 		fontFamily: "MrtMed",
 		flexGrow: 100,
 		height: "100%",
