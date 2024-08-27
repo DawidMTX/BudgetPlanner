@@ -28,6 +28,7 @@ import {
 	buttonSize,
 	elementHeight,
 	elementWidth,
+	modalBorderRadius,
 } from "@/constants/data";
 import { normalize } from "@/utils/normalizeFont";
 
@@ -39,7 +40,7 @@ const AddItemModal = ({
 	date,
 	typeOfOperation,
 }: any) => {
-	const [showHideModal, setShowHideModal] = useState(isVisible);
+	const [showHideModal, setShowHideModal] = useState<boolean>(isVisible);
 	const [amount, setAmount] = useState<string>("");
 	const [text, setText] = useState<string | any>("");
 	const [selectedDate, setSelectedDate] = useState(new Date());
@@ -50,6 +51,7 @@ const AddItemModal = ({
 	);
 	const dispatch = useAppDispatch();
 	const { setTemporaryData } = useContext(TemporaryDataContext);
+
 
 	useEffect(() => {
 		setSelectedDate(date);
@@ -291,7 +293,7 @@ const styles = StyleSheet.create({
 	modalView: {
 		margin: 20,
 		backgroundColor: "white",
-		borderRadius: 20,
+		borderRadius: modalBorderRadius,
 		padding: 35,
 		alignItems: "center",
 		shadowColor: "#000",

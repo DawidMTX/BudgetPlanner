@@ -10,6 +10,8 @@ export const buttonSize = height / 12;
 export const borderWidth = 0.4;
 export const borderRadius = 10;
 
+export const modalBorderRadius = 20;
+
 export const typesOfExpense: ExpensesTypes[] = [
 	{
 		title: "Produkty spozywcze",

@@ -163,7 +163,7 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 					)}
 					<View
 						style={{
-							flexShrink: 1,
+							flexShrink: 2,
 							height: "85%",
 							justifyContent: "space-evenly",
 						}}
@@ -173,7 +173,7 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 							{format(singleCategoryData.date, "dd.MM.yyyy")}
 						</Text>
 					</View>
-					<View style={{ flexShrink: 1 }}>
+					<View style={{ flexShrink: 0 }}>
 						{incomeExpense == "expenses" ? (
 							<Text
 								style={{

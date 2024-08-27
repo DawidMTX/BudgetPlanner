@@ -35,15 +35,7 @@ const BudgetContener = ({selectedDate}: any) => {
 
 	// console.log("BudgetContener: ", selectedDate)
 
-	const removeValue = async () => {
-		try {
-			await AsyncStorage.removeItem("expenses");
-		} catch (e) {
-			// remove error
-		}
-
-		console.log("Done.");
-	};
+	
 
 	return (
 		<View style={[styles.contener, styles.shadowProp]}>
@@ -81,9 +73,6 @@ const BudgetContener = ({selectedDate}: any) => {
 						</View>
 					)}
 
-					{/* <TouchableOpacity onPress={removeValue}>
-						<Text>Usuń</Text>
-					</TouchableOpacity> */}
 				</View>
 			</ScrollView>
 		</View>

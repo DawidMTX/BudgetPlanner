@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { router, useNavigation, useRouter } from "expo-router";
 import { NativeStackNavigationProp } from "react-native-screens/lib/typescript/native-stack/types";
 import { StackNavigationState } from "@react-navigation/native";
+import { modalBorderRadius } from "@/constants/data";
 
 const PopUpModal = ({ isVisible, changeShowVisible, kindOfOperation }: any) => {
 	const [showHideModal, setShowHideModal] = useState(isVisible);
@@ -74,7 +75,7 @@ const styles = StyleSheet.create({
 	modalView: {
 		margin: 20,
 		backgroundColor: "white",
-		borderRadius: 20,
+		borderRadius: modalBorderRadius,
 		padding: 35,
 		alignItems: "center",
 		shadowColor: "#000",
