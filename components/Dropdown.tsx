@@ -59,8 +59,37 @@ const Dropdown = ({
 							...(isSelected && { backgroundColor: "#D2D9DF" }),
 						}}
 					>
-						<Image source={item.icon} />
-						<Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
+						<View
+							style={{
+								backgroundColor: item.color,
+								width: 47,
+								height: 47,
+								borderRadius: 100,
+								justifyContent: "center",
+								alignItems: "center",
+								borderWidth: 0.2,
+							}}
+						>
+							<View
+								style={{
+									backgroundColor: "#E9ECEF",
+									width: 45,
+									height: 45,
+									justifyContent: "center",
+									alignItems: "center",
+									borderRadius: 100,
+									borderWidth: 0.2,
+								}}
+							>
+								<Image
+									style={styles.image}
+									source={item.icon}
+								/>
+							</View>
+						</View>
+						<View style={{ borderBottomWidth: 0.6, flex:1, borderBottomColor: item.color }}>
+							<Text style={styles.dropdownItemTxtStyle}>{item.title}</Text>
+						</View>
 					</View>
 				);
 			}}
@@ -102,10 +131,11 @@ const styles = StyleSheet.create({
 		backgroundColor: "#E9ECEF",
 		borderRadius: 8,
 		height: 300,
+		borderBottomWidth: 1,
 	},
 	dropdownItemStyle: {
 		width: "100%",
-		height: 50,
+		height: 60,
 		flexDirection: "row",
 		paddingHorizontal: 12,
 		justifyContent: "center",
@@ -119,9 +149,12 @@ const styles = StyleSheet.create({
 		fontWeight: "500",
 		color: "#151E26",
 		fontFamily: "Mrt",
+		marginTop: 10
 	},
 	dropdownItemIconStyle: {
 		marginRight: 12,
+		width: 26,
+		height: 26,
 	},
-	image: {},
+	image: { width: 26, height: 26 },
 });

@@ -48,7 +48,10 @@ const Categories = ({ category }: any) => {
 			style={[styles.contener, { borderColor: color, backgroundColor: rgba }]}
 		>
 			<View style={{ flexGrow: 1 }}>
-				<Image source={icon} />
+				<Image
+					style={{ width: 28, height: 28 }}
+					source={icon}
+				/>
 			</View>
 			<View
 				style={{

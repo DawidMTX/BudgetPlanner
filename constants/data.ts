@@ -20,7 +20,7 @@ export const typesOfExpense: ExpensesTypes[] = [
 	},
 	{
 		title: "Paliwo",
-		icon: require("@/assets/images/shopping-cart.png"),
+		icon: require("@/assets/images/gas-station.png"),
 		color: "#8338ec",
 	},
 	{

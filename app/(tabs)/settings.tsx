@@ -15,7 +15,7 @@ import {
 
 export default function HomeScreen() {
 	const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
- 
+
 	const closeModal = () => {
 		setShowDeleteModal(false);
 	};
@@ -27,29 +27,30 @@ export default function HomeScreen() {
 				<Text style={styles.title}>Ustawienia</Text>
 			</View>
 			{showDeleteModal && (
-				<DeleteAllDataModal isVisible={showDeleteModal}
-				closeModal={closeModal}/>
-				
+				<DeleteAllDataModal
+					isVisible={showDeleteModal}
+					closeModal={closeModal}
+				/>
 			)}
 			<View style={styles.stepContainer}>
 				<TouchableOpacity>
-					<Text style={styles.buttonTittle}>Język</Text>
+					<Text style={styles.button}>Język</Text>
 				</TouchableOpacity>
 				<TouchableOpacity>
-					<Text>Usuń reklamy</Text>
+					<Text style={styles.button}>Usuń reklamy</Text>
 				</TouchableOpacity>
 				<TouchableOpacity>
-					<Text>FeedBack</Text>
+					<Text style={styles.button}>FeedBack</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					onPress={() => {
 						setShowDeleteModal(true);
 					}}
 				>
-					<Text>Usuń wszytko</Text>
+					<Text style={styles.button}>Usuń wszystko</Text>
 				</TouchableOpacity>
 				<TouchableOpacity>
-					<Text>O aplikacji</Text>
+					<Text style={styles.button}>O aplikacji</Text>
 				</TouchableOpacity>
 			</View>
 		</SafeAreaView>
@@ -70,10 +71,14 @@ const styles = StyleSheet.create({
 		marginTop: 20,
 	},
 	stepContainer: {
-		gap: 8,
+		height: "80%",
 		marginBottom: 8,
+		marginTop: 30,
+		alignItems: "center",
+		justifyContent: "space-around",
 	},
-	buttonTittle: {
+	button: {
 		fontFamily: "Mrt",
+		fontSize: normalize(30),
 	},
 });

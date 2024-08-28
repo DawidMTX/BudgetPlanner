@@ -61,7 +61,7 @@ const DeleteAllDataModal = ({ isVisible, closeModal }: any) => {
 					>
 						<View style={styles.modalContenerBackground}>
 							<View style={[styles.modalView, { height: 320 }]}>
-								<View style={{ alignItems: "center", padding: 35 }}>
+								<View style={{ alignItems: "center", padding: 35, gap: 20 }}>
 									<AntIcon
 										name={"warning"}
 										style={{ color: "red" }}
