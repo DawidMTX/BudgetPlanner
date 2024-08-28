@@ -68,8 +68,7 @@ const DeleteAllDataModal = ({ isVisible, closeModal }: any) => {
 										size={55}
 									/>
 									<Text style={styles.modalText}>
-										Czy na pewno chcesz usunąć wszystkie dane? Ta operacja jest
-										nieodwracalna!
+										Czy na pewno chcesz usunąć wszystkie dane? 
 									</Text>
 								</View>
 
@@ -144,7 +143,7 @@ const styles = StyleSheet.create({
 		borderWidth: 0.4,
 		width: "50%",
 		height: 60,
-		backgroundColor: "#f3f2f2",
+		backgroundColor: "#f9f8f8",
 		overflow: "hidden",
 	},
 	textStyle: {

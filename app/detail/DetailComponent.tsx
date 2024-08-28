@@ -162,11 +162,14 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 						/>
 					)}
 					<View
-						style={{
-							flexShrink: 2,
-							height: "85%",
-							justifyContent: "space-evenly",
-						}}
+						style={[
+							animation && { alignSelf: "flex-start" },
+							{
+								flexShrink: 2,
+								height: "85%",
+								justifyContent: "space-evenly",
+							},
+						]}
 					>
 						<Text style={styles.nameText}>{singleCategoryData.name}</Text>
 						<Text style={styles.dateText}>
