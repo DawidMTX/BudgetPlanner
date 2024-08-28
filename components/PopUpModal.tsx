@@ -1,23 +1,28 @@
 import { Modal, Pressable, StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
-import { opacity } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
 import { AntIcon } from "./navigation/TabBarIcon";
 import { Ionicons } from "@expo/vector-icons";
-import { router, useNavigation, useRouter } from "expo-router";
-import { NativeStackNavigationProp } from "react-native-screens/lib/typescript/native-stack/types";
-import { StackNavigationState } from "@react-navigation/native";
+import { router } from "expo-router";
 import { modalBorderRadius } from "@/constants/data";
 
-const PopUpModal = ({ isVisible, changeShowVisible, kindOfOperation }: any) => {
+const PopUpModal = ({
+	isVisible,
+	changeShowVisible,
+	kindOfOperation,
+	message,
+}: any) => {
 	const [showHideModal, setShowHideModal] = useState(isVisible);
-	
-	
 
 	if (kindOfOperation == "success") {
 		setTimeout(() => {
 			changeShowVisible();
 			router.push("/(tabs)");
 		}, 1500);
+	}
+	if (kindOfOperation == "done") {
+		setTimeout(() => {
+			changeShowVisible();
+		}, 2500);
 	}
 
 	return (
@@ -35,9 +40,7 @@ const PopUpModal = ({ isVisible, changeShowVisible, kindOfOperation }: any) => {
 								style={{ color: "red" }}
 								size={55}
 							/>
-							<Text style={styles.modalText}>
-								Prosze, uzupełnij wszystkie pola. 
-							</Text>
+							<Text style={styles.modalText}>{message}</Text>
 							<Pressable
 								style={[styles.button, styles.buttonClose]}
 								onPress={changeShowVisible}
@@ -54,7 +57,7 @@ const PopUpModal = ({ isVisible, changeShowVisible, kindOfOperation }: any) => {
 								style={{ color: "green" }}
 								size={55}
 							/>
-							<Text style={styles.modalText}>Element dodany :D</Text>
+							<Text style={styles.modalText}>{message}</Text>
 						</View>
 					)}
 				</View>
@@ -108,6 +111,6 @@ const styles = StyleSheet.create({
 		marginBottom: 15,
 		textAlign: "center",
 		fontSize: 18,
-		fontFamily: 'MrtMed'
+		fontFamily: "MrtMed",
 	},
 });

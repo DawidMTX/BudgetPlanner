@@ -96,8 +96,7 @@ export default function addNew() {
 		setShowSuccessModal(false);
 	};
 
-	console.log("Heigth: ", height);
-	console.log("Width: ", width);
+	
 	return (
 		<SafeAreaView style={styles.contener}>
 			{showErrorModal && (
@@ -105,6 +104,7 @@ export default function addNew() {
 					isVisible={showErrorModal}
 					changeShowVisible={closeModal}
 					kindOfOperation="error"
+					message="Prosze, uzupełnij wszystkie pola. "
 				/>
 			)}
 			{showSuccessModal && (
@@ -112,6 +112,7 @@ export default function addNew() {
 					isVisible={showSuccessModal}
 					changeShowVisible={closeModal}
 					kindOfOperation="success"
+					message="Element dodany :D"
 				/>
 			)}
 			<Text style={styles.header}>Dodaj nowe</Text>

@@ -13,63 +13,98 @@ import { normalize } from "@/utils/normalizeFont";
 import { AntIcon } from "./navigation/TabBarIcon";
 import { expenseColor } from "@/constants/Colors";
 import { modalBorderRadius } from "@/constants/data";
+import PopUpModal from "./PopUpModal";
+import deleteAllData from "@/utils/deleteAllData";
 
 const DeleteAllDataModal = ({ isVisible, closeModal }: any) => {
 	const [showDeleteModal, setShowDeleteModal] = useState<boolean>(isVisible);
-	console.log("sss", isVisible);
-	// useEffect(() => {
-	// 	setShowDeleteModal(isVisible);
-	// }, [showDeleteModal, isVisible]);
+	const [showModalMessage, setShowModalMessage] = useState(false);
+	const [modalMessage, setModalMessage] = useState("");
+	const [result, setResult] = useState<any>("");
+
+	const deleteData = async () => {
+		setShowModalMessage(true);
+		try {
+			const isSucces = await deleteAllData();
+			if (isSucces === "done") {
+				setModalMessage("Wszystkie elementy zostały usunięte. ");
+			}
+
+			if (isSucces === "error") {
+				setModalMessage("Ups! Coś poszło nie tak, spóbuj ponownie pózniej. ");
+			}
+			setResult(isSucces);
+		} catch (error) {
+			console.log(error);
+			setModalMessage("Ups! Coś poszło nie tak, spóbuj ponownie pózniej. ");
+		}
+	};
+
 	return (
 		<View>
-			<Modal
-				visible={showDeleteModal}
-				animationType="fade"
-				transparent={true}
-			>
-				<TouchableWithoutFeedback
-					onPress={closeModal}
-					accessible={false}
+			{showModalMessage ? (
+				<PopUpModal
+					isVisible={showModalMessage}
+					changeShowVisible={closeModal}
+					kindOfOperation={result}
+					message={modalMessage}
+				/>
+			) : (
+				<Modal
+					visible={showDeleteModal}
+					animationType="fade"
+					transparent={true}
 				>
-					<View style={styles.modalContenerBackground}>
-						<View style={[styles.modalView, { height: 320 }]}>
-							<View style={{ alignItems: "center", padding: 35 }}>
-								<AntIcon
-									name={"warning"}
-									style={{ color: "red" }}
-									size={55}
-								/>
-								<Text style={styles.modalText}>
-									Czy na pewno chcesz usunąć wszystkie dane? Ta operacja jest
-									nieodwracalna!
-								</Text>
-							</View>
-
-							<View
-								style={{
-									flexDirection: "row",
-									width: "100%",
-								}}
-							>
-								<TouchableOpacity
-									style={[styles.deleteButton, { borderBottomLeftRadius: modalBorderRadius }]}
-									onPress={closeModal}
-								>
-									<Text style={[styles.textStyle, { color: expenseColor }]}>
-										Tak
+					<TouchableWithoutFeedback
+						onPress={closeModal}
+						accessible={false}
+					>
+						<View style={styles.modalContenerBackground}>
+							<View style={[styles.modalView, { height: 320 }]}>
+								<View style={{ alignItems: "center", padding: 35 }}>
+									<AntIcon
+										name={"warning"}
+										style={{ color: "red" }}
+										size={55}
+									/>
+									<Text style={styles.modalText}>
+										Czy na pewno chcesz usunąć wszystkie dane? Ta operacja jest
+										nieodwracalna!
 									</Text>
-								</TouchableOpacity>
-								<TouchableOpacity
-									style={[styles.deleteButton, {borderBottomRightRadius: modalBorderRadius}]}
-									onPress={closeModal}
+								</View>
+
+								<View
+									style={{
+										flexDirection: "row",
+										width: "100%",
+									}}
 								>
-									<Text style={styles.textStyle}>Nie</Text>
-								</TouchableOpacity>
+									<TouchableOpacity
+										style={[
+											styles.deleteButton,
+											{ borderBottomLeftRadius: modalBorderRadius },
+										]}
+										onPress={deleteData}
+									>
+										<Text style={[styles.textStyle, { color: expenseColor }]}>
+											Tak
+										</Text>
+									</TouchableOpacity>
+									<TouchableOpacity
+										style={[
+											styles.deleteButton,
+											{ borderBottomRightRadius: modalBorderRadius },
+										]}
+										onPress={closeModal}
+									>
+										<Text style={styles.textStyle}>Nie</Text>
+									</TouchableOpacity>
+								</View>
 							</View>
 						</View>
-					</View>
-				</TouchableWithoutFeedback>
-			</Modal>
+					</TouchableWithoutFeedback>
+				</Modal>
+			)}
 		</View>
 	);
 };

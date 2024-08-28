@@ -52,7 +52,6 @@ const AddItemModal = ({
 	const dispatch = useAppDispatch();
 	const { setTemporaryData } = useContext(TemporaryDataContext);
 
-
 	useEffect(() => {
 		setSelectedDate(date);
 		if (typeOfOperation === "edit") {
@@ -161,6 +160,7 @@ const AddItemModal = ({
 					isVisible={showErrorModal}
 					changeShowVisible={closeModal}
 					kindOfOperation="error"
+					message="Prosze, uzupełnij wszystkie pola. "
 				/>
 			)}
 			<Modal

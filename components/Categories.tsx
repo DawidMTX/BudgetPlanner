@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import colorConventer from "@/utils/colorConventer";
 import { useRouter } from "expo-router";
 import { NativeStackScreenProps } from "react-native-screens/lib/typescript/native-stack/types";
-import { incomeColor, redValueColor } from "@/constants/Colors";
+import { greenValuColor, incomeColor, redValueColor } from "@/constants/Colors";
 import { useAppSelector } from "@/store/store";
 import { normalize } from "@/utils/normalizeFont";
 
@@ -74,9 +74,13 @@ const Categories = ({ category }: any) => {
 				</View>
 				<View style={{ flexShrink: 1 }}>
 					{incomeExpense == "expenses" ? (
-						<Text style={styles.amount}>- {sum.toFixed(2)} zł</Text>
+						<Text style={[styles.amount, { color: redValueColor }]}>
+							- {sum.toFixed(2)} zł
+						</Text>
 					) : (
-						<Text style={styles.amount}>{sum.toFixed(2)} zł</Text>
+						<Text style={[styles.amount, { color: greenValuColor }]}>
+							{sum.toFixed(2)} zł
+						</Text>
 					)}
 				</View>
 			</View>
@@ -100,7 +104,6 @@ const styles = StyleSheet.create({
 	},
 	amount: {
 		fontSize: normalize(16),
-		color: redValueColor,
 		fontFamily: "MrtMed",
 	},
 });
