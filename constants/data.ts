@@ -1,5 +1,7 @@
-import { ExpensesTypes, PieChartTypes } from "@/types";
+import { ExpensesTypes} from "@/types";
+import { useTranslation } from "react-i18next";
 import { Dimensions } from "react-native";
+import i18n from "@/i18n/i18n";
 
 
 //inputs:
@@ -11,31 +13,31 @@ export const borderWidth = 0.4;
 export const borderRadius = 10;
 
 export const modalBorderRadius = 20;
-
+// const {t} = useTranslation()
 export const typesOfExpense: ExpensesTypes[] = [
 	{
-		title: "Produkty spozywcze",
+		title: i18n.t("constantData.dropDownData.title.groceries"),
 		icon: require("@/assets/images/shopping-cart.png"),
 		color: "#3a86ff",
 	},
 	{
-		title: "Paliwo",
+		title: i18n.t("constantData.dropDownData.title.fuel"),
 		icon: require("@/assets/images/gas-station.png"),
 		color: "#8338ec",
 	},
 	{
 		title: "Wynajem",
-		icon: require("@/assets/images/shopping-cart.png"),
+		icon: require("@/assets/images/rent.png"),
 		color: "#ff006e",
 	},
 	{
 		title: "Restauracja",
-		icon: require("@/assets/images/shopping-cart.png"),
+		icon: require("@/assets/images/restaurant.png"),
 		color: "#fb5607",
 	},
 	{
 		title: "Siłownia",
-		icon: require("@/assets/images/shopping-cart.png"),
+		icon: require("@/assets/images/gym.png"),
 		color: "#ffbe0b",
 	},
 	{

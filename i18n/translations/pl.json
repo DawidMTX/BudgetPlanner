@@ -1,0 +1,91 @@
+{
+    "language": "Polski",
+    "screens": {
+        "navigateMenu":{
+                "home": "Home",
+                "addNew": "Dodaj",
+                "settings": "Ustawienia"
+            },
+        "home":{
+            "chart": {
+                "text": {
+                    "bilans": "Bilans",
+                    "incomes": "Dochody",
+                    "expenses": "Wydatki"
+                }
+            },
+            "budgetContener" : {
+                "text": {
+                    "emptyComponentMessage": " Ups! Nic tutaj nie ma!",
+                    "buttonTitle": "Dodaj nowy", 
+                    "costView": "Suma"
+                }
+             } ,
+            "categories": {
+                "text": {
+                    "transaction": "Transakcje:",
+                    "currency": "zł"
+                }
+            }
+        },
+        "addNew": {
+            "popUpModal": {
+                "text": {
+                    "errorMessage":"Prosze, uzupełnij wszystkie pola. ",
+                    "successMessage": "Element dodany :D"
+                }
+            },
+            "header":"Dodaj nowe",
+            "activeButton": {
+                    "incomes": "Dochody",
+                    "expenses": "Wydatki"
+            },
+            "inputs":{
+                "name": "Nazwa",
+                "kind": "Rodzaj:",
+                "amount": "Kwota:",
+                "date": "Data:"
+            },
+            "dropDown":{
+                "title": "Wybierz kategorie"
+            }
+        },
+        "settings":{
+            "text":{
+                "header": "Ustawienia",
+                "language": "Język",
+                "ads":  "Usuń reklamy",
+                "feedback": "Feedback",
+                "deleteAll": "Usuń wszytko",
+                "about": "O aplikacji"
+            },
+            "deleteAllModal":{
+                "text": {
+                    "message": "Czy na pewno chcesz usunąć wszystkie dane? ",
+                    "accept": "Tak",
+                    "reject": "Nie"
+                },
+                "done": "Wszystkie elementy zostały usunięte. ",
+                "error": "Ups! Coś poszło nie tak, spóbuj ponownie pózniej. "
+
+            }
+        }
+      
+       
+    },
+    "constantData": {
+        "dropDownData":{
+             "title":{
+                "groceries": "Groceries",
+                "fuel": "Fuel"
+        }
+    }   
+    },
+    "languages":{
+        "polish": "Polski",
+        "english": "Angielski",
+        "france": "Francuski",
+        "german": "Niemiecki"
+    }
+ 
+}

@@ -31,8 +31,10 @@ import { useLocalSearchParams } from "expo-router";
 import createNewItem from "@/utils/createNewItem";
 import handleChangeAmount from "@/utils/handleChangeAmount";
 import { normalize } from "@/utils/normalizeFont";
+import { useTranslation } from "react-i18next";
 
 export default function addNew() {
+	const { t } = useTranslation();
 	const [isSelected, setIsSelected] = useState<string>("expenses");
 	const [text, setText] = useState<string | any>("");
 	const [selectedCategory, setSelectedCategory] = useState<CategoryTypes>();
@@ -44,7 +46,7 @@ export default function addNew() {
 	const id = Date.now();
 	const params = useLocalSearchParams();
 	const { selected, date }: any = params;
-	const { width, height } = Dimensions.get("window");
+
 
 	useEffect(() => {
 		if (date) {
@@ -104,7 +106,7 @@ export default function addNew() {
 					isVisible={showErrorModal}
 					changeShowVisible={closeModal}
 					kindOfOperation="error"
-					message="Prosze, uzupełnij wszystkie pola. "
+					message={t("screens.addNew.popUpModal.text.errorMessage")}
 				/>
 			)}
 			{showSuccessModal && (
@@ -112,10 +114,10 @@ export default function addNew() {
 					isVisible={showSuccessModal}
 					changeShowVisible={closeModal}
 					kindOfOperation="success"
-					message="Element dodany :D"
+					message={t("screens.addNew.popUpModal.text.successMessage")}
 				/>
 			)}
-			<Text style={styles.header}>Dodaj nowe</Text>
+			<Text style={styles.header}>{t("screens.addNew.header")}</Text>
 			<TouchableWithoutFeedback
 				onPress={Keyboard.dismiss}
 				accessible={false}
@@ -128,7 +130,7 @@ export default function addNew() {
 						]}
 					>
 						<ActiveButton
-							title="Dochody"
+							title={t("screens.addNew.activeButton.incomes")}
 							active={"incomes"}
 							onPress={() => setIsSelected("incomes")}
 							isSelected={isSelected}
@@ -141,7 +143,7 @@ export default function addNew() {
 						/>
 
 						<ActiveButton
-							title="Wydatki"
+							title={t("screens.addNew.activeButton.expenses")}
 							active={"expenses"}
 							onPress={() => setIsSelected("expenses")}
 							isSelected={isSelected}
@@ -155,9 +157,9 @@ export default function addNew() {
 					</View>
 
 					<Input
-						placeholder="Nazwa"
+						placeholder={t("screens.addNew.inputs.name")}
 						value={text}
-						name="Nazwa:"
+						name={t("screens.addNew.inputs.name")}
 						style={
 							text.length > 2 || text.length == 0
 								? null
@@ -168,10 +170,10 @@ export default function addNew() {
 					/>
 
 					<View>
-						<Text style={styles.label}>Rodzaj: </Text>
+						<Text style={styles.label}>{t("screens.addNew.inputs.kind")} </Text>
 						<Dropdown
 							reset={isReset}
-							title={"Wybierz kategorie"}
+							title={t("screens.addNew.dropDown.title")}
 							showChevronIcon={true}
 							entryData={
 								isSelected === "incomes" ? typesOfIncome : typesOfExpense
@@ -185,7 +187,7 @@ export default function addNew() {
 					<Input
 						placeholder="0.0"
 						value={amount}
-						name="Kwota:"
+						name={t("screens.addNew.inputs.amount")}
 						style=""
 						onChangeText={(text: any) => {
 							const changedAmount = handleChangeAmount(text);
@@ -195,7 +197,7 @@ export default function addNew() {
 					/>
 
 					<View>
-						<Text style={styles.label}>Data: </Text>
+						<Text style={styles.label}>{t("screens.addNew.inputs.date")} </Text>
 						<SelectData
 							style={{
 								width: elementWidth,

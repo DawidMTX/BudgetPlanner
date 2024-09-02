@@ -6,6 +6,7 @@ import { NativeStackScreenProps } from "react-native-screens/lib/typescript/nati
 import { greenValuColor, incomeColor, redValueColor } from "@/constants/Colors";
 import { useAppSelector } from "@/store/store";
 import { normalize } from "@/utils/normalizeFont";
+import { useTranslation } from "react-i18next";
 
 export interface HomeScreenProps {
 	navigation: NativeStackScreenProps<any, any>;
@@ -13,6 +14,7 @@ export interface HomeScreenProps {
 }
 
 const Categories = ({ category }: any) => {
+	const { t } = useTranslation();
 	const [icon, setIcon] = useState();
 	const [color, setColor] = useState<string>("");
 	const incomeExpense = useAppSelector<string>(
@@ -31,7 +33,7 @@ const Categories = ({ category }: any) => {
 	const sum = category.data.reduce((acc: number, item: any) => {
 		return acc + parseFloat(item.value);
 	}, 0);
-	//  console.log(category)
+	
 	return (
 		<TouchableOpacity
 			onPress={() =>
@@ -72,17 +74,18 @@ const Categories = ({ category }: any) => {
 						{category.name}
 					</Text>
 					<Text style={{ fontFamily: "Mrt" }}>
-						Transakcje: {category.data.length}
+						{t("screens.home.categories.text.transaction")}{" "}
+						{category.data.length}
 					</Text>
 				</View>
 				<View style={{ flexShrink: 1 }}>
 					{incomeExpense == "expenses" ? (
 						<Text style={[styles.amount, { color: redValueColor }]}>
-							- {sum.toFixed(2)} zł
+							- {sum.toFixed(2)} {t("screens.home.categories.text.currency")}
 						</Text>
 					) : (
 						<Text style={[styles.amount, { color: greenValuColor }]}>
-							{sum.toFixed(2)} zł
+							{sum.toFixed(2)} {t("screens.home.categories.text.currency")}
 						</Text>
 					)}
 				</View>

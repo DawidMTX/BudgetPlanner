@@ -1,0 +1,91 @@
+{
+    "language": "Polski",
+    "screens": {
+        "navigateMenu":{
+                "home": "Home",
+                "addNew": "Add",
+                "settings": "Settings"
+            },
+        "home":{
+            "chart": {
+                "text": {
+                    "balance": "Balance",
+                    "incomes": "Income",
+                    "expenses": "Expenses"
+                }
+            },
+            "budgetContener" : {
+                "text": {
+                    "emptyComponentMessage": " Ups! There is nothing here!",
+                    "buttonTitle": "Add new", 
+                    "costView": "Totality"
+                }
+             } ,
+            "categories": {
+                "text": {
+                    "transaction": "Transactions:",
+                    "currency": "$"
+                }
+            }
+        },
+        "addNew": {
+            "popUpModal": {
+                "text": {
+                    "errorMessage":"Please, fill up all fields. ",
+                    "successMessage": "Item added :D"
+                }
+            },
+            "header":"Add new",
+            "activeButton": {
+                    "incomes": "Income",
+                    "expenses": "Expenses"
+            },
+            "inputs":{
+                "name": "Name",
+                "kind": "Type:",
+                "amount": "Amount:",
+                "date": "Date:"
+            },
+            "dropDown":{
+                "title": "Select category"
+            }
+        },
+        "settings":{
+            "text":{
+                "header": "Settings",
+                "language": "Language",
+                "ads":  "Delete ads",
+                "feedback": "Feedback",
+                "deleteAll": "Delete all ",
+                "about": "About"
+            },
+            "deleteAllModal":{
+                "text": {
+                    "message": "Are you sure you want to delete all data? ",
+                    "accept": "Yes",
+                    "reject": "No"
+                },
+                "done": "All data has been deleted. ",
+                "error": "Ups! Somethink went wrong, try again later. "
+
+            }
+        }
+      
+       
+    },
+    "constantData": {
+        "dropDownData":{
+             "title":{
+                "groceries": "Groceries",
+                "fuel": "Fuel"
+        }
+    }   
+    },
+    "languages":{
+        "polish": "Polish",
+        "english": "English",
+        "france": "France",
+        "german": "German"
+    }
+ 
+}

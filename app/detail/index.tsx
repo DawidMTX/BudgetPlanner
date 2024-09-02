@@ -20,7 +20,6 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SelectCategory } from "@/contexts/SelectCategory";
 import { ImageBackground } from "expo-image";
 
-
 const IncomeExpenseDetail = () => {
 	const router = useRouter();
 	const [showModal, setShowModal] = useState<boolean>(false);
@@ -34,10 +33,7 @@ const IncomeExpenseDetail = () => {
 	const { category, icon, color, isSelected }: any = params;
 	setCategory(category);
 
-	
-	useEffect(() => {
-		
-	}, []);
+	useEffect(() => {}, []);
 
 	let singleCategoryData: any = [];
 
@@ -72,12 +68,12 @@ const IncomeExpenseDetail = () => {
 	};
 
 	return (
-		<ImageBackground
-			source={require("@/assets/images/list.png")}
-			style={styles.imageStyles}
-		>
-			<GestureHandlerRootView>
-				<SafeAreaView style={{ width: "100%", height: "100%" }}>
+		<GestureHandlerRootView>
+			<SafeAreaView style={{ width: "100%", height: "100%" }}>
+				<ImageBackground
+					source={require("@/assets/images/list.png")}
+					style={styles.imageStyles}
+				>
 					{showModal && (
 						<AddItemModal
 							isVisible={showModal}
@@ -99,7 +95,7 @@ const IncomeExpenseDetail = () => {
 								/>
 							}
 						>
-							<View style={{ marginBottom: 70,}}>
+							<View style={{ marginBottom: 70 }}>
 								{singleCategoryData.map((item: any, index: any) => (
 									<DetailComponent
 										singleCategoryData={item}
@@ -122,9 +118,9 @@ const IncomeExpenseDetail = () => {
 							</View>
 						</TouchableHighlight>
 					</View>
-				</SafeAreaView>
-			</GestureHandlerRootView>
-		</ImageBackground>
+				</ImageBackground>
+			</SafeAreaView>
+		</GestureHandlerRootView>
 	);
 };
 
@@ -142,7 +138,7 @@ const styles = StyleSheet.create({
 	},
 	imageStyles: {
 		flex: 1,
-		resizeMode: "contain",
+		resizeMode: "cover",
 		justifyContent: "center",
 	},
 	button: {

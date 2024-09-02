@@ -10,6 +10,13 @@ const createNewItem = async (
 	id: number
 ) => {
 	const numberValue = await validateAmount(amount);
+	if (selectedItem.title === undefined) {
+		selectedItem = {
+			title: "###",
+			icon: require("@/assets/images/shopping-cart.png"),
+			color: "#fff",
+		};
+	}
 	let dataArray: any = [];
 	try {
 		let createdData: any = selectedItem;

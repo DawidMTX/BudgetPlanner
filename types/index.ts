@@ -19,7 +19,7 @@ export interface ActiveButtonProps {
 }
 
 export interface ExpensesTypes {
-	title: string;
+	title: any;
 	icon?: string;
 	color?: string;
 }

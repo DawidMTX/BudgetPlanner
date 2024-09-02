@@ -9,13 +9,14 @@ import CostsView from "./CostsView";
 import calculatingProcentage from "@/utils/calculatingProcentage";
 import chartFilterData from "@/utils/chartFilterData";
 import { normalize } from "@/utils/normalizeFont";
-import { withDecay } from "react-native-reanimated";
+import { useTranslation } from "react-i18next";
 
 const Chart = () => {
 	const [isSelected, setIsSelected] = useState<string>("expenses");
 	const [nameOfCategory, setNameOfCategory] = useState<string>("");
 	const [percent, setPercent] = useState<number | string>(0);
 	const { height } = Dimensions.get("window");
+	const { t } = useTranslation();
 	const [data, setData] = useState([
 		{
 			value: 1,
@@ -39,6 +40,7 @@ const Chart = () => {
 		dispatch(getCostInformation(isSelected));
 	}, [isSelected]);
 
+	console.log(filteredDataByMonth)
 	useEffect(() => {
 		const chartFilter = chartFilterData(filteredDataByMonth);
 		if (chartFilter.length == 0) {
@@ -64,17 +66,17 @@ const Chart = () => {
 		<View style={[styles.chartContener, styles.shadowProp]}>
 			<View style={styles.buttonsContener}>
 				<ActiveButton
-					title="Dochody"
+					title={t("screens.home.chart.text.incomes")}
 					active={"incomes"}
 					onPress={() => setIsSelected("incomes")}
 					isSelected={isSelected}
-					style={{ width: "50%", height: "99%" , borderRadius: 5,}}
+					style={{ width: "50%", height: "99%", borderRadius: 5 }}
 				/>
 				<ActiveButton
-					title="Wydatki"
+					title={t("screens.home.chart.text.expenses")}
 					active={"expenses"}
 					onPress={() => setIsSelected("expenses")}
-					style={{ width: "50%", height: "99%", borderRadius: 5, }}
+					style={{ width: "50%", height: "99%", borderRadius: 5 }}
 					isSelected={isSelected}
 				/>
 			</View>
@@ -121,7 +123,7 @@ const Chart = () => {
 			<CostsView
 				bacgroundColor={bilansBacgroundColor}
 				bilans={bilans}
-				name="Bilans"
+				name={t("screens.home.chart.text.balance")}
 				textColor="white"
 			/>
 		</View>

@@ -1,22 +1,22 @@
 import {
 	Modal,
-	Pressable,
 	StyleSheet,
 	Text,
-	TouchableHighlight,
 	TouchableOpacity,
 	TouchableWithoutFeedback,
 	View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { normalize } from "@/utils/normalizeFont";
 import { AntIcon } from "./navigation/TabBarIcon";
 import { expenseColor } from "@/constants/Colors";
 import { modalBorderRadius } from "@/constants/data";
 import PopUpModal from "./PopUpModal";
 import deleteAllData from "@/utils/deleteAllData";
+import { useTranslation } from "react-i18next";
 
 const DeleteAllDataModal = ({ isVisible, closeModal }: any) => {
+	const {t} = useTranslation()
 	const [showDeleteModal, setShowDeleteModal] = useState<boolean>(isVisible);
 	const [showModalMessage, setShowModalMessage] = useState(false);
 	const [modalMessage, setModalMessage] = useState("");
@@ -27,16 +27,16 @@ const DeleteAllDataModal = ({ isVisible, closeModal }: any) => {
 		try {
 			const isSucces = await deleteAllData();
 			if (isSucces === "done") {
-				setModalMessage("Wszystkie elementy zostały usunięte. ");
+				setModalMessage(t("screens.settings.deleteAllModal.done"));
 			}
 
 			if (isSucces === "error") {
-				setModalMessage("Ups! Coś poszło nie tak, spóbuj ponownie pózniej. ");
+				setModalMessage(t("screens.settings.deleteAllModal.error"));
 			}
 			setResult(isSucces);
 		} catch (error) {
 			console.log(error);
-			setModalMessage("Ups! Coś poszło nie tak, spóbuj ponownie pózniej. ");
+			setModalMessage(t("screens.settings.deleteAllModal.error"));
 		}
 	};
 
@@ -68,7 +68,7 @@ const DeleteAllDataModal = ({ isVisible, closeModal }: any) => {
 										size={55}
 									/>
 									<Text style={styles.modalText}>
-										Czy na pewno chcesz usunąć wszystkie dane? 
+										{t("screens.settings.deleteAllModal.text.message")}
 									</Text>
 								</View>
 
@@ -86,7 +86,7 @@ const DeleteAllDataModal = ({ isVisible, closeModal }: any) => {
 										onPress={deleteData}
 									>
 										<Text style={[styles.textStyle, { color: expenseColor }]}>
-											Tak
+										{t("screens.settings.deleteAllModal.text.accept")}
 										</Text>
 									</TouchableOpacity>
 									<TouchableOpacity
@@ -96,7 +96,7 @@ const DeleteAllDataModal = ({ isVisible, closeModal }: any) => {
 										]}
 										onPress={closeModal}
 									>
-										<Text style={styles.textStyle}>Nie</Text>
+										<Text style={styles.textStyle}>{t("screens.settings.deleteAllModal.text.reject")}</Text>
 									</TouchableOpacity>
 								</View>
 							</View>

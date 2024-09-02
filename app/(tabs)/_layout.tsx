@@ -1,9 +1,11 @@
 import { Tabs } from "expo-router";
 import React from "react";
-
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import { useTranslation } from "react-i18next";
+
 
 export default function TabLayout() {
+	const { t } = useTranslation();
 	return (
 		<Tabs
 			screenOptions={{
@@ -14,7 +16,7 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="index"
 				options={{
-					title: "Home",
+					title: t("screens.navigateMenu.home"),
 					tabBarIcon: ({ color, focused }) => (
 						<TabBarIcon
 							name={focused ? "home" : "home-outline"}
@@ -26,7 +28,7 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="addNew"
 				options={{
-					title: "Dodaj",
+					title: t("screens.navigateMenu.addNew"),
 					tabBarIcon: ({ color, focused }) => (
 						<TabBarIcon
 							name={focused ? "add-circle" : "add-circle-outline"}
@@ -38,7 +40,7 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="settings"
 				options={{
-					title: "Ustawienia",
+					title: t("screens.navigateMenu.settings"),
 					tabBarIcon: ({ color, focused }) => (
 						<TabBarIcon
 							name={focused ? "settings" : "settings-outline"}

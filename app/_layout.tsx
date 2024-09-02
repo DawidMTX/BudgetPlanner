@@ -7,6 +7,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import "react-native-reanimated";
+import "@/i18n/i18n";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -20,9 +21,7 @@ export default function RootLayout() {
 		MrtBold: require("../assets/fonts/Montserrat-Bold.ttf"),
 		MrtMed: require("../assets/fonts/Montserrat-Medium.ttf"),
 		Mrt: require("../assets/fonts/Montserrat-Regular.ttf"),
-	
 	});
-	
 
 	useEffect(() => {
 		if (loaded) {
@@ -39,7 +38,7 @@ export default function RootLayout() {
 			<TemporaryDataContext.Provider
 				value={{ temporaryData, setTemporaryData }}
 			>
-				<Providers>
+				<Providers >
 					<Stack>
 						<Stack.Screen
 							name="(tabs)"

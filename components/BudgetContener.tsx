@@ -15,8 +15,10 @@ import CostsView from "./CostsView";
 import { expenseColor, incomeColor } from "@/constants/Colors";
 import { Link } from "expo-router";
 import { normalize } from "@/utils/normalizeFont";
+import { useTranslation } from "react-i18next";
 
 const BudgetContener = ({selectedDate}: any) => {
+	const { t } = useTranslation();
 	const [data, setData] = useState<object[]>([]);
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
@@ -47,7 +49,7 @@ const BudgetContener = ({selectedDate}: any) => {
 								source={require("@/assets/images/box.png")}
 								style={styles.iamgeStyles}
 							/>
-							<Text style={{ fontSize: normalize(18), fontFamily: "MrtMed"}}>Ups! Nic tutaj nie ma!</Text>
+							<Text style={{ fontSize: normalize(18), fontFamily: "MrtMed"}}>{t("screens.home.budgetContener.text.emptyComponentMessage")}</Text>
 							<Link
 								href={{
 									pathname: "/(tabs)/addNew",
@@ -55,7 +57,7 @@ const BudgetContener = ({selectedDate}: any) => {
 								}}
 								asChild
 							>
-								<Button title="Dodaj nowy" />
+								<Button title={t("screens.home.budgetContener.text.buttonTitle")} />
 							</Link>
 						</View>
 					) : (
@@ -66,7 +68,7 @@ const BudgetContener = ({selectedDate}: any) => {
 							<CostsView
 								bacgroundColor={"none"}
 								bilans={sum}
-								name="Suma"
+								name={t("screens.home.budgetContener.text.costView")}
 								textColor={textColor}
 								style={{ alignItems: "left" }}
 							/>

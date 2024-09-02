@@ -1,30 +1,33 @@
 import DeleteAllDataModal from "@/components/DeleteAllDataModal";
+import SelectLanguageModal from "@/components/SelectLanguageModal";
 import { normalize } from "@/utils/normalizeFont";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import {
 	StyleSheet,
 	View,
 	Text,
 	TouchableOpacity,
 	SafeAreaView,
-	Modal,
-	Pressable,
-	TouchableWithoutFeedback,
-	Keyboard,
 } from "react-native";
 
 export default function HomeScreen() {
+	const { t } = useTranslation();
 	const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
+	const [showLanguageModal, setShowLanguageModal] = useState<boolean>(false);
 
 	const closeModal = () => {
 		setShowDeleteModal(false);
+	};
+	const closeLanguageModal = () => {
+		setShowLanguageModal(false);
 	};
 	// const deleteAll = async () => {};
 
 	return (
 		<SafeAreaView>
 			<View style={styles.titleContainer}>
-				<Text style={styles.title}>Ustawienia</Text>
+				<Text style={styles.title}>{t("screens.settings.text.header")}</Text>
 			</View>
 			{showDeleteModal && (
 				<DeleteAllDataModal
@@ -32,25 +35,41 @@ export default function HomeScreen() {
 					closeModal={closeModal}
 				/>
 			)}
+			{showLanguageModal && (
+				<SelectLanguageModal
+					visible={showLanguageModal}
+					closeModal={closeLanguageModal}
+				/>
+			)}
 			<View style={styles.stepContainer}>
-				<TouchableOpacity>
-					<Text style={styles.button}>Język</Text>
+				<TouchableOpacity
+					style={styles.tochableStyles}
+					onPress={() => setShowLanguageModal(true)}
+				>
+					<Text style={styles.button}>
+						{t("screens.settings.text.language")}
+					</Text>
 				</TouchableOpacity>
-				<TouchableOpacity>
-					<Text style={styles.button}>Usuń reklamy</Text>
+				<TouchableOpacity style={styles.tochableStyles}>
+					<Text style={styles.button}>{t("screens.settings.text.ads")}</Text>
 				</TouchableOpacity>
-				<TouchableOpacity>
-					<Text style={styles.button}>FeedBack</Text>
+				<TouchableOpacity style={styles.tochableStyles}>
+					<Text style={styles.button}>
+						{t("screens.settings.text.feedback")}
+					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
+					style={styles.tochableStyles}
 					onPress={() => {
 						setShowDeleteModal(true);
 					}}
 				>
-					<Text style={styles.button}>Usuń wszystko</Text>
+					<Text style={styles.button}>
+						{t("screens.settings.text.deleteAll")}
+					</Text>
 				</TouchableOpacity>
 				<TouchableOpacity>
-					<Text style={styles.button}>O aplikacji</Text>
+					<Text style={styles.button}>{t("screens.settings.text.about")}</Text>
 				</TouchableOpacity>
 			</View>
 		</SafeAreaView>
@@ -80,5 +99,9 @@ const styles = StyleSheet.create({
 	button: {
 		fontFamily: "Mrt",
 		fontSize: normalize(30),
+	},
+	tochableStyles: {
+		width: "100%",
+		alignItems: "center",
 	},
 });
