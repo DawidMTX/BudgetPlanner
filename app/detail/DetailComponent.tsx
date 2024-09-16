@@ -29,6 +29,7 @@ import Animated, {
 	withSpring,
 	withTiming,
 } from "react-native-reanimated";
+import { useTranslation } from "react-i18next";
 
 const DetailComponent = ({ singleCategoryData, key }: any) => {
 	const [animation, setAnimation] = useState<boolean>(false);
@@ -38,7 +39,7 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 		state => state.manageData.filteredData
 	);
 	const heightA = useSharedValue(80);
-
+	const {t} = useTranslation();
 	const { temporaryData } = useContext(TemporaryDataContext);
 	// USUNAC TEN YSE CONTENT RAZEM Z PROVIDEREM
 
@@ -186,7 +187,7 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 								}}
 							>
 								{" "}
-								- {singleCategoryData.value} zł
+								- {singleCategoryData.value} {t("screens.home.categories.text.currency")}
 							</Text>
 						) : (
 							<Text
@@ -196,7 +197,7 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 									fontFamily: "MrtMed",
 								}}
 							>
-								{singleCategoryData.value} zł
+								{singleCategoryData.value} {t("screens.home.categories.text.currency")}
 							</Text>
 						)}
 					</View>

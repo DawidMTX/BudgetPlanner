@@ -1,7 +1,8 @@
 import { ExpensesTypes} from "@/types";
 import { useTranslation } from "react-i18next";
 import { Dimensions } from "react-native";
-import i18n from "@/i18n/i18n";
+import "@/i18n/i18n";
+ const {t} = useTranslation();
 
 
 //inputs:
@@ -13,15 +14,15 @@ export const borderWidth = 0.4;
 export const borderRadius = 10;
 
 export const modalBorderRadius = 20;
-// const {t} = useTranslation()
+
 export const typesOfExpense: ExpensesTypes[] = [
 	{
-		title: i18n.t("constantData.dropDownData.title.groceries"),
+		title: t("constantData.dropDownData.title.groceries"),
 		icon: require("@/assets/images/shopping-cart.png"),
 		color: "#3a86ff",
 	},
 	{
-		title: i18n.t("constantData.dropDownData.title.fuel"),
+		title: t("constantData.dropDownData.title.fuel"),
 		icon: require("@/assets/images/gas-station.png"),
 		color: "#8338ec",
 	},
@@ -42,7 +43,7 @@ export const typesOfExpense: ExpensesTypes[] = [
 	},
 	{
 		title: "Wakacje",
-		icon: require("@/assets/images/shopping-cart.png"),
+		icon: require("@/assets/images/palm-tree.png"),
 		color: "#22577a",
 	},
 	{
@@ -52,22 +53,22 @@ export const typesOfExpense: ExpensesTypes[] = [
 	},
 	{
 		title: "Rozrywka",
-		icon: require("@/assets/images/shopping-cart.png"),
+		icon: require("@/assets/images/popcorn.png"),
 		color: "#57cc99",
 	},
 	{
 		title: "Kredyt",
-		icon: require("@/assets/images/shopping-cart.png"),
+		icon: require("@/assets/images/loan.png"),
 		color: "#80ed99",
 	},
 	{
 		title: "Czynsz i media",
-		icon: require("@/assets/images/shopping-cart.png"),
+		icon: require("@/assets/images/asset.png"),
 		color: "#c7f9cc",
 	},
 	{
 		title: "Inne",
-		icon: require("@/assets/images/shopping-cart.png"),
+		icon: require("@/assets/images/investment.png"),
 		color: "#b5e2fa",
 	},
 ];

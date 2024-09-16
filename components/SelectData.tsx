@@ -1,19 +1,11 @@
-import {
-	Pressable,
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	View,
-} from "react-native";
-import React, { useRef } from "react";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React from "react";
 import { AntIcon } from "./navigation/TabBarIcon";
 import { SelectDateProps } from "@/types";
 import { format } from "date-fns";
-import { pl, se } from "date-fns/locale";
 import GestureRecognizer from "react-native-swipe-gestures";
 import { normalize } from "@/utils/normalizeFont";
 import { borderRadius } from "@/constants/data";
-
 
 const SelectData = ({
 	defaultValue,
@@ -22,11 +14,12 @@ const SelectData = ({
 	dateFormat,
 	style,
 }: SelectDateProps) => {
-	
+
 	return (
 		<GestureRecognizer
-		onSwipeLeft={handleAddDay}
-        onSwipeRight={handleSubDay}>
+			onSwipeLeft={handleAddDay}
+			onSwipeRight={handleSubDay}
+		>
 			<View style={[styles.contener, style]}>
 				<TouchableOpacity onPress={handleSubDay}>
 					<AntIcon
@@ -34,9 +27,7 @@ const SelectData = ({
 						name="left"
 					/>
 				</TouchableOpacity>
-				<Text style={styles.textStyle}>
-					{format(defaultValue, dateFormat, { locale: pl })}
-				</Text>
+				<Text style={styles.textStyle}>{format(defaultValue, dateFormat)}</Text>
 				<TouchableOpacity onPress={handleAddDay}>
 					<AntIcon
 						style={styles.iconStyle}
@@ -45,8 +36,6 @@ const SelectData = ({
 				</TouchableOpacity>
 			</View>
 		</GestureRecognizer>
-			
-	
 	);
 };
 
@@ -58,12 +47,12 @@ const styles = StyleSheet.create({
 		borderRadius: borderRadius,
 		flexDirection: "row",
 		justifyContent: "space-between",
-		alignItems: 'center'
+		alignItems: "center",
 	},
 	textStyle: {
 		alignItems: "center",
 		fontSize: normalize(17),
-		fontFamily: "Mrt"
+		fontFamily: "Mrt",
 	},
 	iconStyle: {
 		fontSize: normalize(20),

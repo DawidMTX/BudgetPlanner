@@ -9,7 +9,7 @@
         "home":{
             "chart": {
                 "text": {
-                    "bilans": "Bilans",
+                    "balance": "Bilans",
                     "incomes": "Dochody",
                     "expenses": "Wydatki"
                 }

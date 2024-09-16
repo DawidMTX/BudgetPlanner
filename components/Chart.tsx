@@ -62,6 +62,8 @@ const Chart = () => {
 		}
 	}, [filteredDataByMonth]);
 
+
+	
 	return (
 		<View style={[styles.chartContener, styles.shadowProp]}>
 			<View style={styles.buttonsContener}>

@@ -9,12 +9,14 @@ import {
 	TouchableWithoutFeedback,
 	View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { modalBorderRadius } from "@/constants/data";
 import { normalize } from "@/utils/normalizeFont";
 import i18n from "@/i18n/i18n";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { pl, enUS } from "date-fns/locale";
+import { setDefaultOptions } from "date-fns/setDefaultOptions";
 
 const SelectLanguageModal = ({ visible, closeModal }: any) => {
 	const [isVisible, setIsVisible] = useState(visible);
@@ -23,7 +25,9 @@ const SelectLanguageModal = ({ visible, closeModal }: any) => {
 	const changeLanguage = async (lng: string) => {
 		i18n.changeLanguage(lng);
 		await AsyncStorage.setItem("language", lng);
+		closeModal();
 	};
+
 
 	return (
 		<View>
@@ -41,13 +45,18 @@ const SelectLanguageModal = ({ visible, closeModal }: any) => {
 							<ScrollView style={styles.modalView}>
 								<TouchableHighlight
 									underlayColor="#f0f0f0"
-									onPress={() => changeLanguage("pl")}
+									onPress={() => {
+										changeLanguage("pl");
+										setDefaultOptions({ locale: pl });
+									}}
 								>
 									<Text style={styles.modalText}>{t("languages.polish")}</Text>
 								</TouchableHighlight>
 								<TouchableHighlight
 									underlayColor="#f0f0f0"
-									onPress={() => changeLanguage("en")}
+									onPress={() => {
+										changeLanguage("enUS"), setDefaultOptions({ locale: enUS });
+									}}
 								>
 									<Text style={styles.modalText}>{t("languages.english")}</Text>
 								</TouchableHighlight>

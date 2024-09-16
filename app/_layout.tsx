@@ -8,6 +8,9 @@ import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import "react-native-reanimated";
 import "@/i18n/i18n";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { enUS, pl } from "date-fns/locale";
+import { Locale, setDefaultOptions } from "date-fns";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -24,6 +27,22 @@ export default function RootLayout() {
 	});
 
 	useEffect(() => {
+		const locales = { pl, enUS };
+
+		const defaultLanguage = async () => {
+			let lng = await AsyncStorage.getItem("language");
+
+			if (lng == null) {
+				setDefaultOptions({ locale: locales["enUS"] });
+			} else {
+				setDefaultOptions({ locale: locales[lng] });
+			}
+		};
+
+		defaultLanguage();
+	}, []);
+
+	useEffect(() => {
 		if (loaded) {
 			SplashScreen.hideAsync();
 		}
@@ -38,7 +57,7 @@ export default function RootLayout() {
 			<TemporaryDataContext.Provider
 				value={{ temporaryData, setTemporaryData }}
 			>
-				<Providers >
+				<Providers>
 					<Stack>
 						<Stack.Screen
 							name="(tabs)"

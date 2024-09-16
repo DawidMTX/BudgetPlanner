@@ -1,5 +1,5 @@
 {
-    "language": "Polski",
+    "language": "English",
     "screens": {
         "navigateMenu":{
                 "home": "Home",
@@ -16,7 +16,7 @@
             },
             "budgetContener" : {
                 "text": {
-                    "emptyComponentMessage": " Ups! There is nothing here!",
+                    "emptyComponentMessage": " Ups! Nothing is here!",
                     "buttonTitle": "Add new", 
                     "costView": "Totality"
                 }

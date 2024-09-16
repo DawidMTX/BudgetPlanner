@@ -24,7 +24,7 @@ import Input from "@/components/Input";
 import Dropdown from "@/components/Dropdown";
 import SelectData from "@/components/SelectData";
 import getDays from "@/utils/handleGetDate";
-import { CategoryTypes } from "@/types";
+import { CategoryTypes, ExpensesTypes } from "@/types";
 import PopUpModal from "@/components/PopUpModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLocalSearchParams } from "expo-router";
@@ -32,9 +32,10 @@ import createNewItem from "@/utils/createNewItem";
 import handleChangeAmount from "@/utils/handleChangeAmount";
 import { normalize } from "@/utils/normalizeFont";
 import { useTranslation } from "react-i18next";
+import i18n from "@/i18n/i18n";
 
 export default function addNew() {
-	const { t } = useTranslation();
+
 	const [isSelected, setIsSelected] = useState<string>("expenses");
 	const [text, setText] = useState<string | any>("");
 	const [selectedCategory, setSelectedCategory] = useState<CategoryTypes>();
@@ -98,6 +99,67 @@ export default function addNew() {
 		setShowSuccessModal(false);
 	};
 
+	const { t, i18n, ready } = useTranslation();
+
+
+
+// const typesOfExpense: ExpensesTypes[] = [
+// 		{
+// 			title: t("constantData.dropDownData.title.groceries"),
+// 			icon: require("@/assets/images/shopping-cart.png"),
+// 			color: "#3a86ff",
+// 		},
+// 		{
+// 			title: t("constantData.dropDownData.title.fuel"),
+// 			icon: require("@/assets/images/gas-station.png"),
+// 			color: "#8338ec",
+// 		},
+// 		{
+// 			title: "Wynajem",
+// 			icon: require("@/assets/images/rent.png"),
+// 			color: "#ff006e",
+// 		},
+// 		{
+// 			title: "Restauracja",
+// 			icon: require("@/assets/images/restaurant.png"),
+// 			color: "#fb5607",
+// 		},
+// 		{
+// 			title: "Siłownia",
+// 			icon: require("@/assets/images/gym.png"),
+// 			color: "#ffbe0b",
+// 		},
+// 		{
+// 			title: "Wakacje",
+// 			icon: require("@/assets/images/shopping-cart.png"),
+// 			color: "#22577a",
+// 		},
+// 		{
+// 			title: "Prezent",
+// 			icon: require("@/assets/images/gift.png"),
+// 			color: "#38a3a5",
+// 		},
+// 		{
+// 			title: "Rozrywka",
+// 			icon: require("@/assets/images/shopping-cart.png"),
+// 			color: "#57cc99",
+// 		},
+// 		{
+// 			title: "Kredyt",
+// 			icon: require("@/assets/images/shopping-cart.png"),
+// 			color: "#80ed99",
+// 		},
+// 		{
+// 			title: "Czynsz i media",
+// 			icon: require("@/assets/images/shopping-cart.png"),
+// 			color: "#c7f9cc",
+// 		},
+// 		{
+// 			title: "Inne",
+// 			icon: require("@/assets/images/shopping-cart.png"),
+// 			color: "#b5e2fa",
+// 		},
+// 	];
 	
 	return (
 		<SafeAreaView style={styles.contener}>
