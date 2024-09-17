@@ -23,7 +23,12 @@ import Animated, {
 } from "react-native-reanimated";
 import { useTranslation } from "react-i18next";
 
-const DetailComponent = ({ singleCategoryData, key, onEdit, onDelete }: any) => {
+const DetailComponent = ({
+	singleCategoryData,
+	key,
+	onEdit,
+	onDelete,
+}: any) => {
 	const [animation, setAnimation] = useState<boolean>(false);
 	const incomeExpense = useAppSelector(state => state.manageData.isSelected);
 	const filteredDataByMonth = useAppSelector(
@@ -43,9 +48,7 @@ const DetailComponent = ({ singleCategoryData, key, onEdit, onDelete }: any) => 
 	const rightSwipe = () => {
 		return (
 			<TouchableOpacity
-				onPress={() => {deleteItem();
-					onDelete()
-				}}
+				onPress={deleteItem}
 				activeOpacity={0.6}
 				style={{ marginVertical: 1, backgroundColor: "#e63946" }}
 			>
@@ -100,6 +103,7 @@ const DetailComponent = ({ singleCategoryData, key, onEdit, onDelete }: any) => 
 			dispatch(getFilteredDataByMonth(handleShowData));
 		} catch (error) {}
 		closeSwipeable();
+		onDelete();
 	};
 
 	useEffect(() => {

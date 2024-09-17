@@ -31,7 +31,6 @@ const IncomeExpenseDetail = () => {
 	const [filteredDataByMonth, setFilteredDataByMonth] = useState(
 		useAppSelector(state => state.manageData.filteredData)
 	);
-
 	const incomeExpense = useAppSelector(state => state.manageData.isSelected);
 	const params = useLocalSearchParams();
 	const { setCategory } = useContext(SelectCategory);
@@ -47,10 +46,7 @@ const IncomeExpenseDetail = () => {
 
 	let singleCategoryData: any = [];
 
-	let selectedDate;
-
 	if (filteredDataByMonth.length > 0) {
-		selectedDate = filteredDataByMonth[0].date;
 		filteredDataByMonth.map((item: any) => {
 			if (item["title"].includes(category)) {
 				singleCategoryData.push(item);
@@ -98,7 +94,7 @@ const IncomeExpenseDetail = () => {
 							closeModal={closeModal}
 							selectedItem={selectedCategory}
 							isSelected={isSelected}
-							date={selectedDate}
+							date={new Date()}
 							typeOfOperation="add"
 						/>
 					)}
