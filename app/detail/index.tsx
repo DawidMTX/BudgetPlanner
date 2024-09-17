@@ -60,8 +60,6 @@ const IncomeExpenseDetail = () => {
 		router.back();
 	}
 
-
-	
 	const selectedCategory = { icon: icon, color: color, title: category };
 
 	const onRefresh = React.useCallback(() => {
@@ -74,6 +72,7 @@ const IncomeExpenseDetail = () => {
 	}, []);
 
 	const closeModal = () => {
+		forceUpdate();
 		setShowModal(false);
 	};
 	const closeEditModal = () => {
@@ -84,7 +83,6 @@ const IncomeExpenseDetail = () => {
 	const handleEditItem = (data: any) => {
 		setShowEditModal(true);
 		setEditData(data);
-		
 	};
 
 	return (
@@ -130,8 +128,8 @@ const IncomeExpenseDetail = () => {
 									<DetailComponent
 										singleCategoryData={item}
 										onEdit={handleEditItem}
+										onDelete={forceUpdate}
 										key={index}
-										
 									/>
 								))}
 							</View>
