@@ -22,7 +22,6 @@ import { getFilteredDataByMonth } from "@/store/manageData";
 import PopUpModal from "./PopUpModal";
 import handleChangeAmount from "@/utils/handleChangeAmount";
 import validateAmount from "@/utils/validateAmount";
-import { TemporaryDataContext } from "@/contexts/TemporaryData";
 import {
 	borderWidth,
 	buttonSize,
@@ -50,7 +49,6 @@ const AddItemModal = ({
 		state => state.manageData.filteredData
 	);
 	const dispatch = useAppDispatch();
-	const { setTemporaryData } = useContext(TemporaryDataContext);
 
 	useEffect(() => {
 		setSelectedDate(date);
@@ -129,7 +127,7 @@ const AddItemModal = ({
 					Object.assign(item, { id: item.id });
 					Object.assign(item, { date: selectedDate });
 					Object.assign(item, { focused: item.focused });
-					setTemporaryData(item);
+				
 				}
 			});
 

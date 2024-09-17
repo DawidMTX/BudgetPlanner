@@ -32,8 +32,8 @@ const createNewItem = async (
 			createdData.value.length > 0
 		) {
 			const dataFromStorage = await getData(isSelected);
-			console.log("Data: ", dataFromStorage);
-			if (dataFromStorage === null) {
+
+			if (dataFromStorage === null || dataFromStorage.length === 0) {
 				dataArray.push(createdData);
 			} else if (dataFromStorage.length > 0) {
 				dataArray = [...dataFromStorage, createdData];

@@ -35,7 +35,7 @@ const BudgetContener = ({selectedDate}: any) => {
 	const textColor = selected == "incomes" ? incomeColor : expenseColor;
 	const sum = selected == "incomes" ? incomes : expenses;
 
-	// console.log("BudgetContener: ", selectedDate)
+	// console.log("BudgetContener: ", data)
 
 	
 

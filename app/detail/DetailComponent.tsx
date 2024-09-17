@@ -1,18 +1,11 @@
-import {
-	Button,
-	Pressable,
-	StyleSheet,
-	Text,
-	TouchableOpacity,
-	View,
-} from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { format } from "date-fns";
 import { incomeColor, redValueColor } from "@/constants/Colors";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import getData from "@/utils/storageData";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import AddItemModal from "@/components/AddItemModal";
+
 import {
 	Swipeable,
 	TouchableWithoutFeedback,
@@ -20,32 +13,25 @@ import {
 import { AntIcon } from "@/components/navigation/TabBarIcon";
 import InsetShadow from "@/components/InsetShadow";
 import { getFilteredDataByMonth } from "@/store/manageData";
-import { TemporaryDataContext } from "@/contexts/TemporaryData";
+
 import { normalize } from "@/utils/normalizeFont";
-import { buttonSize } from "@/constants/data";
+
 import Animated, {
-	useAnimatedStyle,
 	useSharedValue,
 	withSpring,
 	withTiming,
 } from "react-native-reanimated";
 import { useTranslation } from "react-i18next";
 
-const DetailComponent = ({ singleCategoryData, key }: any) => {
+const DetailComponent = ({ singleCategoryData, key, onEdit }: any) => {
 	const [animation, setAnimation] = useState<boolean>(false);
-	const [showEditModal, setShowEditModal] = useState(false);
 	const incomeExpense = useAppSelector(state => state.manageData.isSelected);
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
 	);
 	const heightA = useSharedValue(80);
-	const {t} = useTranslation();
-	const { temporaryData } = useContext(TemporaryDataContext);
-	// USUNAC TEN YSE CONTENT RAZEM Z PROVIDEREM
+	const { t } = useTranslation();
 
-	useEffect(() => {}, []);
-	// ZROBIC ODSWIERZANIE ELEMENTU ABY POBIERALO JESCZE RAZ FILTERED DATA BY MONTH I ZROBIC REFRESHING ( INDEX.TSX)
-	// pomysl o refresch na zasadzie useEffect a jako zaleznosc cos tam dodac, to wtedy komponent sie odswirzt
 	const swipeableRef = useRef<any>(null);
 
 	const dispatch = useAppDispatch();
@@ -77,7 +63,10 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 	const leftSwipe = () => {
 		return (
 			<TouchableOpacity
-				onPress={editItem}
+				onPress={() => {
+					onEdit(singleCategoryData);
+					closeSwipeable();
+				}}
 				activeOpacity={0.6}
 				style={{ marginVertical: 1 }}
 			>
@@ -111,25 +100,6 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 		closeSwipeable();
 	};
 
-	const editItem = () => {
-		setShowEditModal(true);
-		// if (!showEditModal) {
-		// 	singleCategoryData = temporaryData;
-		// 	console.log("single :", temporaryData);
-		// }
-	};
-
-	const closeModal = () => {
-		setShowEditModal(false);
-	};
-
-	const animationStyle = useAnimatedStyle(() => {
-		return {
-			// height: withSpring(animate.value.height),
-		};
-	});
-	// dodac tu jescze flexDirection na column i wyregulowac szerokosc i wysokosc elementow
-
 	useEffect(() => {
 		if (animation) {
 			heightA.value = withSpring(220);
@@ -152,7 +122,7 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 						{ height: heightA },
 					]}
 				>
-					{showEditModal && (
+					{/* {showEditModal && (
 						<AddItemModal
 							isVisible={showEditModal}
 							closeModal={closeModal}
@@ -161,7 +131,7 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 							date={singleCategoryData.date}
 							typeOfOperation="edit"
 						/>
-					)}
+					)} */}
 					<View
 						style={[
 							animation && { alignSelf: "flex-start" },
@@ -187,7 +157,8 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 								}}
 							>
 								{" "}
-								- {singleCategoryData.value} {t("screens.home.categories.text.currency")}
+								- {singleCategoryData.value}{" "}
+								{t("screens.home.categories.text.currency")}
 							</Text>
 						) : (
 							<Text
@@ -197,7 +168,8 @@ const DetailComponent = ({ singleCategoryData, key }: any) => {
 									fontFamily: "MrtMed",
 								}}
 							>
-								{singleCategoryData.value} {t("screens.home.categories.text.currency")}
+								{singleCategoryData.value}{" "}
+								{t("screens.home.categories.text.currency")}
 							</Text>
 						)}
 					</View>

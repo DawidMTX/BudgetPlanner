@@ -10,7 +10,7 @@ import {
 	TouchableOpacity,
 	View,
 } from "react-native";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { useAppSelector } from "@/store/store";
 import DetailComponent from "./DetailComponent";
@@ -19,21 +19,31 @@ import AddItemModal from "@/components/AddItemModal";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SelectCategory } from "@/contexts/SelectCategory";
 import { ImageBackground } from "expo-image";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import getData from "@/utils/storageData";
 
 const IncomeExpenseDetail = () => {
 	const router = useRouter();
 	const [showModal, setShowModal] = useState<boolean>(false);
 	const [refreshing, setRefreshing] = useState(false);
-	let filteredDataByMonth = useAppSelector(
-		state => state.manageData.filteredData
+	const [showEditModal, setShowEditModal] = useState<boolean>(false);
+	const [editData, setEditData] = useState<any>("");
+	const [filteredDataByMonth, setFilteredDataByMonth] = useState(
+		useAppSelector(state => state.manageData.filteredData)
 	);
+
+	const incomeExpense = useAppSelector(state => state.manageData.isSelected);
 	const params = useLocalSearchParams();
 	const { setCategory } = useContext(SelectCategory);
 
 	const { category, icon, color, isSelected }: any = params;
 	setCategory(category);
 
-	useEffect(() => {}, []);
+	const forceUpdate = async () => {
+		const refreshData = await getData(isSelected);
+
+		setFilteredDataByMonth(refreshData);
+	};
 
 	let singleCategoryData: any = [];
 
@@ -50,21 +60,31 @@ const IncomeExpenseDetail = () => {
 		router.back();
 	}
 
+
+	
 	const selectedCategory = { icon: icon, color: color, title: category };
 
 	const onRefresh = React.useCallback(() => {
 		setRefreshing(true);
 
 		setTimeout(() => {
-			// filteredDataByMonth = useAppSelector(
-			// 	state => state.manageData.filteredData
-			// );
+			forceUpdate();
 			setRefreshing(false);
 		}, 2000);
 	}, []);
 
 	const closeModal = () => {
 		setShowModal(false);
+	};
+	const closeEditModal = () => {
+		forceUpdate();
+		setShowEditModal(false);
+	};
+
+	const handleEditItem = (data: any) => {
+		setShowEditModal(true);
+		setEditData(data);
+		
 	};
 
 	return (
@@ -84,6 +104,16 @@ const IncomeExpenseDetail = () => {
 							typeOfOperation="add"
 						/>
 					)}
+					{showEditModal && (
+						<AddItemModal
+							isVisible={showEditModal}
+							closeModal={closeEditModal}
+							selectedItem={editData}
+							isSelected={incomeExpense}
+							date={editData.date}
+							typeOfOperation="edit"
+						/>
+					)}
 
 					<View>
 						<ScrollView
@@ -99,7 +129,9 @@ const IncomeExpenseDetail = () => {
 								{singleCategoryData.map((item: any, index: any) => (
 									<DetailComponent
 										singleCategoryData={item}
+										onEdit={handleEditItem}
 										key={index}
+										
 									/>
 								))}
 							</View>

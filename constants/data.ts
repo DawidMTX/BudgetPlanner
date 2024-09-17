@@ -77,12 +77,12 @@ export const typesOfIncome: ExpensesTypes[] = [
 	{
 		title: "Pensja",
 		color: "#f95738",
-		icon: require("@/assets/images/shopping-cart.png"),
+		icon: require("@/assets/images/money.png"),
 	},
 	{
 		title: "Prezent",
 		color: "##ee964b",
-		icon: require("@/assets/images/shopping-cart.png"),
+		icon: require("@/assets/images/gift.png"),
 	},
 	{
 		title: "Sprzedaz",
@@ -90,15 +90,11 @@ export const typesOfIncome: ExpensesTypes[] = [
 		icon: require("@/assets/images/shopping-cart.png"),
 	},
 	{
-		title: "Bonus",
-		color: "#faf0ca",
-		icon: require("@/assets/images/shopping-cart.png"),
-	},
-	{
 		title: "Premia",
-		color: "#0d3b66",
-		icon: require("@/assets/images/shopping-cart.png"),
+		color: "#faf0ca",
+		icon: require("@/assets/images/bonus.png"),
 	},
+
 	{
 		title: "Inne",
 		color: "#81b29a",

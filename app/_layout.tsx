@@ -1,5 +1,5 @@
 import { SelectCategory } from "@/contexts/SelectCategory";
-import { TemporaryDataContext } from "@/contexts/TemporaryData";
+
 import { Providers } from "@/store/provider";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
@@ -54,26 +54,22 @@ export default function RootLayout() {
 
 	return (
 		<SelectCategory.Provider value={{ category, setCategory }}>
-			<TemporaryDataContext.Provider
-				value={{ temporaryData, setTemporaryData }}
-			>
-				<Providers>
-					<Stack>
-						<Stack.Screen
-							name="(tabs)"
-							options={{ headerShown: false }}
-						/>
-						<Stack.Screen
-							name="detail"
-							options={{
-								headerShown: false,
-							}}
-						/>
-						<Stack.Screen name="+not-found" />
-					</Stack>
-					<StatusBar style="dark" />
-				</Providers>
-			</TemporaryDataContext.Provider>
+			<Providers>
+				<Stack>
+					<Stack.Screen
+						name="(tabs)"
+						options={{ headerShown: false }}
+					/>
+					<Stack.Screen
+						name="detail"
+						options={{
+							headerShown: false,
+						}}
+					/>
+					<Stack.Screen name="+not-found" />
+				</Stack>
+				<StatusBar style="dark" />
+			</Providers>
 		</SelectCategory.Provider>
 	);
 }
