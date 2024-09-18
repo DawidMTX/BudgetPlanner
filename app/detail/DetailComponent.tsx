@@ -119,6 +119,8 @@ const DetailComponent = ({
 			ref={swipeableRef}
 			renderRightActions={rightSwipe}
 			renderLeftActions={leftSwipe}
+			overshootLeft={false}
+			overshootRight={false}
 		>
 			<TouchableWithoutFeedback onPress={() => setAnimation(!animation)}>
 				<Animated.View
@@ -128,16 +130,7 @@ const DetailComponent = ({
 						{ height: heightA },
 					]}
 				>
-					{/* {showEditModal && (
-						<AddItemModal
-							isVisible={showEditModal}
-							closeModal={closeModal}
-							selectedItem={singleCategoryData}
-							isSelected={incomeExpense}
-							date={singleCategoryData.date}
-							typeOfOperation="edit"
-						/>
-					)} */}
+					
 					<View
 						style={[
 							animation && { alignSelf: "flex-start" },

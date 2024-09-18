@@ -1,6 +1,5 @@
 import {
-	Animated,
-	Button,
+	Dimensions,
 	RefreshControl,
 	SafeAreaView,
 	ScrollView,
@@ -18,7 +17,7 @@ import { AntIcon } from "@/components/navigation/TabBarIcon";
 import AddItemModal from "@/components/AddItemModal";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SelectCategory } from "@/contexts/SelectCategory";
-import { ImageBackground } from "expo-image";
+import { Image, ImageBackground } from "expo-image";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import getData from "@/utils/storageData";
 
@@ -37,6 +36,9 @@ const IncomeExpenseDetail = () => {
 
 	const { category, icon, color, isSelected }: any = params;
 	setCategory(category);
+
+	const screenWidth = Dimensions.get("screen").width;
+	const screenHeight = Dimensions.get("screen").height;
 
 	const forceUpdate = async () => {
 		const refreshData = await getData(isSelected);
@@ -84,67 +86,67 @@ const IncomeExpenseDetail = () => {
 	return (
 		<GestureHandlerRootView>
 			<SafeAreaView style={{ width: "100%", height: "100%" }}>
-				<ImageBackground
-					source={require("@/assets/images/list.png")}
-					style={styles.imageStyles}
-				>
-					{showModal && (
-						<AddItemModal
-							isVisible={showModal}
-							closeModal={closeModal}
-							selectedItem={selectedCategory}
-							isSelected={isSelected}
-							date={new Date()}
-							typeOfOperation="add"
-						/>
-					)}
-					{showEditModal && (
-						<AddItemModal
-							isVisible={showEditModal}
-							closeModal={closeEditModal}
-							selectedItem={editData}
-							isSelected={incomeExpense}
-							date={editData.date}
-							typeOfOperation="edit"
-						/>
-					)}
+				{showModal && (
+					<AddItemModal
+						isVisible={showModal}
+						closeModal={closeModal}
+						selectedItem={selectedCategory}
+						isSelected={isSelected}
+						date={new Date()}
+						typeOfOperation="add"
+					/>
+				)}
+				{showEditModal && (
+					<AddItemModal
+						isVisible={showEditModal}
+						closeModal={closeEditModal}
+						selectedItem={editData}
+						isSelected={incomeExpense}
+						date={editData.date}
+						typeOfOperation="edit"
+					/>
+				)}
 
-					<View>
-						<ScrollView
-							style={{ height: "100%" }}
-							refreshControl={
-								<RefreshControl
-									refreshing={refreshing}
-									onRefresh={onRefresh}
+				<View>
+					<ScrollView
+						style={{ height: "100%" }}
+						refreshControl={
+							<RefreshControl
+								refreshing={refreshing}
+								onRefresh={onRefresh}
+							/>
+						}
+					>
+						<Image
+							source={require("@/assets/images/list.png")}
+							style={[styles.imageStyles, {top: screenHeight/2 - 110, left: screenWidth/2 - 110}]}
+							contentFit="contain"
+						/>
+						<View style={{ marginBottom: 70 }}>
+							{singleCategoryData.map((item: any, index: any) => (
+								<DetailComponent
+									singleCategoryData={item}
+									onEdit={handleEditItem}
+									onDelete={forceUpdate}
+									key={index}
 								/>
-							}
-						>
-							<View style={{ marginBottom: 70 }}>
-								{singleCategoryData.map((item: any, index: any) => (
-									<DetailComponent
-										singleCategoryData={item}
-										onEdit={handleEditItem}
-										onDelete={forceUpdate}
-										key={index}
-									/>
-								))}
-							</View>
-						</ScrollView>
-					</View>
-					<View style={styles.addButton}>
-						<TouchableHighlight
-							onPress={() => setShowModal(true)}
-							underlayColor={"transparent"}
-						>
-							<View style={[styles.button, { backgroundColor: "#89BB7B" }]}>
-								<AntIcon
-									name="plus"
-									style={styles.iconStyle}
-								/>
-							</View>
-						</TouchableHighlight>
-					</View>
-				</ImageBackground>
+							))}
+						</View>
+					</ScrollView>
+				</View>
+				<View style={styles.addButton}>
+					<TouchableHighlight
+						onPress={() => setShowModal(true)}
+						underlayColor={"transparent"}
+					>
+						<View style={[styles.button, { backgroundColor: "#89BB7B" }]}>
+							<AntIcon
+								name="plus"
+								style={styles.iconStyle}
+							/>
+						</View>
+					</TouchableHighlight>
+				</View>
 			</SafeAreaView>
 		</GestureHandlerRootView>
 	);
@@ -163,9 +165,11 @@ const styles = StyleSheet.create({
 		height: "100%",
 	},
 	imageStyles: {
-		flex: 1,
-		resizeMode: "cover",
-		justifyContent: "center",
+		width: 220,
+		height: 220,
+		opacity: 0.1,
+		position: "absolute",
+		
 	},
 	button: {
 		width: 70,

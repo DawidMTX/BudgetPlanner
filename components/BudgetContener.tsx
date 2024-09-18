@@ -35,7 +35,7 @@ const BudgetContener = ({selectedDate}: any) => {
 	const textColor = selected == "incomes" ? incomeColor : expenseColor;
 	const sum = selected == "incomes" ? incomes : expenses;
 
-	// console.log("BudgetContener: ", data)
+	
 
 	
 
@@ -47,7 +47,7 @@ const BudgetContener = ({selectedDate}: any) => {
 						<View style={styles.noDataStyles}>
 							<Image
 								source={require("@/assets/images/box.png")}
-								style={styles.iamgeStyles}
+								style={styles.imageStyles}
 							/>
 							<Text style={{ fontSize: normalize(18), fontFamily: "MrtMed"}}>{t("screens.home.budgetContener.text.emptyComponentMessage")}</Text>
 							<Link
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
 		justifyContent: "center",
 		alignItems: "center",
 	},
-	iamgeStyles: {
+	imageStyles: {
 		width: 120,
 		height: 120,
 		opacity: 0.2,

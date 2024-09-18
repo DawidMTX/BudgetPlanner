@@ -40,7 +40,7 @@ const Chart = () => {
 		dispatch(getCostInformation(isSelected));
 	}, [isSelected]);
 
-	console.log(filteredDataByMonth)
+	
 	useEffect(() => {
 		const chartFilter = chartFilterData(filteredDataByMonth);
 		if (chartFilter.length == 0) {
