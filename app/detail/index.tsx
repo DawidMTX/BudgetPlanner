@@ -4,29 +4,27 @@ import {
 	SafeAreaView,
 	ScrollView,
 	StyleSheet,
-	Text,
 	TouchableHighlight,
-	TouchableOpacity,
 	View,
 } from "react-native";
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
+import React, {  useContext, useState } from "react";
+import {  useLocalSearchParams, useRouter } from "expo-router";
 import { useAppSelector } from "@/store/store";
 import DetailComponent from "./DetailComponent";
 import { AntIcon } from "@/components/navigation/TabBarIcon";
 import AddItemModal from "@/components/AddItemModal";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SelectCategory } from "@/contexts/SelectCategory";
-import { Image, ImageBackground } from "expo-image";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Image} from "expo-image";
 import getData from "@/utils/storageData";
+import { CategoryTypes, DataTypes } from "@/types";
 
 const IncomeExpenseDetail = () => {
 	const router = useRouter();
 	const [showModal, setShowModal] = useState<boolean>(false);
-	const [refreshing, setRefreshing] = useState(false);
+	const [refreshing, setRefreshing] = useState<boolean>(false);
 	const [showEditModal, setShowEditModal] = useState<boolean>(false);
-	const [editData, setEditData] = useState<any>("");
+	const [editData, setEditData] = useState<DataTypes | string>("");
 	const [filteredDataByMonth, setFilteredDataByMonth] = useState(
 		useAppSelector(state => state.manageData.filteredData)
 	);
@@ -46,10 +44,10 @@ const IncomeExpenseDetail = () => {
 		setFilteredDataByMonth(refreshData);
 	};
 
-	let singleCategoryData: any = [];
+	let singleCategoryData: Array<DataTypes> = [];
 
 	if (filteredDataByMonth.length > 0) {
-		filteredDataByMonth.map((item: any) => {
+		filteredDataByMonth.map((item: DataTypes) => {
 			if (item["title"].includes(category)) {
 				singleCategoryData.push(item);
 			}
@@ -58,7 +56,7 @@ const IncomeExpenseDetail = () => {
 		router.back();
 	}
 
-	const selectedCategory = { icon: icon, color: color, title: category };
+	const selectedCategory:CategoryTypes = { icon: icon, color: color, title: category };
 
 	const onRefresh = React.useCallback(() => {
 		setRefreshing(true);
@@ -78,8 +76,9 @@ const IncomeExpenseDetail = () => {
 		setShowEditModal(false);
 	};
 
-	const handleEditItem = (data: any) => {
-		setShowEditModal(true);
+	const handleEditItem = (data: DataTypes) => {
+		setShowEditModal(true)
+		console.log("editData: ", data)
 		setEditData(data);
 	};
 
@@ -118,12 +117,12 @@ const IncomeExpenseDetail = () => {
 						}
 					>
 						<Image
-							source={require("@/assets/images/list.png")}
-							style={[styles.imageStyles, {top: screenHeight/2 - 110, left: screenWidth/2 - 110}]}
+							source={require("@/assets/images/document.png")}
+							style={[styles.imageStyles, {top: screenHeight/2 - 200, left: screenWidth/2 - 140}]}
 							contentFit="contain"
 						/>
 						<View style={{ marginBottom: 70 }}>
-							{singleCategoryData.map((item: any, index: any) => (
+							{singleCategoryData.map((item: DataTypes, index: number) => (
 								<DetailComponent
 									singleCategoryData={item}
 									onEdit={handleEditItem}
@@ -165,8 +164,8 @@ const styles = StyleSheet.create({
 		height: "100%",
 	},
 	imageStyles: {
-		width: 220,
-		height: 220,
+		width: 280,
+		height: 280,
 		opacity: 0.1,
 		position: "absolute",
 		

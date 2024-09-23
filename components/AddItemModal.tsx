@@ -30,6 +30,7 @@ import {
 	modalBorderRadius,
 } from "@/constants/data";
 import { normalize } from "@/utils/normalizeFont";
+import { AddItemTypes, DataTypes } from "@/types";
 
 const AddItemModal = ({
 	isVisible,
@@ -38,13 +39,13 @@ const AddItemModal = ({
 	isSelected,
 	date,
 	typeOfOperation,
-}: any) => {
+}: AddItemTypes) => {
 	const [showHideModal, setShowHideModal] = useState<boolean>(isVisible);
 	const [amount, setAmount] = useState<string>("");
 	const [text, setText] = useState<string | any>("");
-	const [selectedDate, setSelectedDate] = useState(new Date());
+	const [selectedDate, setSelectedDate] = useState<Date | string>(new Date());
 	const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
-	const id = Date.now();
+	const id: number = Date.now();
 	const filteredDataByMonth = useAppSelector(
 		state => state.manageData.filteredData
 	);
@@ -52,6 +53,7 @@ const AddItemModal = ({
 
 	useEffect(() => {
 		setSelectedDate(date);
+
 		if (typeOfOperation === "edit") {
 			setText(selectedItem.name);
 			setAmount(selectedItem.value);
@@ -59,12 +61,20 @@ const AddItemModal = ({
 	}, [date]);
 
 	const addDay = () => {
-		const date: any = getDays("add", selectedDate);
-		setSelectedDate(date);
+		if (typeof selectedDate === "string") {
+			return;
+		} else {
+			const date: Date | string = getDays("add", selectedDate);
+			setSelectedDate(date);
+		}
 	};
 	const subDay = () => {
-		const date: any = getDays("sub", selectedDate);
-		setSelectedDate(date);
+		if (typeof selectedDate === "string") {
+			return;
+		} else {
+			const date: Date | string = getDays("sub", selectedDate);
+			setSelectedDate(date);
+		}
 	};
 
 	const addItems = async () => {
@@ -117,7 +127,7 @@ const AddItemModal = ({
 		try {
 			const allData = await getData(isSelected);
 
-			allData.map((item: any) => {
+			allData.map((item: DataTypes) => {
 				if (
 					item["id"] === selectedItem.id &&
 					item["name"] === selectedItem.name
@@ -127,7 +137,6 @@ const AddItemModal = ({
 					Object.assign(item, { id: item.id });
 					Object.assign(item, { date: selectedDate });
 					Object.assign(item, { focused: item.focused });
-				
 				}
 			});
 

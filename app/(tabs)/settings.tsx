@@ -22,7 +22,7 @@ export default function HomeScreen() {
 	const closeLanguageModal = () => {
 		setShowLanguageModal(false);
 	};
-	// const deleteAll = async () => {};
+	
 
 	return (
 		<SafeAreaView>

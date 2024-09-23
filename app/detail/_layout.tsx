@@ -1,8 +1,8 @@
 import { TabBarIcon } from "@/components/navigation/TabBarIcon";
 import { SelectCategory } from "@/contexts/SelectCategory";
-import { Stack, Tabs, useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { useContext } from "react";
-import { Button, Text, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 
 const detailLayout = () => {
 	const router = useRouter();

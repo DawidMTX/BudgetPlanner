@@ -1,5 +1,5 @@
 import { AntIcon, MaterialIcon } from "@/components/navigation/TabBarIcon";
-import { useEffect, useRef, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import {
 	StyleSheet,
 	View,
@@ -8,7 +8,6 @@ import {
 	TouchableHighlight,
 	TouchableWithoutFeedback,
 	Keyboard,
-	Dimensions,
 } from "react-native";
 import ActiveButton from "@/components/ActiveButton";
 import {
@@ -24,7 +23,7 @@ import Input from "@/components/Input";
 import Dropdown from "@/components/Dropdown";
 import SelectData from "@/components/SelectData";
 import getDays from "@/utils/handleGetDate";
-import { CategoryTypes, ExpensesTypes } from "@/types";
+import { CategoryTypes, ParamsDate } from "@/types";
 import PopUpModal from "@/components/PopUpModal";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useLocalSearchParams } from "expo-router";
@@ -35,20 +34,20 @@ import { useTranslation } from "react-i18next";
 import i18n from "@/i18n/i18n";
 
 export default function addNew() {
-
 	const [isSelected, setIsSelected] = useState<string>("expenses");
-	const [text, setText] = useState<string | any>("");
+	const [text, setText] = useState<string>("");
 	const [selectedCategory, setSelectedCategory] = useState<CategoryTypes>();
 	const [amount, setAmount] = useState<string>("");
-	const [selectedDate, setSelectedDate] = useState(new Date());
+	const [selectedDate, setSelectedDate] = useState<Date | string>(new Date());
 	const [showErrorModal, setShowErrorModal] = useState<boolean>(false);
 	const [showSuccessModal, setShowSuccessModal] = useState<boolean>(false);
 	const [isReset, setIsReset] = useState<boolean>(false);
-	const id = Date.now();
+	const id: number = Date.now();
 	const params = useLocalSearchParams();
-	const { selected, date }: any = params;
+	const { selected, date } = params;
 
-
+	console.log("date: ", date);
+	console.log("selected: ", selected);
 	useEffect(() => {
 		if (date) {
 			setIsSelected(selected);
@@ -57,12 +56,17 @@ export default function addNew() {
 	}, [selected, date]);
 
 	const addDay = () => {
-		const date: any = getDays("add", selectedDate);
-		setSelectedDate(date);
+		if (typeof selectedDate !== "string") {
+			const date: string | Date = getDays("add", selectedDate);
+			console.log( "DATA: ", date)
+			setSelectedDate(date);
+		}
 	};
 	const subDay = () => {
-		const date: any = getDays("sub", selectedDate);
-		setSelectedDate(date);
+		if (typeof selectedDate !== "string") {
+			const date: string | Date = getDays("sub", selectedDate);
+			setSelectedDate(date);
+		}
 	};
 
 	const addItems = async () => {
@@ -101,66 +105,64 @@ export default function addNew() {
 
 	const { t, i18n, ready } = useTranslation();
 
+	// const typesOfExpense: ExpensesTypes[] = [
+	// 		{
+	// 			title: t("constantData.dropDownData.title.groceries"),
+	// 			icon: require("@/assets/images/shopping-cart.png"),
+	// 			color: "#3a86ff",
+	// 		},
+	// 		{
+	// 			title: t("constantData.dropDownData.title.fuel"),
+	// 			icon: require("@/assets/images/gas-station.png"),
+	// 			color: "#8338ec",
+	// 		},
+	// 		{
+	// 			title: "Wynajem",
+	// 			icon: require("@/assets/images/rent.png"),
+	// 			color: "#ff006e",
+	// 		},
+	// 		{
+	// 			title: "Restauracja",
+	// 			icon: require("@/assets/images/restaurant.png"),
+	// 			color: "#fb5607",
+	// 		},
+	// 		{
+	// 			title: "Siłownia",
+	// 			icon: require("@/assets/images/gym.png"),
+	// 			color: "#ffbe0b",
+	// 		},
+	// 		{
+	// 			title: "Wakacje",
+	// 			icon: require("@/assets/images/shopping-cart.png"),
+	// 			color: "#22577a",
+	// 		},
+	// 		{
+	// 			title: "Prezent",
+	// 			icon: require("@/assets/images/gift.png"),
+	// 			color: "#38a3a5",
+	// 		},
+	// 		{
+	// 			title: "Rozrywka",
+	// 			icon: require("@/assets/images/shopping-cart.png"),
+	// 			color: "#57cc99",
+	// 		},
+	// 		{
+	// 			title: "Kredyt",
+	// 			icon: require("@/assets/images/shopping-cart.png"),
+	// 			color: "#80ed99",
+	// 		},
+	// 		{
+	// 			title: "Czynsz i media",
+	// 			icon: require("@/assets/images/shopping-cart.png"),
+	// 			color: "#c7f9cc",
+	// 		},
+	// 		{
+	// 			title: "Inne",
+	// 			icon: require("@/assets/images/shopping-cart.png"),
+	// 			color: "#b5e2fa",
+	// 		},
+	// 	];
 
-
-// const typesOfExpense: ExpensesTypes[] = [
-// 		{
-// 			title: t("constantData.dropDownData.title.groceries"),
-// 			icon: require("@/assets/images/shopping-cart.png"),
-// 			color: "#3a86ff",
-// 		},
-// 		{
-// 			title: t("constantData.dropDownData.title.fuel"),
-// 			icon: require("@/assets/images/gas-station.png"),
-// 			color: "#8338ec",
-// 		},
-// 		{
-// 			title: "Wynajem",
-// 			icon: require("@/assets/images/rent.png"),
-// 			color: "#ff006e",
-// 		},
-// 		{
-// 			title: "Restauracja",
-// 			icon: require("@/assets/images/restaurant.png"),
-// 			color: "#fb5607",
-// 		},
-// 		{
-// 			title: "Siłownia",
-// 			icon: require("@/assets/images/gym.png"),
-// 			color: "#ffbe0b",
-// 		},
-// 		{
-// 			title: "Wakacje",
-// 			icon: require("@/assets/images/shopping-cart.png"),
-// 			color: "#22577a",
-// 		},
-// 		{
-// 			title: "Prezent",
-// 			icon: require("@/assets/images/gift.png"),
-// 			color: "#38a3a5",
-// 		},
-// 		{
-// 			title: "Rozrywka",
-// 			icon: require("@/assets/images/shopping-cart.png"),
-// 			color: "#57cc99",
-// 		},
-// 		{
-// 			title: "Kredyt",
-// 			icon: require("@/assets/images/shopping-cart.png"),
-// 			color: "#80ed99",
-// 		},
-// 		{
-// 			title: "Czynsz i media",
-// 			icon: require("@/assets/images/shopping-cart.png"),
-// 			color: "#c7f9cc",
-// 		},
-// 		{
-// 			title: "Inne",
-// 			icon: require("@/assets/images/shopping-cart.png"),
-// 			color: "#b5e2fa",
-// 		},
-// 	];
-	
 	return (
 		<SafeAreaView style={styles.contener}>
 			{showErrorModal && (

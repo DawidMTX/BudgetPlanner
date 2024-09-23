@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { format } from "date-fns";
 import { incomeColor, redValueColor } from "@/constants/Colors";
 import { useAppDispatch, useAppSelector } from "@/store/store";
@@ -16,19 +16,16 @@ import { getFilteredDataByMonth } from "@/store/manageData";
 
 import { normalize } from "@/utils/normalizeFont";
 
-import Animated, {
-	useSharedValue,
-	withSpring,
-	withTiming,
-} from "react-native-reanimated";
+import Animated, { useSharedValue, withSpring } from "react-native-reanimated";
 import { useTranslation } from "react-i18next";
+import { DataTypes, DetailComponentTypes } from "@/types";
 
 const DetailComponent = ({
 	singleCategoryData,
 	key,
 	onEdit,
 	onDelete,
-}: any) => {
+}: DetailComponentTypes) => {
 	const [animation, setAnimation] = useState<boolean>(false);
 	const incomeExpense = useAppSelector(state => state.manageData.isSelected);
 	const filteredDataByMonth = useAppSelector(
@@ -93,11 +90,11 @@ const DetailComponent = ({
 		try {
 			const allData = await getData(incomeExpense);
 
-			const filteredData = allData.filter((item: any) => {
+			const filteredData = allData.filter((item: DataTypes) => {
 				return item.id !== singleCategoryData.id;
 			});
 			AsyncStorage.setItem(incomeExpense, JSON.stringify(filteredData));
-			const handleShowData = filteredDataByMonth.filter((item: any) => {
+			const handleShowData = filteredDataByMonth.filter((item: DataTypes) => {
 				return item.id !== singleCategoryData.id;
 			});
 			dispatch(getFilteredDataByMonth(handleShowData));
@@ -130,7 +127,6 @@ const DetailComponent = ({
 						{ height: heightA },
 					]}
 				>
-					
 					<View
 						style={[
 							animation && { alignSelf: "flex-start" },

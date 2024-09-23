@@ -87,7 +87,7 @@ export const typesOfIncome: ExpensesTypes[] = [
 	{
 		title: "Sprzedaz",
 		color: "#f4d35e",
-		icon: require("@/assets/images/shopping-cart.png"),
+		icon: require("@/assets/images/arrow.png"),
 	},
 	{
 		title: "Premia",
@@ -98,6 +98,6 @@ export const typesOfIncome: ExpensesTypes[] = [
 	{
 		title: "Inne",
 		color: "#81b29a",
-		icon: require("@/assets/images/shopping-cart.png"),
+		icon: require("@/assets/images/other-money.png"),
 	},
 ];

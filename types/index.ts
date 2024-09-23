@@ -18,12 +18,6 @@ export interface ActiveButtonProps {
 	activeStyle?: any;
 }
 
-export interface ExpensesTypes {
-	title: any;
-	icon?: string;
-	color?: string;
-}
-
 export interface PieChartTypes {
 	value: number;
 	color: string;
@@ -43,7 +37,7 @@ export interface TypeOfState {
 }
 
 export interface DropdownProps {
-	entryData: ExpensesTypes[] | object[];
+	entryData: CategoryTypes[] | object[];
 	onSelect: (selectedItem: {}, index: number) => void;
 	title: string;
 	showChevronIcon: boolean;
@@ -60,9 +54,9 @@ export interface InputProps {
 }
 
 export interface SelectDateProps {
-	defaultValue: Date,
-	handleAddDay: any,
-	handleSubDay: any,
+	defaultValue: Date | string,
+	handleAddDay: () => void,
+	handleSubDay: () => void,
 	dateFormat: string,
 	style: any
 }
@@ -73,10 +67,31 @@ export interface CategoryTypes {
 	color: string,
 }
 
-export interface AllDataTypes extends CategoryTypes {
-	name: string;
-	value: string;
-	id: number;
-	date: Date;
-	focused: boolean;
+export interface ParamsDate {
+	date: string[] | string | undefined
+	selected: string | string[]
+}
+
+export interface DataTypes extends CategoryTypes{
+	name: string, 
+	value: string,
+	id: number,
+	date: Date | string,
+	focused: boolean
+}
+
+export interface DetailComponentTypes {
+	singleCategoryData: DataTypes,
+	key: number
+	onEdit: (data: DataTypes) => void
+	onDelete: () => void
+}
+
+export interface AddItemTypes {
+	isVisible: boolean,
+	selectedItem: DataTypes 
+	closeModal: () => void, 
+	isSelected: string, 
+	date: Date | string, 
+	typeOfOperation: string,
 }

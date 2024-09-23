@@ -12,11 +12,11 @@ import { useEffect, useState } from "react";
 import { StyleSheet, SafeAreaView, View, Dimensions } from "react-native";
 
 export default function HomeScreen() {
-	const [selectedDate, setSelectedDate] = useState(new Date());
+	const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 	const costInformation = useAppSelector(state => state.manageData.isSelected);
 	const dispatch = useAppDispatch();
 	const isFocus = useIsFocused();
-	const { width, height } = Dimensions.get('screen');
+	
 
 	const addDay = () => {
 		const date: any = getMonths("add", selectedDate);
@@ -28,7 +28,7 @@ export default function HomeScreen() {
 	};
 
 	useEffect(() => {
-		let filteredDataByMonth: any = [];
+		let filteredDataByMonth: object[] = [];
 		const showData = async () => {
 			const incomesData = await getData("incomes");
 			const expensesData = await getData("expenses");
