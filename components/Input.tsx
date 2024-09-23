@@ -11,6 +11,7 @@ const Input = ({
 	value,
 	placeholder,
 	keyboardType,
+	maxLength,
 }: InputProps) => {
 	return (
 		<View>
@@ -21,6 +22,7 @@ const Input = ({
 				value={value}
 				placeholder={placeholder}
 				keyboardType={keyboardType}
+				maxLength={maxLength}
 			/>
 		</View>
 	);

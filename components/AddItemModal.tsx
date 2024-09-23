@@ -217,6 +217,7 @@ const AddItemModal = ({
 									}
 									onChangeText={(text: string) => setText(text)}
 									keyboardType=""
+									maxLength={80}
 								/>
 								<Input
 									placeholder="0.0"
@@ -228,6 +229,7 @@ const AddItemModal = ({
 										setAmount(changedAmount);
 									}}
 									keyboardType="numeric"
+									maxLength={11}
 								/>
 								<View>
 									<Text style={{ fontFamily: "Mrt" }}>Data: </Text>
@@ -316,8 +318,7 @@ const styles = StyleSheet.create({
 		justifyContent: "space-between",
 	},
 	iconStyle: {
-		fontSize: 40,
-		padding: 15,
+		fontSize: normalize(36),
 		color: "white",
 	},
 	button: {

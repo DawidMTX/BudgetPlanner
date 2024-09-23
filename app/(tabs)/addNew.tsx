@@ -231,6 +231,7 @@ export default function addNew() {
 						}
 						onChangeText={(text: string) => setText(text)}
 						keyboardType=""
+						maxLength={80}
 					/>
 
 					<View>
@@ -258,6 +259,7 @@ export default function addNew() {
 							setAmount(changedAmount);
 						}}
 						keyboardType="numeric"
+						maxLength={11}
 					/>
 
 					<View>

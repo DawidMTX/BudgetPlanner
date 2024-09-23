@@ -51,6 +51,7 @@ export interface InputProps {
 	value: string;
 	placeholder: string;
 	keyboardType?: string | any;
+	maxLength: number
 }
 
 export interface SelectDateProps {
